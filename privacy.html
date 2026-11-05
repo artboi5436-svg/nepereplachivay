@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Политика конфиденциальности — «Не переплачивай»</title>
+  <meta name="description" content="Политика обработки данных сервиса «Не переплачивай». Локальное хранение данных в браузере, отсутствие сбора персональных данных.">
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-container">
+      <a href="index.html#calculator" class="site-logo">
+        Не переплачивай <span class="badge">Приватность</span>
+      </a>
+      <nav class="header-nav">
+        <a href="index.html#calculator">Калькулятор</a>
+        <a href="index.html#how-we-calculate">Как мы считаем</a>
+        <a href="index.html#how-we-earn">Как мы зарабатываем</a>
+        <button type="button" class="theme-toggle-btn" id="theme-toggle" title="Переключить тему" aria-label="Сменить тему">
+          <span id="theme-icon">🌙</span>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="main-content">
+    <article class="step-card">
+      <h1>Политика конфиденциальности и локальное хранение данных</h1>
+      <p class="step-subtitle">Сервис разработан с учётом положений Федерального закона РФ № 152-ФЗ «О персональных данных».</p>
+
+      <section style="margin-bottom: 20px;">
+        <h3>1. Общие положения</h3>
+        <p>Сервис «Не переплачивай» разработан по принципу <strong>Privacy by Design</strong> (встроенная конфиденциальность). Мы не требуем регистрации, ввода ФИО, номера телефона, email или реквизитов банковских карт.</p>
+      </section>
+
+      <section style="margin-bottom: 20px;">
+        <h3>2. Где хранятся введённые данные</h3>
+        <p>Все цифры (суммы платежей, объём гигабайт, перечень выбранных подписок) обрабатываются клиентским JavaScript-кодом <strong>исключительно на вашем устройстве</strong>.</p>
+        <p>Для вашего удобства данные сохраняются в локальном хранилище браузера (<code>localStorage</code>), чтобы вам не приходилось вводить их заново при обновлении страницы. Эти данные <strong>никогда не передаются на сторонние серверы</strong>.</p>
+      </section>
+
+      <section style="margin-bottom: 20px;">
+        <h3>3. Файлы Cookie и параметры темы</h3>
+        <p>Сервис использует параметры локального хранилища только для сохранения выбранной темы оформления (тёмная/светлая) и состояния калькулятора.</p>
+      </section>
+
+      <section style="margin-bottom: 20px;">
+        <h3>4. Как полностью удалить свои данные</h3>
+        <p>Вы можете в любой момент нажать кнопку «Очистить историю браузера» внизу отчёта, либо очистить кэш и данные сайта в настройках своего браузера. Данные сотрутся безвозвратно.</p>
+      </section>
+
+      <div style="margin-top: 24px;">
+        <a href="index.html#calculator" class="btn btn-primary">← Вернуться к калькулятору</a>
+      </div>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-container">
+      <div>«Не переплачивай» © 2026. Конфиденциальность гарантирована архитектурой.</div>
+      <div class="footer-links">
+        <a href="index.html#calculator">Калькулятор</a>
+        <a href="index.html#how-we-calculate">Как мы считаем</a>
+        <a href="index.html#how-we-earn">Как мы зарабатываем</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    (function() {
+      const savedTheme = localStorage.getItem('ne_pereplachivay_theme') || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      document.documentElement.setAttribute('data-theme', savedTheme);
+      const icon = document.getElementById('theme-icon');
+      if (icon) icon.textContent = savedTheme === 'dark' ? '☀️' : '🌙';
+
+      const btn = document.getElementById('theme-toggle');
+      if (btn) {
+        btn.onclick = function() {
+          const cur = document.documentElement.getAttribute('data-theme');
+          const next = cur === 'dark' ? 'light' : 'dark';
+          document.documentElement.setAttribute('data-theme', next);
+          localStorage.setItem('ne_pereplachivay_theme', next);
+          if (icon) icon.textContent = next === 'dark' ? '☀️' : '🌙';
+        };
+      }
+    })();
+  </script>
+</body>
+</html>

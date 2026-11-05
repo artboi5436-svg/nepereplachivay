@@ -1,0 +1,14 @@
+{
+  "name": "ne-pereplachivay",
+  "version": "1.0.0",
+  "description": "Сервис честной оптимизации расходов на связь, интернет и подписки без регистрации",
+  "type": "module",
+  "scripts": {
+    "test": "node --test test/calculator.test.mjs",
+    "validate": "node scripts/validate-data.mjs",
+    "serve": "npx serve ."
+  },
+  "keywords": ["economy", "tariffs", "calculator", "russia", "subscriptions"],
+  "author": "Ne Pereplachivay Team",
+  "license": "MIT"
+}

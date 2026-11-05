@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Не переплачивай — честный расчёт экономии на связи, интернете и подписках</title>
+  <meta name="description" content="Бесплатный сервис оптимизации ежемесячных расходов: мобильная связь, домашний интернет, подписки. Считаем чистую экономию за 12 месяцев прямо в браузере без регистрации.">
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/print.css" media="print">
+</head>
+<body>
+
+  <!-- Баннер демо-данных -->
+  <aside class="demo-banner" role="alert">
+    ⚠️ <strong>ДЕМО-ДАННЫЕ:</strong> Тарифы и цены в каталоге являются демонстрационными. Перед переходом обязательно проверяйте условия на официальных сайтах операторов.
+  </aside>
+
+  <!-- Шапка сайта -->
+  <header class="site-header">
+    <div class="header-container">
+      <a href="#calculator" class="site-logo" data-tab="calculator">
+        Не переплачивай <span class="badge">Калькулятор</span>
+      </a>
+      <nav class="header-nav">
+        <a href="#calculator" class="nav-link active" data-tab="calculator">Калькулятор</a>
+        <a href="#how-we-calculate" class="nav-link" data-tab="how-we-calculate">Как мы считаем</a>
+        <a href="#how-we-earn" class="nav-link" data-tab="how-we-earn">Как мы зарабатываем</a>
+        <button type="button" class="theme-toggle-btn" id="theme-toggle" title="Переключить тему" aria-label="Сменить тему">
+          <span id="theme-icon">🌙</span>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Основной контент -->
+  <main class="main-content">
+
+    <!-- Вкладка 1: Основной калькулятор (Wizard + Report) -->
+    <div id="calculator-view">
+
+      <!-- Вводный блок -->
+      <section class="hero-intro">
+        <h1>Хватит переплачивать за связь и подписки</h1>
+        <p>Введите, сколько вы платите сейчас — сервис честно посчитает выгоду за 12 месяцев с учётом скрытых условий и акций, и поможет перейти без стресса.</p>
+        <div class="privacy-pill">
+          🔒 <span>Без регистрации. Расчёты и данные остаются только в вашем браузере (152-ФЗ)</span>
+        </div>
+      </section>
+
+      <!-- Секция мастера ввода (Wizard) -->
+      <section id="wizard-section" aria-label="Мастер ввода данных">
+        
+        <!-- Прогресс-бар -->
+        <div class="wizard-progress-card">
+          <div class="progress-header">
+            <span id="wizard-progress-text">Шаг 1 из 4: Мобильная связь</span>
+          </div>
+          <div class="progress-bar-bg">
+            <div class="progress-bar-fill" id="wizard-progress-bar"></div>
+          </div>
+        </div>
+
+        <!-- ШАГ 1: Мобильная связь -->
+        <div class="step-card" id="step-1">
+          <h2>Шаг 1: Мобильная связь</h2>
+          <p class="step-subtitle">Узнаем, сколько вы тратите сейчас и сколько минут и гигабайт вам действительно нужно.</p>
+
+          <div class="form-group">
+            <label for="mob-region">Ваш регион</label>
+            <select id="mob-region" class="form-select">
+              <option value="Все регионы">Все регионы РФ</option>
+              <option value="Москва и Московская область">Москва и Московская область</option>
+              <option value="Санкт-Петербург и ЛО">Санкт-Петербург и ЛО</option>
+              <option value="Луганская Народная Республика (ЛНР)" selected>Луганская Народная Республика (ЛНР)</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="mob-operator">Текущий оператор</label>
+            <select id="mob-operator" class="form-select">
+              <option value="МКС" selected>МКС (Лугаком)</option>
+              <option value="+7Телеком">+7Телеком</option>
+              <option value="билайн">билайн</option>
+              <option value="МТС">МТС</option>
+              <option value="МегаФон">МегаФон</option>
+              <option value="Т2">Т2</option>
+              <option value="Т-Мобайл">Т-Мобайл</option>
+              <option value="СберМобайл">СберМобайл</option>
+              <option value="Другой">Другой оператор</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="mob-price">Сколько вы платите в месяц (₽)</label>
+            <input type="number" id="mob-price" class="form-input" min="0" step="10" value="650" placeholder="Например: 650">
+          </div>
+
+          <div class="form-group">
+            <label for="mob-gb">Сколько гигабайт интернета реально расходуете: <span id="mob-gb-val" class="range-badge">25</span> ГБ</label>
+            <div class="range-slider-wrap">
+              <input type="range" id="mob-gb" min="2" max="100" step="1" value="25">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="mob-min">Сколько минут звонков реально тратите: <span id="mob-min-val" class="range-badge">400</span> мин</label>
+            <div class="range-slider-wrap">
+              <input type="range" id="mob-min" min="0" max="1200" step="50" value="400">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="mob-sms">Нужны ли СМС в пакете: <span id="mob-sms-val" class="range-badge">0</span> шт</label>
+            <div class="range-slider-wrap">
+              <input type="range" id="mob-sms" min="0" max="100" step="10" value="0">
+            </div>
+          </div>
+
+          <div class="wizard-actions-row">
+            <button type="button" class="btn-link-skip btn-wizard-skip">Пропустить мобильную связь</button>
+            <div class="actions-right">
+              <button type="button" class="btn btn-primary btn-wizard-next">Далее: Домашний интернет →</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ШАГ 2: Домашний интернет и ТВ -->
+        <div class="step-card hidden" id="step-2">
+          <h2>Шаг 2: Домашний интернет и ТВ</h2>
+          <p class="step-subtitle">Проверим, не переплачиваете ли вы за архивную скорость или скрытую аренду оборудования.</p>
+
+          <div class="form-group">
+            <label for="net-region">Регион подключения</label>
+            <select id="net-region" class="form-select">
+              <option value="Все регионы">Все регионы РФ</option>
+              <option value="Москва и Московская область">Москва и Московская область</option>
+              <option value="Санкт-Петербург и ЛО">Санкт-Петербург и ЛО</option>
+              <option value="Луганская Народная Республика (ЛНР)" selected>Луганская Народная Республика (ЛНР)</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="net-operator">Текущий интернет-провайдер</label>
+            <select id="net-operator" class="form-select">
+              <option value="Луганет" selected>Луганет</option>
+              <option value="Луганские коммуникации (ЛТК)">Луганские коммуникации (ЛТК)</option>
+              <option value="Ростелеком">Ростелеком</option>
+              <option value="МТС Домашний">МТС Домашний</option>
+              <option value="билайн Домашний">билайн Домашний</option>
+              <option value="Дом.ру">Дом.ру</option>
+              <option value="Другой">Другой провайдер</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="net-price">Плата за интернет и ТВ в месяц (₽)</label>
+            <input type="number" id="net-price" class="form-input" min="0" step="10" value="650" placeholder="Например: 650">
+          </div>
+
+          <div class="form-group">
+            <label for="net-speed">Желаемая скорость интернета</label>
+            <select id="net-speed" class="form-select">
+              <option value="100">100 Мбит/с (достаточно для серфинга и Full HD видео)</option>
+              <option value="200" selected>200–300 Мбит/с (для семьи, 4K видео и удалённой работы)</option>
+              <option value="500">500+ Мбит/с (для тяжелых скачиваний и онлайн-игр)</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="custom-checkbox-label">
+              <input type="checkbox" id="net-router-rent">
+              <span>В тарифе есть платная аренда роутера или ТВ-приставки (нужен роутер от провайдера)</span>
+            </label>
+          </div>
+
+          <div class="wizard-actions-row">
+            <button type="button" class="btn btn-secondary btn-wizard-prev">← Назад</button>
+            <button type="button" class="btn-link-skip btn-wizard-skip">Пропустить интернет</button>
+            <button type="button" class="btn btn-primary btn-wizard-next">Далее: Подписки →</button>
+          </div>
+        </div>
+
+        <!-- ШАГ 3: Подписки -->
+        <div class="step-card hidden" id="step-3">
+          <h2>Шаг 3: Подписки и сервисы</h2>
+          <p class="step-subtitle">Отметьте сервисы, за которые у вас списываются деньги. Мы найдём скрытые дубликаты и неиспользуемые услуги.</p>
+
+          <div class="subscriptions-grid" id="subscriptions-list">
+            <!-- Генерируется динамически -->
+          </div>
+
+          <!-- Добавить свою подписку -->
+          <div class="custom-sub-add-box">
+            <h4>+ Добавить другую подписку</h4>
+            <div class="custom-sub-row">
+              <input type="text" id="custom-sub-name" class="form-input" placeholder="Название сервиса">
+              <input type="number" id="custom-sub-price" class="form-input" placeholder="Цена ₽/мес">
+              <button type="button" class="btn btn-secondary" id="btn-add-custom-sub">Добавить</button>
+            </div>
+            <label class="unused-label">
+              <input type="checkbox" id="custom-sub-unused">
+              <span>Не пользуюсь этой подпиской</span>
+            </label>
+            <div class="custom-subs-pills" id="custom-subs-container"></div>
+          </div>
+
+          <div class="wizard-actions-row">
+            <button type="button" class="btn btn-secondary btn-wizard-prev">← Назад</button>
+            <button type="button" class="btn-link-skip btn-wizard-skip">Пропустить подписки</button>
+            <button type="button" class="btn btn-primary btn-wizard-next">Далее: Страховки →</button>
+          </div>
+        </div>
+
+        <!-- ШАГ 4: Страхование (Справочно) -->
+        <div class="step-card hidden" id="step-4">
+          <h2>Шаг 4: Страхование (Справочный режим)</h2>
+          <p class="step-subtitle">Мы не продаём страховки и не считаем цены наугад. Отметьте полисы, которые вам предстоит продлевать — мы дадим официальные инструменты проверки и чек-лист защиты от переплат.</p>
+
+          <div class="insurance-grid" id="insurance-selector-container">
+            <!-- Генерируется из данных страховок -->
+          </div>
+
+          <div class="wizard-actions-row">
+            <button type="button" class="btn btn-secondary btn-wizard-prev">← Назад</button>
+            <button type="button" class="btn btn-primary btn-wizard-next">Рассчитать экономию и перейти к отчёту 🚀</button>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- Секция отчёта (Итоговый результат) -->
+      <section id="report-section" class="hidden" aria-label="Персональный отчёт об экономии">
+
+        <!-- Главный баннер экономии -->
+        <div class="report-hero-card">
+          <h2>Ваш персональный расчёт экономии</h2>
+          <div class="numbers-comparison">
+            <div class="num-box">
+              <div class="num-label">Сейчас вы платите</div>
+              <div class="num-val" id="grand-current-month">0 ₽</div>
+              <small>в месяц</small>
+            </div>
+            <span class="arrow-icon">➔</span>
+            <div class="num-box">
+              <div class="num-label">Можно платить</div>
+              <div class="num-val" id="grand-target-month">0 ₽</div>
+              <small>в месяц</small>
+            </div>
+            <div class="num-box savings">
+              <div class="num-label">Экономия за 12 месяцев</div>
+              <div class="num-val" id="grand-savings-year">0 ₽</div>
+              <small>чистая годовая выгода</small>
+            </div>
+          </div>
+          <p class="banner-note" id="grand-banner-note"></p>
+          <small style="display:block; margin-top:10px; color:var(--text-subtle);">
+            📅 Тарифы проверены по состоянию на ноябрь 2026. Условия могут меняться операторами, всегда сверяйте перед заключением договора.
+          </small>
+        </div>
+
+        <!-- Детализация: Мобильная связь -->
+        <div class="report-card" id="report-mobile-card">
+          <div class="report-card-header">
+            <h3>📱 Мобильная связь</h3>
+          </div>
+          <div class="card-content"></div>
+        </div>
+
+        <!-- Детализация: Домашний интернет -->
+        <div class="report-card" id="report-internet-card">
+          <div class="report-card-header">
+            <h3>🌐 Домашний интернет и ТВ</h3>
+          </div>
+          <div class="card-content"></div>
+        </div>
+
+        <!-- Детализация: Подписки -->
+        <div class="report-card" id="report-subs-card">
+          <div class="report-card-header">
+            <h3>🎬 Подписки и сервисы</h3>
+          </div>
+          <div class="card-content"></div>
+        </div>
+
+        <!-- Детализация: Страховки (Справочно) -->
+        <div class="report-card" id="report-insurance-card">
+          <div class="report-card-header">
+            <h3>🛡️ Страхование (Гид по экономии)</h3>
+          </div>
+          <div class="card-content"></div>
+        </div>
+
+        <!-- Глобальные действия -->
+        <div class="report-global-actions">
+          <button type="button" class="btn btn-primary" id="btn-export-ics">📅 Добавить напоминания в календарь (.ics)</button>
+          <button type="button" class="btn btn-secondary" id="btn-print-report">🖨️ Печать / Сохранить в PDF</button>
+          <button type="button" class="btn btn-secondary" id="btn-export-json">💾 Сохранить данные (JSON)</button>
+          <button type="button" class="btn btn-secondary" id="btn-import-json">📂 Загрузить данные (JSON)</button>
+          <input type="file" id="import-file-input" accept=".json" class="hidden">
+          <button type="button" class="btn btn-outline" id="btn-restart">🔄 Начать заново</button>
+          <button type="button" class="btn btn-link-skip" id="btn-clear-data">Очистить историю браузера</button>
+        </div>
+
+      </section>
+
+    </div>
+
+    <!-- Вкладка 2: Как мы считаем (Методология) -->
+    <article id="view-how-we-calculate" class="step-card doc-view hidden">
+      <h1>Как мы считаем экономию: честно и без уловок</h1>
+      <p class="step-subtitle">Большинство сайтов сравнения тарифов показывают только маркетинговую «цену в первый месяц». Мы рассчитываем реальную стоимость владения (TCO) за 12 месяцев.</p>
+
+      <section style="margin-bottom: 24px;">
+        <h3>1. Формула годовой стоимости владения (TCO за 12 месяцев)</h3>
+        <p>Когда оператор пишет «1 рубль в месяц», мелким шрифтом в договоре часто указано: «со 2-го месяца — 650 ₽, плата за подключение — 500 ₽, аренда роутера — 150 ₽/мес».</p>
+        <p>Наша формула учитывает все расходы за год:</p>
+        <div style="background-color: var(--bg-surface-elevated); padding: 14px; border-radius: var(--radius-sm); font-family: monospace; font-size: 14px; margin: 12px 0;">
+          TCO = Плата_за_подключение + (Цена_акции × Месяцев_акции) + (Базовая_цена × (12 - Месяцев_акции)) + (Аренда_роутера × 12)
+        </div>
+        <p>Среднемесячная стоимость в нашем отчёте — это <code>TCO / 12</code>. Это позволяет честно сравнивать предложения между собой.</p>
+      </section>
+
+      <section style="margin-bottom: 24px;">
+        <h3>2. Принцип «Текущий тариф уже лучший»</h3>
+        <p>Если ваш архивный тариф дешевле любых существующих на рынке предложений, <strong>мы прямо сообщаем об этом</strong> и советуем ни в коем случае его не менять.</p>
+        <p>Мы никогда не навязываем переход ради перехода или ради партнёрской комиссии.</p>
+      </section>
+
+      <section style="margin-bottom: 24px;">
+        <h3>3. Как мы ищем дубликаты подписок</h3>
+        <ul>
+          <li><strong>Вложенные сервисы (экосистемы):</strong> Если у вас подключен «Яндекс Плюс», отдельная оплата «Кинопоиска» или «Яндекс Музыки» — это 100% потеря денег, так как они уже входят в базовый пакет. Аналогично с «СберПрайм» и «Okko».</li>
+          <li><strong>Категориальный избыток:</strong> Оплата одновременно 2–3 онлайн-кинотеатров. По статистике, пользователь смотрит только один сериал в конкретный период. Выгоднее чередовать сервисы помесячно.</li>
+          <li><strong>Неиспользуемые подписки:</strong> Сервисы, о которых человек забыл после бесплатного пробного периода.</li>
+        </ul>
+      </section>
+
+      <section style="margin-bottom: 24px;">
+        <h3>4. Почему мы не считаем цены на страховку</h3>
+        <p>ОСАГО, КАСКО и ипотечные полисы зависят от десятков индивидуальных параметров (КБМ водителя, марка авто, мощность, возраст, остаток долга по ипотеке). Сайты, обещающие «рассчитать страховку в один клик», либо выдумывают цифры, либо заставляют передавать паспортные данные сторонним брокерам.</p>
+        <p>Вместо этого мы даём:</p>
+        <ul>
+          <li>Прямые ссылки на официальную базу РСА для проверки КБМ без посредников;</li>
+          <li>Чек-лист защиты от навязанных услуг (ст. 15.34.1 КоАП РФ);</li>
+          <li>Памятку о «периоде охлаждения» (14 дней на отказ от навязанной страховки).</li>
+        </ul>
+      </section>
+
+      <section>
+        <h3>5. Откуда берутся данные о тарифах</h3>
+        <p>Все тарифы хранятся в открытых структурированных JSON-файлах в репозитории проекта. Каждая запись содержит дату последней проверки и ссылку на официальный сайт оператора. Мы не используем агрессивный автоматический сбор данных, нарушающий правила операторов.</p>
+      </section>
+
+      <div style="margin-top: 24px;">
+        <button type="button" class="btn btn-primary btn-return-calc">← Вернуться к калькулятору</button>
+      </div>
+    </article>
+
+    <!-- Вкладка 3: Как мы зарабатываем -->
+    <article id="view-how-we-earn" class="step-card doc-view hidden">
+      <h1>Как мы зарабатываем и почему нам можно доверять</h1>
+      <p class="step-subtitle">Мы выступаем на стороне потребителя. Доверие пользователей — наш главный актив.</p>
+
+      <section style="margin-bottom: 24px;">
+        <h3>1. Рейтинг тарифов не продаётся</h3>
+        <p>Наш алгоритм сортирует тарифы <strong>исключительно по выгоде для вас</strong> (минимальная стоимость за 12 месяцев при соблюдении нужного объёма минут, гигабайт или скорости).</p>
+        <p>Оператор не может заплатить нам, чтобы подняться выше в выдаче или вытеснить более выгодного конкурента.</p>
+      </section>
+
+      <section style="margin-bottom: 24px;">
+        <h3>2. Партнёрские ссылки и маркировка рекламы (erid)</h3>
+        <p>Некоторые ссылки на подключение могут быть партнёрскими: если вы перейдёте по такой ссылке и оформите тариф, оператор может выплатить сервису небольшое вознаграждение на оплату хостинга и поддержку проекта.</p>
+        <p>В строгом соответствии с требованиями Федерального закона «О рекламе» № 38-ФЗ (ст. 18.1):</p>
+        <ul>
+          <li>Любая партнёрская ссылка явно помечена плашкой <strong>«Реклама»</strong>;</li>
+          <li>В карточке тарифа отображается уникальный идентификатор интернет-рекламы — <strong>токен erid</strong>;</li>
+          <li>Наличие или отсутствие партнёрской интеграции никак не влияет на формулу расчёта экономии.</li>
+        </ul>
+      </section>
+
+      <section style="margin-bottom: 24px;">
+        <h3>3. Мы не продаём ваши данные</h3>
+        <p>Сервис работает без регистрации. Вы не вводите имя, телефон, адрес или паспортные данные. Все числа хранятся исключительно в памяти вашего браузера (localStorage) и не отправляются на наш сервер.</p>
+      </section>
+
+      <div style="margin-top: 24px;">
+        <button type="button" class="btn btn-primary btn-return-calc">← Вернуться к калькулятору</button>
+      </div>
+    </article>
+
+    <!-- Вкладка 4: Политика конфиденциальности -->
+    <article id="view-privacy" class="step-card doc-view hidden">
+      <h1>Политика конфиденциальности и локальное хранение данных</h1>
+      <p class="step-subtitle">Сервис разработан с учётом положений Федерального закона РФ № 152-ФЗ «О персональных данных».</p>
+
+      <section style="margin-bottom: 20px;">
+        <h3>1. Общие положения</h3>
+        <p>Сервис «Не переплачивай» разработан по принципу <strong>Privacy by Design</strong> (встроенная конфиденциальность). Мы не требуем регистрации, ввода ФИО, номера телефона, email или реквизитов банковских карт.</p>
+      </section>
+
+      <section style="margin-bottom: 20px;">
+        <h3>2. Где хранятся введённые данные</h3>
+        <p>Все цифры (суммы платежей, объём гигабайт, перечень выбранных подписок) обрабатываются клиентским JavaScript-кодом <strong>исключительно на вашем устройстве</strong>.</p>
+        <p>Для вашего удобства данные сохраняются в локальном хранилище браузера (<code>localStorage</code>), чтобы вам не приходилось вводить их заново при обновлении страницы. Эти данные <strong>никогда не передаются на сторонние серверы</strong>.</p>
+      </section>
+
+      <section style="margin-bottom: 20px;">
+        <h3>3. Файлы Cookie и параметры темы</h3>
+        <p>Сервис использует параметры локального хранилища только для сохранения выбранной темы оформления (тёмная/светлая) и состояния калькулятора.</p>
+      </section>
+
+      <section style="margin-bottom: 20px;">
+        <h3>4. Как полностью удалить свои данные</h3>
+        <p>Вы можете в любой момент нажать кнопку «Очистить историю браузера» внизу отчёта, либо очистить кэш и данные сайта в настройках своего браузера. Данные сотрутся безвозвратно.</p>
+      </section>
+
+      <div style="margin-top: 24px;">
+        <button type="button" class="btn btn-primary btn-return-calc">← Вернуться к калькулятору</button>
+      </div>
+    </article>
+
+  </main>
+
+  <!-- Модальное окно инструкций и скриптов -->
+  <div id="info-modal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 id="modal-title">Заголовок</h3>
+        <button type="button" class="modal-close-btn" id="modal-close-btn" aria-label="Закрыть">✕</button>
+      </div>
+      <div class="modal-body" id="modal-body"></div>
+    </div>
+  </div>
+
+  <!-- Футер -->
+  <footer class="site-footer">
+    <div class="footer-container">
+      <div>
+        <strong>«Не переплачивай»</strong> © 2026. Сервис честной потребительской оптимизации расходов.
+      </div>
+      <div class="footer-links">
+        <a href="#calculator" class="footer-nav-link" data-tab="calculator">Калькулятор</a>
+        <a href="#how-we-calculate" class="footer-nav-link" data-tab="how-we-calculate">Как мы считаем</a>
+        <a href="#how-we-earn" class="footer-nav-link" data-tab="how-we-earn">Как мы зарабатываем</a>
+        <a href="#privacy" class="footer-nav-link" data-tab="privacy">Конфиденциальность</a>
+      </div>
+    </div>
+  </footer>
+
+  <script defer src="js/app.js"></script>
+</body>
+</html>

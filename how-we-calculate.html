@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Как мы считаем — Методология сервиса «Не переплачивай»</title>
+  <meta name="description" content="Честная методология расчёта экономии на тарифах связи, домашнего интернета и подписок. Формула TCO за 12 месяцев.">
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-container">
+      <a href="index.html#calculator" class="site-logo">
+        Не переплачивай <span class="badge">Методология</span>
+      </a>
+      <nav class="header-nav">
+        <a href="index.html#calculator">Калькулятор</a>
+        <a href="index.html#how-we-calculate" class="active">Как мы считаем</a>
+        <a href="index.html#how-we-earn">Как мы зарабатываем</a>
+        <button type="button" class="theme-toggle-btn" id="theme-toggle" title="Переключить тему" aria-label="Сменить тему">
+          <span id="theme-icon">🌙</span>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="main-content">
+    <article class="step-card">
+      <h1>Как мы считаем экономию: честно и без уловок</h1>
+      <p class="step-subtitle">Большинство сайтов сравнения тарифов показывают только маркетинговую «цену в первый месяц». Мы рассчитываем реальную стоимость владения (TCO) за 12 месяцев.</p>
+
+      <section style="margin-bottom: 24px;">
+        <h3>1. Формула годовой стоимости владения (TCO за 12 месяцев)</h3>
+        <p>Когда оператор пишет «1 рубль в месяц», мелким шрифтом в договоре часто указано: «со 2-го месяца — 650 ₽, плата за подключение — 500 ₽, аренда роутера — 150 ₽/мес».</p>
+        <p>Наша формула учитывает все расходы за год:</p>
+        <div style="background-color: var(--bg-surface-elevated); padding: 14px; border-radius: var(--radius-sm); font-family: monospace; font-size: 14px; margin: 12px 0;">
+          TCO = Плата_за_подключение + (Цена_акции × Месяцев_акции) + (Базовая_цена × (12 - Месяцев_акции)) + (Аренда_роутера × 12)
+        </div>
+        <p>Среднемесячная стоимость в нашем отчёте — это <code>TCO / 12</code>. Это позволяет честно сравнивать предложения между собой.</p>
+      </section>
+
+      <section style="margin-bottom: 24px;">
+        <h3>2. Принцип «Текущий тариф уже лучший»</h3>
+        <p>Если ваш архивный тариф дешевле любых существующих на рынке предложений, <strong>мы прямо сообщаем об этом</strong> и советуем ни в коем случае его не менять.</p>
+        <p>Мы никогда не навязываем переход ради перехода или ради партнёрской комиссии.</p>
+      </section>
+
+      <section style="margin-bottom: 24px;">
+        <h3>3. Как мы ищем дубликаты подписок</h3>
+        <ul>
+          <li><strong>Вложенные сервисы (экосистемы):</strong> Если у вас подключен «Яндекс Плюс», отдельная оплата «Кинопоиска» или «Яндекс Музыки» — это 100% потеря денег, так как они уже входят в базовый пакет. Аналогично с «СберПрайм» и «Okko».</li>
+          <li><strong>Категориальный избыток:</strong> Оплата одновременно 2–3 онлайн-кинотеатров. По статистике, пользователь смотрит только один сериал в конкретный период. Выгоднее чередовать сервисы помесячно.</li>
+          <li><strong>Неиспользуемые подписки:</strong> Сервисы, о которых человек забыл после бесплатного пробного периода.</li>
+        </ul>
+      </section>
+
+      <section style="margin-bottom: 24px;">
+        <h3>4. Почему мы не считаем цены на страховку</h3>
+        <p>ОСАГО, КАСКО и ипотечные полисы зависят от десятков индивидуальных параметров (КБМ водителя, марка авто, мощность, возраст, остаток долга по ипотеке). Сайты, обещающие «рассчитать страховку в один клик», либо выдумывают цифры, либо заставляют передавать паспортные данные сторонним брокерам.</p>
+        <p>Вместо этого мы даём:</p>
+        <ul>
+          <li>Прямые ссылки на официальную базу РСА для проверки КБМ без посредников;</li>
+          <li>Чек-лист защиты от навязанных услуг (ст. 15.34.1 КоАП РФ);</li>
+          <li>Памятку о «периоде охлаждения» (14 дней на отказ от навязанной страховки).</li>
+        </ul>
+      </section>
+
+      <section>
+        <h3>5. Откуда берутся данные о тарифах</h3>
+        <p>Все тарифы хранятся в открытых структурированных JSON-файлах в репозитории проекта. Каждая запись содержит дату последней проверки и ссылку на официальный сайт оператора. Мы не используем агрессивный автоматический сбор данных, нарушающий правила операторов.</p>
+      </section>
+
+      <div style="margin-top: 24px;">
+        <a href="index.html#calculator" class="btn btn-primary">← Вернуться к калькулятору</a>
+      </div>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-container">
+      <div>«Не переплачивай» © 2026. Расчёты в браузере без передачи на сервер.</div>
+      <div class="footer-links">
+        <a href="index.html#calculator">Калькулятор</a>
+        <a href="index.html#how-we-earn">Как мы зарабатываем</a>
+        <a href="index.html#privacy">Конфиденциальность</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    (function() {
+      const savedTheme = localStorage.getItem('ne_pereplachivay_theme') || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      document.documentElement.setAttribute('data-theme', savedTheme);
+      const icon = document.getElementById('theme-icon');
+      if (icon) icon.textContent = savedTheme === 'dark' ? '☀️' : '🌙';
+
+      const btn = document.getElementById('theme-toggle');
+      if (btn) {
+        btn.onclick = function() {
+          const cur = document.documentElement.getAttribute('data-theme');
+          const next = cur === 'dark' ? 'light' : 'dark';
+          document.documentElement.setAttribute('data-theme', next);
+          localStorage.setItem('ne_pereplachivay_theme', next);
+          if (icon) icon.textContent = next === 'dark' ? '☀️' : '🌙';
+        };
+      }
+    })();
+  </script>
+</body>
+</html>

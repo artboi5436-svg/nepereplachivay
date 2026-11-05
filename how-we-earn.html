@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Как мы зарабатываем — Сервис «Не переплачивай»</title>
+  <meta name="description" content="Политика честности и монетизации сайта «Не переплачивай». Маркировка рекламы erid, отсутствие скрытых комиссий.">
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-container">
+      <a href="index.html#calculator" class="site-logo">
+        Не переплачивай <span class="badge">Прозрачность</span>
+      </a>
+      <nav class="header-nav">
+        <a href="index.html#calculator">Калькулятор</a>
+        <a href="index.html#how-we-calculate">Как мы считаем</a>
+        <a href="index.html#how-we-earn" class="active">Как мы зарабатываем</a>
+        <button type="button" class="theme-toggle-btn" id="theme-toggle" title="Переключить тему" aria-label="Сменить тему">
+          <span id="theme-icon">🌙</span>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="main-content">
+    <article class="step-card">
+      <h1>Как мы зарабатываем и почему нам можно доверять</h1>
+      <p class="step-subtitle">Мы выступаем на стороне потребителя. Доверие пользователей — наш главный актив.</p>
+
+      <section style="margin-bottom: 24px;">
+        <h3>1. Рейтинг тарифов не продаётся</h3>
+        <p>Наш алгоритм сортирует тарифы <strong>исключительно по выгоде для вас</strong> (минимальная стоимость за 12 месяцев при соблюдении нужного объёма минут, гигабайт или скорости).</p>
+        <p>Оператор не может заплатить нам, чтобы подняться выше в выдаче или вытеснить более выгодного конкурента.</p>
+      </section>
+
+      <section style="margin-bottom: 24px;">
+        <h3>2. Партнёрские ссылки и маркировка рекламы (erid)</h3>
+        <p>Некоторые ссылки на подключение могут быть партнёрскими: если вы перейдёте по такой ссылке и оформите тариф, оператор может выплатить сервису небольшое вознаграждение на оплату хостинга и поддержку проекта.</p>
+        <p>В строгом соответствии с требованиями Федерального закона «О рекламе» № 38-ФЗ (ст. 18.1):</p>
+        <ul>
+          <li>Любая партнёрская ссылка явно помечена плашкой <strong>«Реклама»</strong>;</li>
+          <li>В карточке тарифа отображается уникальный идентификатор интернет-рекламы — <strong>токен erid</strong>;</li>
+          <li>Наличие или отсутствие партнёрской интеграции никак не влияет на формулу расчёта экономии.</li>
+        </ul>
+      </section>
+
+      <section style="margin-bottom: 24px;">
+        <h3>3. Мы не продаём ваши данные</h3>
+        <p>Сервис работает без регистрации. Вы не вводите имя, телефон, адрес или паспортные данные. Все числа хранятся исключительно в памяти вашего браузера (localStorage) и не отправляются на наш сервер.</p>
+      </section>
+
+      <div style="margin-top: 24px;">
+        <a href="index.html#calculator" class="btn btn-primary">← Перейти к калькулятору</a>
+      </div>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-container">
+      <div>«Не переплачивай» © 2026. Честный и независимый сервис.</div>
+      <div class="footer-links">
+        <a href="index.html#calculator">Калькулятор</a>
+        <a href="index.html#how-we-calculate">Как мы считаем</a>
+        <a href="index.html#privacy">Конфиденциальность</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    (function() {
+      const savedTheme = localStorage.getItem('ne_pereplachivay_theme') || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      document.documentElement.setAttribute('data-theme', savedTheme);
+      const icon = document.getElementById('theme-icon');
+      if (icon) icon.textContent = savedTheme === 'dark' ? '☀️' : '🌙';
+
+      const btn = document.getElementById('theme-toggle');
+      if (btn) {
+        btn.onclick = function() {
+          const cur = document.documentElement.getAttribute('data-theme');
+          const next = cur === 'dark' ? 'light' : 'dark';
+          document.documentElement.setAttribute('data-theme', next);
+          localStorage.setItem('ne_pereplachivay_theme', next);
+          if (icon) icon.textContent = next === 'dark' ? '☀️' : '🌙';
+        };
+      }
+    })();
+  </script>
+</body>
+</html>

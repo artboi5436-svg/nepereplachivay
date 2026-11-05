@@ -1,0 +1,83 @@
+@media print {
+  body {
+    background: #ffffff !important;
+    color: #000000 !important;
+    font-size: 12pt;
+    line-height: 1.4;
+  }
+
+  .site-header,
+  .site-footer,
+  .demo-banner,
+  .wizard-progress-card,
+  #wizard-section,
+  .report-global-actions,
+  .action-buttons-row,
+  .modal-overlay,
+  .theme-toggle-btn,
+  .btn-remove-custom,
+  input[type="file"],
+  .btn {
+    display: none !important;
+  }
+
+  .main-content {
+    max-width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  #report-section {
+    display: block !important;
+  }
+
+  .report-hero-card {
+    border: 2px solid #000000 !important;
+    background: #ffffff !important;
+    box-shadow: none !important;
+    padding: 16px !important;
+    page-break-after: avoid;
+  }
+
+  .num-box {
+    border: 1px solid #000000 !important;
+    background: #ffffff !important;
+  }
+
+  .report-card {
+    border: 1px solid #cccccc !important;
+    box-shadow: none !important;
+    page-break-inside: avoid;
+    break-inside: avoid;
+    margin-bottom: 20px !important;
+    padding: 14px !important;
+  }
+
+  .savings-highlight {
+    background: #f0f0f0 !important;
+    color: #000000 !important;
+    border: 1px solid #000000 !important;
+  }
+
+  .comparison-grid {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 12px !important;
+  }
+
+  .comp-col {
+    border: 1px solid #999999 !important;
+    background: #ffffff !important;
+  }
+
+  a {
+    text-decoration: none !important;
+    color: #000000 !important;
+  }
+
+  a[href^="http"]::after {
+    content: " (" attr(href) ")";
+    font-size: 9pt;
+    color: #555555;
+  }
+}
