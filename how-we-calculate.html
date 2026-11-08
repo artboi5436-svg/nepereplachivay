@@ -2,11 +2,11 @@
 <html lang="ru" data-theme="light">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Как мы считаем — Методология сервиса «ТарифДетокс»</title>
   <meta name="description" content="Честная методология расчёта экономии на тарифах связи, домашнего интернета и подписок. Формула TCO за 12 месяцев.">
-  <link rel="stylesheet" href="css/variables.css?v=20261108_5">
-  <link rel="stylesheet" href="css/style.css?v=20261108_5">
+  <link rel="stylesheet" href="css/variables.css?v=20261108_6">
+  <link rel="stylesheet" href="css/style.css?v=20261108_6">
 </head>
 <body>
 
@@ -19,10 +19,10 @@
         <a href="index.html#calculator">Калькулятор</a>
         <a href="index.html#how-we-calculate" class="active">Как мы считаем</a>
         <a href="index.html#how-we-earn">Как мы планируем зарабатывать</a>
-        <button type="button" class="theme-toggle-btn" id="theme-toggle" title="Переключить тему" aria-label="Сменить тему">
-          <span id="theme-icon">🌙</span>
-        </button>
       </nav>
+      <button type="button" class="theme-toggle-btn" id="theme-toggle" title="Переключить тему" aria-label="Сменить тему">
+        <span id="theme-icon">🌙</span>
+      </button>
     </div>
   </header>
 
@@ -35,7 +35,7 @@
         <h3>1. Формула годовой стоимости владения (TCO за 12 месяцев)</h3>
         <p>Когда оператор пишет «1 рубль в месяц», мелким шрифтом в договоре часто указано: «со 2-го месяца — 650 ₽, плата за подключение — 500 ₽, аренда роутера — 150 ₽/мес».</p>
         <p>Наша формула учитывает все расходы за год:</p>
-        <div style="background-color: var(--bg-surface-elevated); padding: 14px; border-radius: var(--radius-sm); font-family: monospace; font-size: 14px; margin: 12px 0;">
+        <div style="background-color: var(--bg-surface-elevated); padding: 14px; border-radius: var(--radius-sm); font-family: monospace; font-size: 13px; margin: 12px 0; overflow-x: auto; word-break: break-word;">
           TCO = Плата_за_подключение + (Цена_акции × Месяцев_акции) + (Базовая_цена × (12 - Месяцев_акции)) + (Аренда_роутера × 12)
         </div>
         <p>Среднемесячная стоимость в нашем отчёте — это <code>TCO / 12</code>. Это позволяет честно сравнивать предложения между собой.</p>

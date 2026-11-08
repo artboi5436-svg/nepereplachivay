@@ -54,10 +54,11 @@ a:hover {
 .site-header {
   background-color: var(--bg-surface);
   border-bottom: 1px solid var(--border-color);
-  padding: 14px 20px;
+  padding: 12px 20px;
   position: sticky;
   top: 0;
   z-index: 40;
+  backdrop-filter: blur(8px);
 }
 
 .header-container {
@@ -66,7 +67,7 @@ a:hover {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
+  gap: 16px;
 }
 
 .site-logo {
@@ -77,6 +78,7 @@ a:hover {
   display: flex;
   align-items: center;
   gap: 8px;
+  flex-shrink: 0;
 }
 
 .site-logo span.badge {
@@ -92,6 +94,7 @@ a:hover {
   display: flex;
   align-items: center;
   gap: 16px;
+  margin-left: auto;
 }
 
 .header-nav a {
@@ -99,10 +102,14 @@ a:hover {
   font-size: 14px;
   color: var(--text-muted);
   font-weight: 500;
+  padding: 6px 0;
+  border-bottom: 2px solid transparent;
+  transition: all 0.15s ease;
 }
 
 .header-nav a:hover, .header-nav a.active {
   color: var(--primary);
+  border-bottom-color: var(--primary);
 }
 
 .theme-toggle-btn {
@@ -111,16 +118,20 @@ a:hover {
   color: var(--text-main);
   font-size: 16px;
   cursor: pointer;
-  padding: 6px 10px;
+  padding: 8px 12px;
+  min-height: 40px;
+  min-width: 40px;
   border-radius: var(--radius-sm);
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background 0.15s ease;
+  transition: background 0.15s ease, border-color 0.15s ease;
+  flex-shrink: 0;
 }
 
 .theme-toggle-btn:hover {
   background-color: var(--bg-surface-elevated);
+  border-color: var(--primary);
 }
 
 /* Контейнер страницы */
@@ -218,26 +229,48 @@ a:hover {
 
 /* Формы и поля ввода */
 .form-group {
-  margin-bottom: 18px;
+  margin-bottom: 20px;
 }
 
 .form-group label {
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 6px;
   font-size: 14px;
   font-weight: 600;
-  margin-bottom: 6px;
+  margin-bottom: 8px;
   color: var(--text-main);
 }
 
 .form-input, .form-select {
   width: 100%;
+  min-height: 48px;
   padding: 12px 14px;
   border: 1px solid var(--border-color);
   border-radius: var(--radius-sm);
   background-color: var(--bg-surface);
   color: var(--text-main);
-  font-size: 16px;
+  font-size: 16px; /* Предотвращает зум в iOS Safari при фокусе */
+  line-height: 1.4;
   transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  touch-action: manipulation;
+}
+
+.form-select {
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2371717a' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  background-size: 16px;
+  padding-right: 40px;
+  cursor: pointer;
+}
+
+[data-theme="dark"] .form-select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23a1a1aa' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
 }
 
 .form-input:focus, .form-select:focus {
@@ -250,13 +283,46 @@ a:hover {
   display: flex;
   align-items: center;
   gap: 14px;
+  padding: 6px 0;
 }
 
 .range-slider-wrap input[type="range"] {
   flex: 1;
-  accent-color: var(--primary);
+  height: 8px;
+  -webkit-appearance: none;
+  appearance: none;
+  background: var(--border-color);
+  border-radius: var(--radius-full);
+  outline: none;
   cursor: pointer;
-  height: 6px;
+  touch-action: manipulation;
+}
+
+.range-slider-wrap input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--primary);
+  border: 2px solid #ffffff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  transition: transform 0.1s ease;
+}
+
+.range-slider-wrap input[type="range"]::-moz-range-thumb {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--primary);
+  border: 2px solid #ffffff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+}
+
+.range-slider-wrap input[type="range"]:active::-webkit-slider-thumb {
+  transform: scale(1.15);
 }
 
 .range-badge {
@@ -266,8 +332,9 @@ a:hover {
   border-radius: var(--radius-sm);
   font-weight: 700;
   font-size: 15px;
-  min-width: 80px;
+  min-width: 76px;
   text-align: center;
+  display: inline-block;
 }
 
 /* Кнопки */
@@ -277,6 +344,7 @@ a:hover {
   justify-content: center;
   gap: 8px;
   padding: 12px 20px;
+  min-height: 46px;
   font-size: 15px;
   font-weight: 600;
   border-radius: var(--radius-sm);
@@ -284,6 +352,13 @@ a:hover {
   border: none;
   text-decoration: none;
   transition: all 0.15s ease;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+
+.btn:active {
+  transform: scale(0.98);
 }
 
 .btn-primary {
@@ -317,7 +392,8 @@ a:hover {
 }
 
 .btn-sm {
-  padding: 6px 12px;
+  padding: 8px 14px;
+  min-height: 38px;
   font-size: 13px;
 }
 
@@ -328,7 +404,12 @@ a:hover {
   font-size: 14px;
   cursor: pointer;
   text-decoration: underline;
-  padding: 6px;
+  padding: 8px 10px;
+  min-height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  touch-action: manipulation;
 }
 
 .btn-link-skip:hover {
@@ -363,9 +444,11 @@ a:hover {
 .sub-item-card {
   border: 1px solid var(--border-color);
   border-radius: var(--radius-md);
-  padding: 12px 16px;
+  padding: 14px 16px;
   background-color: var(--bg-surface);
   transition: border-color 0.15s ease, background-color 0.15s ease;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .sub-item-card.active {
@@ -383,15 +466,19 @@ a:hover {
 .custom-checkbox-label {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
   cursor: pointer;
   font-weight: 500;
   flex: 1;
+  min-height: 40px;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .custom-checkbox-label input[type="checkbox"] {
-  width: 18px;
-  height: 18px;
+  width: 22px;
+  height: 22px;
+  min-width: 22px;
   accent-color: var(--primary);
   cursor: pointer;
 }
@@ -402,6 +489,7 @@ a:hover {
   background-color: var(--bg-surface-elevated);
   padding: 4px 10px;
   border-radius: var(--radius-full);
+  white-space: nowrap;
 }
 
 .sub-footer-row {
@@ -413,12 +501,23 @@ a:hover {
 }
 
 .unused-label {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: 8px;
   cursor: pointer;
   color: var(--danger-red);
   font-weight: 500;
+  min-height: 38px;
+  padding: 4px 0;
+  touch-action: manipulation;
+}
+
+.unused-label input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  min-width: 18px;
+  accent-color: var(--primary);
+  cursor: pointer;
 }
 
 /* Добавление своей подписки */
@@ -619,6 +718,13 @@ a:hover {
   border-radius: var(--radius-md);
   padding: 16px;
   background-color: var(--bg-surface-elevated);
+  display: flex;
+  flex-direction: column;
+}
+
+.comp-col .btn {
+  margin-top: auto;
+  width: 100%;
 }
 
 .comp-col.target {
@@ -948,4 +1054,401 @@ a:hover {
 
 .footer-links a:hover {
   color: var(--primary);
+}
+
+/* ============================================================ */
+/* МОБИЛЬНАЯ ОПТИМИЗАЦИЯ (iOS / Android / Мобильные браузеры) */
+/* ============================================================ */
+
+/* Базовые параметры адаптивности */
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  overflow-x: hidden;
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+img, svg, canvas {
+  max-width: 100%;
+  height: auto;
+}
+
+pre, code {
+  max-width: 100%;
+  word-break: break-word;
+  white-space: pre-wrap;
+}
+
+/* Планшеты и смартфоны (ширина до 680px) */
+@media (max-width: 680px) {
+  .site-header {
+    padding: 10px 14px;
+    padding-top: max(10px, env(safe-area-inset-top));
+  }
+
+  .header-container {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px 10px;
+  }
+
+  .site-logo {
+    order: 1;
+    font-size: 18px;
+  }
+
+  .theme-toggle-btn {
+    order: 2;
+    margin-left: auto;
+    min-height: 38px;
+    min-width: 38px;
+    padding: 6px 10px;
+  }
+
+  .header-nav {
+    order: 3;
+    width: 100%;
+    margin-left: 0;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding: 2px 0 4px;
+  }
+
+  .header-nav::-webkit-scrollbar {
+    display: none;
+  }
+
+  .header-nav a {
+    white-space: nowrap;
+    padding: 7px 13px;
+    background-color: var(--bg-surface-elevated);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-full);
+    font-size: 13px;
+    font-weight: 500;
+    text-decoration: none;
+    border-bottom: 1px solid var(--border-color);
+    flex-shrink: 0;
+  }
+
+  .header-nav a:hover {
+    border-color: var(--primary);
+  }
+
+  .header-nav a.active {
+    background-color: var(--primary);
+    color: #ffffff;
+    border-color: var(--primary);
+  }
+
+  .main-content {
+    padding: 16px 12px 36px;
+  }
+
+  .hero-intro {
+    margin-bottom: 16px;
+  }
+
+  .hero-intro h1 {
+    font-size: clamp(20px, 5.5vw, 25px);
+    line-height: 1.25;
+  }
+
+  .hero-intro p {
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  .privacy-pill {
+    font-size: 11px;
+    padding: 4px 10px;
+    line-height: 1.35;
+    text-align: left;
+  }
+
+  .step-card {
+    padding: 18px 14px;
+    border-radius: var(--radius-md);
+  }
+
+  .step-card h2 {
+    font-size: 18px;
+    line-height: 1.3;
+  }
+
+  .step-subtitle {
+    font-size: 13px;
+    margin-bottom: 16px;
+    line-height: 1.45;
+  }
+
+  .wizard-progress-card {
+    padding: 10px 14px;
+    margin-bottom: 14px;
+  }
+
+  .progress-header {
+    font-size: 13px;
+  }
+
+  /* Модальное окно в виде мобильного bottom-sheet */
+  .modal-overlay {
+    padding: 0;
+    align-items: flex-end;
+  }
+
+  .modal-dialog {
+    max-width: 100%;
+    width: 100%;
+    max-height: 86vh;
+    border-radius: 20px 20px 0 0;
+    border-bottom: none;
+    border-left: none;
+    border-right: none;
+  }
+
+  .modal-header {
+    padding: 14px 16px;
+  }
+
+  .modal-header h3 {
+    font-size: 16px;
+  }
+
+  .modal-body {
+    padding: 16px;
+    padding-bottom: max(24px, env(safe-area-inset-bottom));
+  }
+
+  .copy-textarea {
+    font-size: 13px;
+    min-height: 100px;
+  }
+
+  .guide-step-card {
+    padding: 10px;
+    gap: 10px;
+  }
+
+  .step-num {
+    width: 24px;
+    height: 24px;
+    font-size: 12px;
+  }
+
+  .site-footer {
+    padding: 20px 14px;
+    padding-bottom: max(24px, env(safe-area-inset-bottom));
+  }
+
+  .footer-container {
+    flex-direction: column;
+    text-align: center;
+    gap: 12px;
+  }
+
+  .footer-links {
+    justify-content: center;
+    gap: 14px;
+    font-size: 13px;
+  }
+}
+
+/* Смартфоны (ширина до 540px) */
+@media (max-width: 540px) {
+  /* Панель навигации в мастере шагов */
+  .wizard-actions-row {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: stretch;
+    margin-top: 18px;
+    padding-top: 14px;
+  }
+
+  .wizard-actions-row .actions-right {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    order: 1;
+  }
+
+  .wizard-actions-row .btn-wizard-next,
+  .wizard-actions-row .actions-right .btn-wizard-next {
+    width: 100%;
+    min-height: 48px;
+    font-size: 16px;
+    order: 1;
+    padding: 12px 16px;
+  }
+
+  .wizard-actions-row .btn-wizard-prev {
+    width: 100%;
+    min-height: 44px;
+    order: 2;
+    padding: 10px 16px;
+    text-align: center;
+  }
+
+  .wizard-actions-row .btn-wizard-skip,
+  .wizard-actions-row .btn-link-skip {
+    width: 100%;
+    order: 3;
+    text-align: center;
+    padding: 8px;
+    font-size: 13px;
+  }
+
+  /* Главный баннер экономии в отчёте */
+  .report-hero-card {
+    padding: 16px 12px;
+    margin-bottom: 18px;
+  }
+
+  .report-hero-card h2 {
+    font-size: 18px;
+    line-height: 1.3;
+    margin-bottom: 12px;
+  }
+
+  .numbers-comparison {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin: 14px 0;
+    align-items: stretch;
+  }
+
+  .num-box {
+    min-width: 0;
+    padding: 10px 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .num-label {
+    font-size: 11px;
+    line-height: 1.25;
+    margin-bottom: 4px;
+  }
+
+  .num-val {
+    font-size: 19px;
+  }
+
+  .arrow-icon {
+    display: none;
+  }
+
+  .num-box.savings {
+    grid-column: 1 / -1;
+    padding: 14px 12px;
+  }
+
+  .num-box.savings .num-label {
+    font-size: 12px;
+  }
+
+  .num-box.savings .num-val {
+    font-size: 24px;
+  }
+
+  /* Карточки категорий в отчёте */
+  .report-card {
+    padding: 16px 12px;
+    margin-bottom: 16px;
+  }
+
+  .report-card-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+    margin-bottom: 12px;
+    padding-bottom: 10px;
+  }
+
+  .report-card-header h3 {
+    font-size: 16px;
+  }
+
+  .comp-col {
+    padding: 12px;
+  }
+
+  .comp-price {
+    font-size: 18px;
+  }
+
+  .comp-list {
+    font-size: 13px;
+    margin-bottom: 10px;
+  }
+
+  .action-buttons-row {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+    margin-top: 12px;
+  }
+
+  .action-buttons-row .btn {
+    width: 100%;
+    min-height: 44px;
+    font-size: 13px;
+    white-space: normal;
+    text-align: center;
+    line-height: 1.3;
+    padding: 10px 14px;
+  }
+
+  /* Глобальные действия в отчёте */
+  .report-global-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    margin: 20px 0;
+  }
+
+  .report-global-actions .btn {
+    width: 100%;
+    min-height: 48px;
+    font-size: 15px;
+  }
+
+  /* Добавление своей подписки */
+  .custom-sub-row {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .custom-sub-row input {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .custom-sub-row .btn {
+    width: 100%;
+    min-height: 44px;
+  }
+
+  /* Кнопки возврата на инфо-страницах */
+  .step-card > div > .btn-primary {
+    width: 100%;
+    min-height: 48px;
+    justify-content: center;
+  }
 }
