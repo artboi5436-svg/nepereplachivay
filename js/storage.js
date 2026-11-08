@@ -46,7 +46,7 @@ export function clearUserData() {
  */
 export function exportDataAsJson(data) {
   const exportPayload = {
-    appName: 'Не переплачивай',
+    appName: 'ТарифДетокс',
     siteUrl: window.location.origin,
     exportedAt: new Date().toISOString(),
     notice: 'Все данные сохранены локально в вашем браузере.',

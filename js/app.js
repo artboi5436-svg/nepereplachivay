@@ -1,5 +1,5 @@
 ﻿/**
- * Единый самодостаточный бандл «Не переплачивай».
+ * Единый самодостаточный бандл «ТарифДетокс».
  * Включает встроенную базу данных, калькулятор TCO, проверку дубликатов,
  * мастер ввода (Wizard), экспорт в .ics, шаблоны заявлений и SPA-навигацию.
  * Работает без серверов: как локально (file://), так и на GitHub Pages.
@@ -642,7 +642,7 @@
 
   function exportDataAsJson(data) {
     const exportPayload = {
-      appName: 'Не переплачивай',
+      appName: 'ТарифДетокс',
       siteUrl: window.location.origin,
       exportedAt: new Date().toISOString(),
       notice: 'Все данные сохранены локально в вашем браузере.',
@@ -1872,7 +1872,7 @@
       const checkSubsDate = new Date();
       checkSubsDate.setDate(checkSubsDate.getDate() + 25);
       events.push({
-        title: 'Ревизия подписок (Не переплачивай)',
+        title: 'Ревизия подписок (ТарифДетокс)',
         description: 'Проверьте активные подписки на смартфоне и в онлайн-банках, чтобы не списались деньги за неиспользуемые сервисы.',
         date: checkSubsDate
       });
