@@ -774,55 +774,6 @@
     }
   }
 
-  function exportDataAsJson(data) {
-    const exportPayload = {
-      appName: 'ТарифДетокс',
-      siteUrl: window.location.origin,
-      exportedAt: new Date().toISOString(),
-      notice: 'Все данные сохранены локально в вашем браузере.',
-      data
-    };
-
-    const jsonStr = JSON.stringify(exportPayload, null, 2);
-    const blob = new Blob([jsonStr], { type: 'application/json;charset=utf-8' });
-    const url = URL.createObjectURL(blob);
-    
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'ne-pereplachivay-data-' + new Date().toISOString().slice(0, 10) + '.json';
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
-  }
-
-  function importDataFromJson(file) {
-    return new Promise((resolve, reject) => {
-      if (!file) {
-        reject(new Error('Файл не выбран'));
-        return;
-      }
-
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        try {
-          const json = JSON.parse(e.target.result);
-          if (json && json.data) {
-            resolve(json.data);
-          } else if (json && typeof json === 'object') {
-            resolve(json);
-          } else {
-            reject(new Error('Некорректный формат файла резервной копии.'));
-          }
-        } catch (err) {
-          reject(new Error('Не удалось прочитать JSON: ' + err.message));
-        }
-      };
-      reader.onerror = () => reject(new Error('Ошибка чтения файла.'));
-      reader.readAsText(file, 'utf-8');
-    });
-  }
-
   // ==========================================
   // 3. АНАЛИЗАТОР ДУБЛИКАТОВ ПОДПИСОК
   // ==========================================
@@ -2249,32 +2200,6 @@
     if (btnPrint) {
       btnPrint.addEventListener('click', () => {
         window.print();
-      });
-    }
-
-    const btnExportJson = document.getElementById('btn-export-json');
-    if (btnExportJson) {
-      btnExportJson.addEventListener('click', () => {
-        exportDataAsJson(wizard.state);
-      });
-    }
-
-    const btnImportJson = document.getElementById('btn-import-json');
-    const fileInput = document.getElementById('import-file-input');
-    if (btnImportJson && fileInput) {
-      btnImportJson.addEventListener('click', () => fileInput.click());
-      fileInput.addEventListener('change', async (e) => {
-        const file = e.target.files[0];
-        if (!file) return;
-        try {
-          const imported = await importDataFromJson(file);
-          wizard.loadState(imported);
-          syncInputsWithState(wizard.state);
-          alert('Данные успешно загружены!');
-          wizard.goToStep(1);
-        } catch (err) {
-          alert('Ошибка при импорте: ' + err.message);
-        }
       });
     }
 
