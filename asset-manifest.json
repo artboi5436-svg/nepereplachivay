@@ -1,0 +1,17 @@
+{
+  "deck": "ТарифДетокс — Презентация проекта",
+  "version": "1.0",
+  "author": "Antigravity",
+  "target_format": "HTML",
+  "url": "https://artboi5436-svg.github.io/nepereplachivay/",
+  "visuals": [
+    {
+      "id": "qr-site",
+      "type": "diagram",
+      "path": "assets/qr-site.svg",
+      "source": "api.qrserver.com",
+      "status": "verified",
+      "description": "Векторный QR-код со ссылкой на рабочий сайт"
+    }
+  ]
+}
