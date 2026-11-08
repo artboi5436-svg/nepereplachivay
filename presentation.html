@@ -554,6 +554,7 @@
   <!-- Верхняя панель быстрого перехода -->
   <div class="top-controls">
     <a href="index.html" class="control-btn" title="Вернуться к сервису">← К калькулятору</a>
+    <a href="presentation.pptx" download class="control-btn" title="Скачать редактируемую презентацию PowerPoint (.pptx)">Скачать .PPTX</a>
     <button type="button" class="control-btn" onclick="document.querySelector('deck-stage').requestFullscreen?.() || document.documentElement.requestFullscreen()" title="Полноэкранный режим (F)">Полноэкранный режим</button>
   </div>
 
@@ -1010,6 +1011,9 @@
         </div>
 
         <div style="margin-top: 16px; display: flex; justify-content: center; gap: 16px;">
+          <a href="presentation.pptx" download class="control-btn" style="padding: 14px 28px; font-size: 16px; background: #252D3D; border-color: rgba(255, 255, 255, 0.2);">
+            Скачать презентацию (.PPTX)
+          </a>
           <a href="index.html" class="control-btn" style="padding: 14px 32px; font-size: 16px; background: var(--pres-red); border-color: var(--pres-red);">
             Перейти в калькулятор «ТарифДетокс» →
           </a>
