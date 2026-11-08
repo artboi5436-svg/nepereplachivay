@@ -802,10 +802,13 @@
     }
   }
 
+  const THEME_SUN_SVG = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>';
+  const THEME_MOON_SVG = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>';
+
   function updateThemeIcon(theme) {
     const iconSpan = document.getElementById('theme-icon');
     if (iconSpan) {
-      iconSpan.textContent = theme === 'dark' ? '☀️' : '🌙';
+      iconSpan.innerHTML = theme === 'dark' ? THEME_SUN_SVG : THEME_MOON_SVG;
     }
   }
 
@@ -1017,7 +1020,7 @@
     if (grandTotal.hasAnySavings) {
       bannerNote.innerHTML = 'Вы можете сохранить до <strong>' + grandTotal.totalMonthlySavings.toLocaleString('ru-RU') + ' ₽ в месяц</strong> без потери качества связи и контента!';
     } else {
-      bannerNote.innerHTML = '🎉 <strong>Поздравляем!</strong> Ваши текущие тарифы уже одни из самых выгодных на рынке. Ниже — подсказки, как не переплатить при их продлении.';
+      bannerNote.innerHTML = '<strong>Отличный результат:</strong> Ваши текущие тарифы уже одни из самых выгодных на рынке. Ниже — подсказки, как не переплатить при их продлении.';
     }
 
     const mobCardContainer = document.getElementById('report-mobile-card');
@@ -1062,7 +1065,7 @@
     let bodyHtml = '';
     if (isCurrentOptimal) {
       bodyHtml = [
-        '<div class="optimal-badge">👍 Ваш тариф оптимален</div>',
+        '<div class="optimal-badge">Ваш тариф оптимален</div>',
         '<p class="card-desc">Вы платите <strong>' + currentMonthly + ' ₽/мес</strong>. Достойных альтернатив с таким пакетом минут и гигабайт дешевле мы не нашли.</p>',
         '<div class="action-buttons-row">',
         '  <button type="button" class="btn btn-secondary btn-retention" data-type="mobile">Скрипт звонка оператору для скидки 30%</button>',
@@ -1115,7 +1118,7 @@
     let bodyHtml = '';
     if (isCurrentOptimal) {
       bodyHtml = [
-        '<div class="optimal-badge">👍 Ваш тариф интернета оптимален</div>',
+        '<div class="optimal-badge">Ваш тариф интернета оптимален</div>',
         '<p class="card-desc">Вы платите <strong>' + currentMonthly + ' ₽/мес</strong>. В вашем регионе это отличная рыночная ставка.</p>',
         '<div class="action-buttons-row">',
         '  <button type="button" class="btn btn-secondary btn-retention" data-type="internet">Скрипт диалога с провайдером для скидки</button>',
@@ -1163,7 +1166,7 @@
     if (duplicates.length > 0) {
       dupHtml = [
         '<div class="duplicates-alert-box">',
-        '  <h4>🚨 Обнаружены дубликаты и лишние подписки:</h4>',
+        '  <h4>Обнаружены дубликаты и лишние подписки:</h4>',
         '  <ul class="duplicates-list">',
         duplicates.map(d => '<li><strong>' + (d.duplicateName || 'Пересечение') + ':</strong> ' + d.message + (d.monthlySavings ? ' <span class="saving-tag">+' + d.monthlySavings + ' ₽/мес</span>' : '') + '</li>').join(''),
         '  </ul>',
@@ -1176,7 +1179,7 @@
     if (unusedItems.length > 0) {
       unusedHtml = [
         '<div class="unused-subs-box">',
-        '  <h4>🗑️ Подписки, которыми вы не пользуетесь (отменить прямо сейчас):</h4>',
+        '  <h4>Подписки, которыми вы не пользуетесь (рекомендуется отменить):</h4>',
         '  <ul class="subs-action-list">',
         unusedItems.map(item => '<li><span>' + item.name + ' (' + item.monthlyPrice + ' ₽/мес)</span>' + (item.cancelUrl ? ' <a href="' + item.cancelUrl + '" target="_blank" rel="noopener noreferrer" class="btn-cancel-link">Отключить ↗</a>' : '') + '</li>').join(''),
         '  </ul>',
@@ -1188,7 +1191,7 @@
     if (subsResult.annualPlanRecommendations.length > 0) {
       annualHtml = [
         '<div class="annual-subs-box">',
-        '  <h4>💡 Выгода при переходе на годовую оплату (для сервисов, которыми точно пользуетесь):</h4>',
+        '  <h4>Выгода при переходе на годовую оплату (для постоянных сервисов):</h4>',
         '  <ul>',
         subsResult.annualPlanRecommendations.map(rec => '<li>«' + rec.name + '» — экономия <strong>' + rec.diffYear + ' ₽ в год</strong> при переходе на ежегодную оплату (выходит ' + rec.monthlyEquivalent + ' ₽/мес).</li>').join(''),
         '  </ul>',
@@ -1308,24 +1311,28 @@
   function switchTab(tabId) {
     const calcView = document.getElementById('calculator-view');
     const howCalcView = document.getElementById('view-how-we-calculate');
-    const howEarnView = document.getElementById('view-how-we-earn');
+    const securityView = document.getElementById('view-data-security') || document.getElementById('view-how-we-earn');
     const privacyView = document.getElementById('view-privacy');
+
+    const canonicalTab = (tabId === 'how-we-earn') ? 'data-security' : tabId;
 
     const views = {
       calculator: calcView,
       'how-we-calculate': howCalcView,
-      'how-we-earn': howEarnView,
+      'data-security': securityView,
+      'how-we-earn': securityView,
       privacy: privacyView
     };
 
-    Object.keys(views).forEach(key => {
-      if (views[key]) {
-        views[key].classList.toggle('hidden', key !== tabId);
-      }
-    });
+    if (calcView) calcView.classList.toggle('hidden', canonicalTab !== 'calculator');
+    if (howCalcView) howCalcView.classList.toggle('hidden', canonicalTab !== 'how-we-calculate');
+    if (securityView) securityView.classList.toggle('hidden', canonicalTab !== 'data-security');
+    if (privacyView) privacyView.classList.toggle('hidden', canonicalTab !== 'privacy');
 
-    document.querySelectorAll('.header-nav .nav-link').forEach(link => {
-      link.classList.toggle('active', link.dataset.tab === tabId);
+    document.querySelectorAll('.header-nav .nav-link, .footer-links .footer-nav-link').forEach(link => {
+      const linkTab = link.dataset.tab;
+      const isActive = linkTab === canonicalTab || (linkTab === 'how-we-earn' && canonicalTab === 'data-security') || (linkTab === 'data-security' && canonicalTab === 'how-we-earn');
+      link.classList.toggle('active', isActive);
     });
 
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -1554,7 +1561,7 @@
 
     window.addEventListener('hashchange', () => {
       const hash = window.location.hash.replace('#', '') || 'calculator';
-      if (['calculator', 'how-we-calculate', 'how-we-earn', 'privacy'].includes(hash)) {
+      if (['calculator', 'how-we-calculate', 'data-security', 'how-we-earn', 'privacy'].includes(hash)) {
         switchTab(hash);
       }
     });
@@ -1587,7 +1594,7 @@
 
     // Обработка начального хэша в URL
     const initialHash = window.location.hash.replace('#', '');
-    if (initialHash && ['how-we-calculate', 'how-we-earn', 'privacy'].includes(initialHash)) {
+    if (initialHash && ['how-we-calculate', 'data-security', 'how-we-earn', 'privacy'].includes(initialHash)) {
       switchTab(initialHash);
     } else {
       switchTab('calculator');

@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Политика конфиденциальности — «ТарифДетокс»</title>
   <meta name="description" content="Политика обработки данных сервиса «ТарифДетокс». Локальное хранение данных в браузере, отсутствие сбора персональных данных.">
-  <link rel="stylesheet" href="css/variables.css?v=20261108_6">
-  <link rel="stylesheet" href="css/style.css?v=20261108_6">
+  <link rel="stylesheet" href="css/variables.css?v=20261108_7">
+  <link rel="stylesheet" href="css/style.css?v=20261108_7">
 </head>
 <body>
 
@@ -18,10 +18,10 @@
       <nav class="header-nav">
         <a href="index.html#calculator">Калькулятор</a>
         <a href="index.html#how-we-calculate">Как мы считаем</a>
-        <a href="index.html#how-we-earn">Как мы планируем зарабатывать</a>
+        <a href="data-security.html">Безопасность ваших данных</a>
       </nav>
       <button type="button" class="theme-toggle-btn" id="theme-toggle" title="Переключить тему" aria-label="Сменить тему">
-        <span id="theme-icon">🌙</span>
+        <span id="theme-icon" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></span>
       </button>
     </div>
   </header>
@@ -64,17 +64,19 @@
       <div class="footer-links">
         <a href="index.html#calculator">Калькулятор</a>
         <a href="index.html#how-we-calculate">Как мы считаем</a>
-        <a href="index.html#how-we-earn">Как мы планируем зарабатывать</a>
+        <a href="data-security.html">Безопасность ваших данных</a>
       </div>
     </div>
   </footer>
 
   <script>
     (function() {
+      const MOON_SVG = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>';
+      const SUN_SVG = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>';
       const savedTheme = localStorage.getItem('ne_pereplachivay_theme') || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
       document.documentElement.setAttribute('data-theme', savedTheme);
       const icon = document.getElementById('theme-icon');
-      if (icon) icon.textContent = savedTheme === 'dark' ? '☀️' : '🌙';
+      if (icon) icon.innerHTML = savedTheme === 'dark' ? SUN_SVG : MOON_SVG;
 
       const btn = document.getElementById('theme-toggle');
       if (btn) {
@@ -83,7 +85,7 @@
           const next = cur === 'dark' ? 'light' : 'dark';
           document.documentElement.setAttribute('data-theme', next);
           localStorage.setItem('ne_pereplachivay_theme', next);
-          if (icon) icon.textContent = next === 'dark' ? '☀️' : '🌙';
+          if (icon) icon.innerHTML = next === 'dark' ? SUN_SVG : MOON_SVG;
         };
       }
     })();

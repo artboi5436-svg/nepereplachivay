@@ -5,9 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>ТарифДетокс — честный расчёт экономии на связи, интернете и подписках в ЛНР</title>
   <meta name="description" content="Бесплатный сервис оптимизации ежемесячных расходов: мобильная связь, домашний интернет, подписки в городах ЛНР. Считаем чистую экономию за 12 месяцев прямо в браузере.">
-  <link rel="stylesheet" href="css/variables.css?v=20261108_6">
-  <link rel="stylesheet" href="css/style.css?v=20261108_6">
-  <link rel="stylesheet" href="css/print.css?v=20261108_6" media="print">
+  <link rel="stylesheet" href="css/variables.css?v=20261108_7">
+  <link rel="stylesheet" href="css/style.css?v=20261108_7">
+  <link rel="stylesheet" href="css/print.css?v=20261108_7" media="print">
 </head>
 <body>
 
@@ -20,10 +20,10 @@
       <nav class="header-nav">
         <a href="#calculator" class="nav-link active" data-tab="calculator">Калькулятор</a>
         <a href="#how-we-calculate" class="nav-link" data-tab="how-we-calculate">Как мы считаем</a>
-        <a href="#how-we-earn" class="nav-link" data-tab="how-we-earn">Как мы планируем зарабатывать</a>
+        <a href="#data-security" class="nav-link" data-tab="data-security">Безопасность ваших данных</a>
       </nav>
       <button type="button" class="theme-toggle-btn" id="theme-toggle" title="Переключить тему" aria-label="Сменить тему">
-        <span id="theme-icon">🌙</span>
+        <span id="theme-icon" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></span>
       </button>
     </div>
   </header>
@@ -39,7 +39,7 @@
         <h1>Хватит переплачивать за связь и интернет в ЛНР</h1>
         <p>Введите, сколько вы платите сейчас — сервис честно посчитает выгоду за 12 месяцев с учётом скрытых условий и акций, и поможет перейти без стресса.</p>
         <div class="privacy-pill">
-          🔒 <span>Без регистрации. Расчёты и данные остаются только в вашем браузере (152-ФЗ)</span>
+          <span>Без регистрации. Расчёты и данные остаются только в вашем браузере (152-ФЗ)</span>
         </div>
       </section>
 
@@ -239,7 +239,7 @@
 
           <div class="wizard-actions-row">
             <button type="button" class="btn btn-secondary btn-wizard-prev">← Назад</button>
-            <button type="button" class="btn btn-primary btn-wizard-next">Рассчитать экономию и перейти к отчёту 🚀</button>
+            <button type="button" class="btn btn-primary btn-wizard-next">Рассчитать экономию и перейти к отчёту</button>
           </div>
         </div>
 
@@ -257,7 +257,7 @@
               <div class="num-val" id="grand-current-month">0 ₽</div>
               <small>в месяц</small>
             </div>
-            <span class="arrow-icon">➔</span>
+            <span class="arrow-icon">→</span>
             <div class="num-box">
               <div class="num-label">Можно платить</div>
               <div class="num-val" id="grand-target-month">0 ₽</div>
@@ -271,14 +271,14 @@
           </div>
           <p class="banner-note" id="grand-banner-note"></p>
           <small style="display:block; margin-top:10px; color:var(--text-subtle);">
-            📅 Тарифы по городам ЛНР проверены по состоянию на ноябрь 2026. Условия могут меняться операторами, всегда сверяйте перед заключением договора.
+            Тарифы по городам ЛНР проверены по состоянию на ноябрь 2026. Условия могут меняться операторами, всегда сверяйте перед заключением договора.
           </small>
         </div>
 
         <!-- Детализация: Мобильная связь -->
         <div class="report-card" id="report-mobile-card">
           <div class="report-card-header">
-            <h3>📱 Мобильная связь</h3>
+            <h3>Мобильная связь</h3>
           </div>
           <div class="card-content"></div>
         </div>
@@ -286,7 +286,7 @@
         <!-- Детализация: Домашний интернет -->
         <div class="report-card" id="report-internet-card">
           <div class="report-card-header">
-            <h3>🌐 Домашний интернет и ТВ</h3>
+            <h3>Домашний интернет и ТВ</h3>
           </div>
           <div class="card-content"></div>
         </div>
@@ -294,7 +294,7 @@
         <!-- Детализация: Подписки -->
         <div class="report-card" id="report-subs-card">
           <div class="report-card-header">
-            <h3>🎬 Подписки и сервисы</h3>
+            <h3>Подписки и сервисы</h3>
           </div>
           <div class="card-content"></div>
         </div>
@@ -302,16 +302,16 @@
         <!-- Детализация: Страховки (Справочно) -->
         <div class="report-card" id="report-insurance-card">
           <div class="report-card-header">
-            <h3>🛡️ Страхование (Гид по экономии)</h3>
+            <h3>Страхование (Гид по экономии)</h3>
           </div>
           <div class="card-content"></div>
         </div>
 
         <!-- Глобальные действия -->
         <div class="report-global-actions">
-          <button type="button" class="btn btn-primary" id="btn-export-ics">📅 Добавить напоминания в календарь (.ics)</button>
-          <button type="button" class="btn btn-secondary" id="btn-print-report">🖨️ Печать / Сохранить в PDF</button>
-          <button type="button" class="btn btn-outline" id="btn-restart">🔄 Начать заново</button>
+          <button type="button" class="btn btn-primary" id="btn-export-ics">Добавить напоминания в календарь (.ics)</button>
+          <button type="button" class="btn btn-secondary" id="btn-print-report">Печать / Сохранить в PDF</button>
+          <button type="button" class="btn btn-outline" id="btn-restart">Начать заново</button>
           <button type="button" class="btn btn-link-skip" id="btn-clear-data">Очистить историю браузера</button>
         </div>
 
@@ -370,31 +370,49 @@
       </div>
     </article>
 
-    <!-- Вкладка 3: Как мы планируем зарабатывать -->
-    <article id="view-how-we-earn" class="step-card doc-view hidden">
-      <h1>Как мы планируем зарабатывать и почему нам можно доверять</h1>
-      <p class="step-subtitle">Мы выступаем на стороне потребителя. Доверие пользователей — наш главный актив.</p>
+    <!-- Вкладка 3: Безопасность ваших данных -->
+    <article id="view-data-security" class="step-card doc-view hidden">
+      <h1>Безопасность ваших данных</h1>
+      <p class="step-subtitle">Архитектурная защита приватности: сервис работает локально в вашем браузере, не собирает персональные данные и не передаёт их третьим лицам.</p>
 
       <section style="margin-bottom: 24px;">
-        <h3>1. Рейтинг тарифов не продаётся</h3>
-        <p>Наш алгоритм сортирует тарифы <strong>исключительно по выгоде для вас</strong> (минимальная стоимость за 12 месяцев при соблюдении нужного объёма минут, гигабайт или скорости).</p>
-        <p>Оператор не может заплатить нам, чтобы подняться выше в выдаче или вытеснить более выгодного конкурента.</p>
+        <h3>1. Принцип Privacy by Design (Встроенная приватность)</h3>
+        <p>Сервис «ТарифДетокс» спроектирован так, чтобы технически исключить сбор конфиденциальной информации. Мы не требуем регистрации, создания аккаунта, ввода логина, пароля, ФИО, номера телефона, email или данных банковских карт. Вам не нужно соглашаться на рекламные звонки или передавать контакты операторам связи.</p>
       </section>
 
       <section style="margin-bottom: 24px;">
-        <h3>2. Партнёрские ссылки и маркировка рекламы (erid)</h3>
-        <p>В будущем некоторые ссылки на подключение могут стать партнёрскими: если вы перейдёте по такой ссылке и оформите тариф, оператор сможет выплатить сервису небольшое вознаграждение на оплату хостинга и поддержку проекта.</p>
-        <p>В строгом соответствии с требованиями Федерального закона «О рекламе» № 38-ФЗ (ст. 18.1):</p>
+        <h3>2. 100% клиентские вычисления в браузере (Client-side)</h3>
+        <p>Все математические операции — расчёт полной стоимости владения (TCO) за 12 месяцев, подбор оптимальных тарифов мобильной связи и домашнего интернета в ЛНР, поиск скрытых дубликатов подписок — выполняются <strong>исключительно на вашем устройстве</strong> с помощью клиентского JavaScript.</p>
+        <p>Введённые вами цифры расходов и выбранные услуги не отправляются на удалённые серверы и не сохраняются во внешних базах данных.</p>
+      </section>
+
+      <section style="margin-bottom: 24px;">
+        <h3>3. Локальное хранение параметров (localStorage)</h3>
+        <p>Для вашего удобства параметры калькулятора сохраняются в локальной памяти вашего браузера (<code>localStorage</code>), чтобы расчёт не сбрасывался при случайной перезагрузке страницы. Доступ к этой памяти имеет только ваш веб-браузер на текущем устройстве.</p>
+      </section>
+
+      <section style="margin-bottom: 24px;">
+        <h3>4. Мгновенное и полное удаление данных</h3>
+        <p>Вы полностью контролируете сохранённую информацию:</p>
         <ul>
-          <li>Любая партнёрская ссылка явно помечается плашкой <strong>«Реклама»</strong>;</li>
-          <li>В карточке тарифа отображается уникальный идентификатор интернет-рекламы — <strong>токен erid</strong>;</li>
-          <li>Наличие или отсутствие партнёрской интеграции никогда не повлияет на честность формулы расчёта.</li>
+          <li>Внизу отчёта расположена кнопка <strong>«Очистить историю браузера»</strong> — одно нажатие мгновенно и безвозвратно стирает все введённые данные из памяти браузера;</li>
+          <li>Вы также можете в любой момент очистить данные сайта через стандартные настройки конфиденциальности вашего браузера.</li>
         </ul>
       </section>
 
       <section style="margin-bottom: 24px;">
-        <h3>3. Мы не продаём ваши данные</h3>
-        <p>Сервис работает без регистрации. Вы не вводите имя, телефон, адрес или паспортные данные. Все числа хранятся исключительно в памяти вашего браузера (localStorage) и не отправляются на наш сервер.</p>
+        <h3>5. Отсутствие трекеров и скрытых сборщиков</h3>
+        <p>Мы принципиально не используем сторонние рекламные пиксели, шпионские трекеры поведенческого анализа и скрипты перепродажи лидов микрофинансовым организациям или брокерам.</p>
+      </section>
+
+      <section style="margin-bottom: 24px;">
+        <h3>6. Соответствие требованиям 152-ФЗ «О персональных данных»</h3>
+        <p>Архитектура сервиса исключает сбор и обработку персональных данных субъектов (ст. 3 Федерального закона № 152-ФЗ), благодаря чему полностью устраняются риски утечек, несанкционированного доступа или нецелевого использования информации.</p>
+      </section>
+
+      <section>
+        <h3>7. Прозрачный открытый исходный код</h3>
+        <p>Весь код приложения и базы тарифов открыты и размещены в публичном репозитории на GitHub. Любой пользователь или независимый эксперт по информационной безопасности может лично убедиться в отсутствии скрытых сетевых запросов и честности алгоритмов.</p>
       </section>
 
       <div style="margin-top: 24px;">
@@ -455,12 +473,12 @@
       <div class="footer-links">
         <a href="#calculator" class="footer-nav-link" data-tab="calculator">Калькулятор</a>
         <a href="#how-we-calculate" class="footer-nav-link" data-tab="how-we-calculate">Как мы считаем</a>
-        <a href="#how-we-earn" class="footer-nav-link" data-tab="how-we-earn">Как мы планируем зарабатывать</a>
+        <a href="#data-security" class="footer-nav-link" data-tab="data-security">Безопасность ваших данных</a>
         <a href="#privacy" class="footer-nav-link" data-tab="privacy">Конфиденциальность</a>
       </div>
     </div>
   </footer>
 
-  <script defer src="js/app.js?v=20261108_6"></script>
+  <script defer src="js/app.js?v=20261108_7"></script>
 </body>
 </html>

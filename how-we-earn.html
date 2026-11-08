@@ -3,54 +3,72 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>Как мы планируем зарабатывать — Сервис «ТарифДетокс»</title>
-  <meta name="description" content="Политика честности и планируемой монетизации сайта «ТарифДетокс». Маркировка рекламы erid, отсутствие скрытых комиссий.">
-  <link rel="stylesheet" href="css/variables.css?v=20261108_6">
-  <link rel="stylesheet" href="css/style.css?v=20261108_6">
+  <title>Безопасность ваших данных — Сервис «ТарифДетокс»</title>
+  <meta name="description" content="Как сервис «ТарифДетокс» защищает конфиденциальность: локальные вычисления в браузере, без регистрации и сбора персональных данных (152-ФЗ).">
+  <link rel="stylesheet" href="css/variables.css?v=20261108_7">
+  <link rel="stylesheet" href="css/style.css?v=20261108_7">
 </head>
 <body>
 
   <header class="site-header">
     <div class="header-container">
       <a href="index.html#calculator" class="site-logo">
-        ТарифДетокс <span class="badge">ЛНР</span>
+        ТарифДетокс <span class="badge">Безопасность</span>
       </a>
       <nav class="header-nav">
         <a href="index.html#calculator">Калькулятор</a>
         <a href="index.html#how-we-calculate">Как мы считаем</a>
-        <a href="index.html#how-we-earn" class="active">Как мы планируем зарабатывать</a>
+        <a href="data-security.html" class="active">Безопасность ваших данных</a>
       </nav>
       <button type="button" class="theme-toggle-btn" id="theme-toggle" title="Переключить тему" aria-label="Сменить тему">
-        <span id="theme-icon">🌙</span>
+        <span id="theme-icon" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></span>
       </button>
     </div>
   </header>
 
   <main class="main-content">
     <article class="step-card">
-      <h1>Как мы планируем зарабатывать и почему нам можно доверять</h1>
-      <p class="step-subtitle">Мы выступаем на стороне потребителя. Доверие пользователей — наш главный актив.</p>
+      <h1>Безопасность ваших данных</h1>
+      <p class="step-subtitle">Архитектурная защита приватности: сервис работает локально в вашем браузере, не собирает персональные данные и не передаёт их третьим лицам.</p>
 
       <section style="margin-bottom: 24px;">
-        <h3>1. Рейтинг тарифов не продаётся</h3>
-        <p>Наш алгоритм сортирует тарифы <strong>исключительно по выгоде для вас</strong> (минимальная стоимость за 12 месяцев при соблюдении нужного объёма минут, гигабайт или скорости).</p>
-        <p>Оператор не может заплатить нам, чтобы подняться выше в выдаче или вытеснить более выгодного конкурента.</p>
+        <h3>1. Принцип Privacy by Design (Встроенная приватность)</h3>
+        <p>Сервис «ТарифДетокс» спроектирован так, чтобы технически исключить сбор конфиденциальной информации. Мы не требуем регистрации, создания аккаунта, ввода логина, пароля, ФИО, номера телефона, email или данных банковских карт. Вам не нужно соглашаться на рекламные звонки или передавать контакты операторам связи.</p>
       </section>
 
       <section style="margin-bottom: 24px;">
-        <h3>2. Партнёрские ссылки и маркировка рекламы (erid)</h3>
-        <p>В будущем некоторые ссылки на подключение могут стать партнёрскими: если вы перейдёте по такой ссылке и оформите тариф, оператор сможет выплатить сервису небольшое вознаграждение на оплату хостинга и поддержку проекта.</p>
-        <p>В строгом соответствии с требованиями Федерального закона «О рекламе» № 38-ФЗ (ст. 18.1):</p>
+        <h3>2. 100% клиентские вычисления в браузере (Client-side)</h3>
+        <p>Все математические операции — расчёт полной стоимости владения (TCO) за 12 месяцев, подбор оптимальных тарифов мобильной связи и домашнего интернета в ЛНР, поиск скрытых дубликатов подписок — выполняются <strong>исключительно на вашем устройстве</strong> с помощью клиентского JavaScript.</p>
+        <p>Введённые вами цифры расходов и выбранные услуги не отправляются на удалённые серверы и не сохраняются во внешних базах данных.</p>
+      </section>
+
+      <section style="margin-bottom: 24px;">
+        <h3>3. Локальное хранение параметров (localStorage)</h3>
+        <p>Для вашего удобства параметры калькулятора сохраняются в локальной памяти вашего браузера (<code>localStorage</code>), чтобы расчёт не сбрасывался при случайной перезагрузке страницы. Доступ к этой памяти имеет только ваш веб-браузер на текущем устройстве.</p>
+      </section>
+
+      <section style="margin-bottom: 24px;">
+        <h3>4. Мгновенное и полное удаление данных</h3>
+        <p>Вы полностью контролируете сохранённую информацию:</p>
         <ul>
-          <li>Любая партнёрская ссылка явно помечается плашкой <strong>«Реклама»</strong>;</li>
-          <li>В карточке тарифа отображается уникальный идентификатор интернет-рекламы — <strong>токен erid</strong>;</li>
-          <li>Наличие или отсутствие партнёрской интеграции никак не влияет на формулу расчёта экономии.</li>
+          <li>Внизу отчёта расположена кнопка <strong>«Очистить историю браузера»</strong> — одно нажатие мгновенно и безвозвратно стирает все введённые данные из памяти браузера;</li>
+          <li>Вы также можете в любой момент очистить данные сайта через стандартные настройки конфиденциальности вашего браузера.</li>
         </ul>
       </section>
 
       <section style="margin-bottom: 24px;">
-        <h3>3. Мы не продаём ваши данные</h3>
-        <p>Сервис работает без регистрации. Вы не вводите имя, телефон, адрес или паспортные данные. Все числа хранятся исключительно в памяти вашего браузера (localStorage) и не отправляются на наш сервер.</p>
+        <h3>5. Отсутствие трекеров и скрытых сборщиков</h3>
+        <p>Мы принципиально не используем сторонние рекламные пиксели, шпионские трекеры поведенческого анализа и скрипты перепродажи лидов микрофинансовым организациям или брокерам.</p>
+      </section>
+
+      <section style="margin-bottom: 24px;">
+        <h3>6. Соответствие требованиям 152-ФЗ «О персональных данных»</h3>
+        <p>Архитектура сервиса исключает сбор и обработку персональных данных субъектов (ст. 3 Федерального закона № 152-ФЗ), благодаря чему полностью устраняются риски утечек, несанкционированного доступа или нецелевого использования информации.</p>
+      </section>
+
+      <section style="margin-bottom: 24px;">
+        <h3>7. Прозрачный открытый исходный код</h3>
+        <p>Весь код приложения и базы тарифов открыты и размещены в публичном репозитории на GitHub. Любой пользователь или независимый эксперт по информационной безопасности может лично убедиться в отсутствии скрытых сетевых запросов и честности алгоритмов.</p>
       </section>
 
       <div style="margin-top: 24px;">
@@ -61,21 +79,23 @@
 
   <footer class="site-footer">
     <div class="footer-container">
-      <div>«ТарифДетокс» © 2026. Честный и независимый сервис в ЛНР.</div>
+      <div>«ТарифДетокс» © 2026. Конфиденциальность гарантирована архитектурой.</div>
       <div class="footer-links">
         <a href="index.html#calculator">Калькулятор</a>
         <a href="index.html#how-we-calculate">Как мы считаем</a>
-        <a href="index.html#privacy">Конфиденциальность</a>
+        <a href="privacy.html">Конфиденциальность</a>
       </div>
     </div>
   </footer>
 
   <script>
     (function() {
+      const MOON_SVG = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>';
+      const SUN_SVG = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>';
       const savedTheme = localStorage.getItem('ne_pereplachivay_theme') || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
       document.documentElement.setAttribute('data-theme', savedTheme);
       const icon = document.getElementById('theme-icon');
-      if (icon) icon.textContent = savedTheme === 'dark' ? '☀️' : '🌙';
+      if (icon) icon.innerHTML = savedTheme === 'dark' ? SUN_SVG : MOON_SVG;
 
       const btn = document.getElementById('theme-toggle');
       if (btn) {
@@ -84,7 +104,7 @@
           const next = cur === 'dark' ? 'light' : 'dark';
           document.documentElement.setAttribute('data-theme', next);
           localStorage.setItem('ne_pereplachivay_theme', next);
-          if (icon) icon.textContent = next === 'dark' ? '☀️' : '🌙';
+          if (icon) icon.innerHTML = next === 'dark' ? SUN_SVG : MOON_SVG;
         };
       }
     })();
