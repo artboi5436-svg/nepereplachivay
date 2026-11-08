@@ -1,17 +1,28 @@
 {
-  "deck": "ТарифДетокс — Презентация проекта",
-  "version": "1.0",
+  "deck": "ТарифДетокс — Расширенная презентация проекта (12 слайдов)",
+  "version": "2.0",
   "author": "Antigravity",
-  "target_format": "HTML",
-  "url": "https://artboi5436-svg.github.io/nepereplachivay/",
+  "target_formats": ["HTML", "PPTX"],
+  "slides_count": 12,
+  "site_url": "https://artboi5436-svg.github.io/nepereplachivay/",
+  "presentation_html_url": "https://artboi5436-svg.github.io/nepereplachivay/presentation.html",
+  "presentation_pptx_url": "https://artboi5436-svg.github.io/nepereplachivay/presentation.pptx",
   "visuals": [
     {
-      "id": "qr-site",
-      "type": "diagram",
+      "id": "qr-site-svg",
+      "type": "vector-qr",
       "path": "assets/qr-site.svg",
       "source": "api.qrserver.com",
       "status": "verified",
-      "description": "Векторный QR-код со ссылкой на рабочий сайт"
+      "description": "Векторный SVG QR-код со ссылкой на рабочий сайт для веб-презентации"
+    },
+    {
+      "id": "qr-site-png",
+      "type": "raster-qr",
+      "path": "assets/qr-site.png",
+      "source": "api.qrserver.com",
+      "status": "verified",
+      "description": "Растровый PNG QR-код для встроенного слайда 11 в PPTX"
     }
   ]
 }

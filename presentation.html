@@ -4,9 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Презентация проекта «ТарифДетокс»</title>
-  <meta name="description" content="Презентация сервиса ТарифДетокс: идея, анализ рынка, архитектура, примеры кода и QR-код.">
-  <link rel="stylesheet" href="css/variables.css?v=20261108_8">
-  <script src="js/deck_stage.js?v=20261108_8"></script>
+  <meta name="description" content="Презентация сервиса ТарифДетокс: идея, анализ рынка, специфика ЛНР, честная формула TCO, архитектура 152-ФЗ, код и QR-код.">
+  <link rel="stylesheet" href="css/variables.css?v=20261108_9">
+  <script src="js/deck_stage.js?v=20261108_9"></script>
   <style>
     /* Базовые переменные презентации */
     :root {
@@ -43,7 +43,7 @@
     section.slide {
       background: radial-gradient(circle at 80% 20%, #171C2B 0%, #080A10 70%, #040508 100%);
       color: #FFFFFF;
-      padding: 64px 88px;
+      padding: 56px 80px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
@@ -92,7 +92,7 @@
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
-      margin-bottom: 24px;
+      margin-bottom: 20px;
     }
 
     .slide-tag {
@@ -108,7 +108,7 @@
       border: 1px solid rgba(208, 0, 0, 0.3);
       padding: 6px 14px;
       border-radius: 999px;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
     }
 
     .slide-tag-dot {
@@ -120,7 +120,7 @@
     }
 
     .slide-title {
-      font-size: 44px;
+      font-size: 40px;
       font-weight: 800;
       line-height: 1.15;
       letter-spacing: -0.02em;
@@ -129,11 +129,11 @@
     }
 
     .slide-subtitle {
-      font-size: 19px;
+      font-size: 18px;
       color: var(--pres-muted);
-      margin-top: 8px;
+      margin-top: 6px;
       line-height: 1.45;
-      max-width: 1100px;
+      max-width: 1150px;
     }
 
     .slide-brand-pill {
@@ -145,6 +145,7 @@
       border-radius: 8px;
       background: rgba(255, 255, 255, 0.02);
       letter-spacing: 0.05em;
+      white-space: nowrap;
     }
 
     /* Нижний колонтитул */
@@ -153,8 +154,8 @@
       justify-content: space-between;
       align-items: center;
       border-top: 1px solid rgba(255, 255, 255, 0.08);
-      padding-top: 20px;
-      font-size: 14px;
+      padding-top: 16px;
+      font-size: 13.5px;
       color: var(--pres-dim);
     }
 
@@ -166,32 +167,38 @@
     .grid-2 {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 28px;
+      gap: 24px;
       align-items: stretch;
     }
 
     .grid-3 {
       display: grid;
       grid-template-columns: 1fr 1fr 1fr;
-      gap: 24px;
+      gap: 22px;
+      align-items: stretch;
+    }
+
+    .grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
       align-items: stretch;
     }
 
     .grid-5 {
       display: grid;
       grid-template-columns: repeat(5, 1fr);
-      gap: 18px;
+      gap: 16px;
     }
 
     .card {
       background: var(--pres-card);
       border: 1px solid var(--pres-card-border);
-      border-radius: 16px;
-      padding: 28px;
+      border-radius: 14px;
+      padding: 24px;
       display: flex;
       flex-direction: column;
       position: relative;
-      transition: all 0.2s ease;
     }
 
     .card.highlight {
@@ -201,17 +208,17 @@
     }
 
     .card-title {
-      font-size: 20px;
+      font-size: 19px;
       font-weight: 700;
       color: #FFFFFF;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
     }
 
     .card-text {
-      font-size: 15px;
+      font-size: 14.5px;
       line-height: 1.55;
       color: var(--pres-muted);
       flex-grow: 1;
@@ -226,7 +233,7 @@
       text-transform: uppercase;
       padding: 4px 10px;
       border-radius: 6px;
-      margin-bottom: 14px;
+      margin-bottom: 12px;
     }
 
     .badge-red {
@@ -254,15 +261,15 @@
       flex-direction: column;
       justify-content: center;
       max-width: 1400px;
-      padding-bottom: 40px;
+      padding-bottom: 30px;
     }
 
     .cover-title {
-      font-size: 88px;
+      font-size: 84px;
       font-weight: 900;
       letter-spacing: -0.04em;
       line-height: 1;
-      margin-bottom: 24px;
+      margin-bottom: 22px;
       background: linear-gradient(135deg, #FFFFFF 0%, #E2E8F0 60%, #94A3B8 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
@@ -275,17 +282,17 @@
     }
 
     .cover-desc {
-      font-size: 26px;
+      font-size: 24px;
       line-height: 1.45;
       color: var(--pres-muted);
-      max-width: 980px;
-      margin-bottom: 40px;
+      max-width: 1020px;
+      margin-bottom: 36px;
     }
 
     .cover-pills {
       display: flex;
       flex-wrap: wrap;
-      gap: 14px;
+      gap: 12px;
     }
 
     .pill-item {
@@ -294,9 +301,9 @@
       gap: 10px;
       background: rgba(255, 255, 255, 0.04);
       border: 1px solid rgba(255, 255, 255, 0.1);
-      padding: 10px 20px;
+      padding: 10px 18px;
       border-radius: 999px;
-      font-size: 15px;
+      font-size: 14.5px;
       font-weight: 600;
       color: #FFFFFF;
     }
@@ -312,7 +319,7 @@
       background: #0A0D14;
       border: 1px solid rgba(255, 255, 255, 0.08);
       border-radius: 14px;
-      padding: 20px;
+      padding: 18px;
       display: flex;
       flex-direction: column;
       font-family: var(--font-mono);
@@ -322,10 +329,10 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 14px;
-      padding-bottom: 10px;
+      margin-bottom: 12px;
+      padding-bottom: 8px;
       border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-      font-size: 13px;
+      font-size: 12.5px;
       color: var(--pres-dim);
     }
 
@@ -335,8 +342,8 @@
     }
 
     .code-dot {
-      width: 10px;
-      height: 10px;
+      width: 9px;
+      height: 9px;
       border-radius: 50%;
       background: rgba(255, 255, 255, 0.15);
     }
@@ -346,8 +353,8 @@
     .code-dot.green { background: #10B981; }
 
     pre.code-body {
-      font-size: 12.5px;
-      line-height: 1.55;
+      font-size: 12px;
+      line-height: 1.5;
       color: #E2E8F0;
       overflow-x: auto;
       font-family: var(--font-mono);
@@ -364,13 +371,13 @@
     .vs-box {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 28px;
+      gap: 24px;
     }
 
     .vs-col {
       background: var(--pres-card);
-      border-radius: 16px;
-      padding: 26px 30px;
+      border-radius: 14px;
+      padding: 24px 28px;
       border: 1px solid var(--pres-card-border);
     }
 
@@ -386,10 +393,10 @@
     }
 
     .vs-header {
-      font-size: 20px;
+      font-size: 19px;
       font-weight: 800;
-      margin-bottom: 18px;
-      padding-bottom: 12px;
+      margin-bottom: 16px;
+      padding-bottom: 10px;
       border-bottom: 1px solid rgba(255, 255, 255, 0.08);
       display: flex;
       justify-content: space-between;
@@ -400,15 +407,15 @@
       list-style: none;
       display: flex;
       flex-direction: column;
-      gap: 14px;
+      gap: 12px;
     }
 
     .vs-list li {
-      font-size: 15px;
+      font-size: 14.5px;
       line-height: 1.45;
       display: flex;
       align-items: flex-start;
-      gap: 12px;
+      gap: 10px;
     }
 
     .vs-icon-bad {
@@ -427,19 +434,157 @@
       margin-top: 2px;
     }
 
+    /* Сравнительная матрица (Таблица) */
+    .matrix-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      background: var(--pres-card);
+      border: 1px solid var(--pres-card-border);
+      border-radius: 14px;
+      overflow: hidden;
+      margin-top: 6px;
+    }
+
+    .matrix-table th {
+      padding: 14px 18px;
+      text-align: left;
+      font-size: 13.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--pres-muted);
+      background: rgba(255, 255, 255, 0.03);
+      border-bottom: 1px solid var(--pres-card-border);
+    }
+
+    .matrix-table th.col-accent {
+      color: #34D399;
+      background: rgba(16, 185, 129, 0.08);
+      border-left: 1px solid rgba(16, 185, 129, 0.2);
+    }
+
+    .matrix-table th.col-bad {
+      color: #F87171;
+      background: rgba(239, 68, 68, 0.06);
+    }
+
+    .matrix-table td {
+      padding: 12px 18px;
+      font-size: 14px;
+      color: #E2E8F0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      vertical-align: middle;
+      line-height: 1.4;
+    }
+
+    .matrix-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .matrix-table td.col-accent {
+      background: rgba(16, 185, 129, 0.04);
+      font-weight: 600;
+      color: #FFFFFF;
+      border-left: 1px solid rgba(16, 185, 129, 0.2);
+    }
+
+    .matrix-table td.col-bad {
+      background: rgba(239, 68, 68, 0.02);
+      color: var(--pres-muted);
+    }
+
+    /* Блок TCO формулы */
+    .formula-box {
+      background: linear-gradient(135deg, rgba(208, 0, 0, 0.12) 0%, rgba(16, 20, 31, 0.95) 100%);
+      border: 1px solid rgba(208, 0, 0, 0.4);
+      border-radius: 14px;
+      padding: 20px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      margin-bottom: 16px;
+    }
+
+    .formula-math {
+      font-family: var(--font-mono);
+      font-size: 24px;
+      font-weight: 800;
+      color: #FFFFFF;
+      letter-spacing: -0.01em;
+    }
+
+    .formula-math span.hl {
+      color: var(--pres-red-light);
+    }
+
+    /* Столпы приватности */
+    .pillar-card {
+      background: var(--pres-card);
+      border: 1px solid var(--pres-card-border);
+      border-radius: 14px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .pillar-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      background: rgba(208, 0, 0, 0.15);
+      border: 1px solid rgba(208, 0, 0, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--pres-red-light);
+      font-weight: 800;
+      font-size: 18px;
+      margin-bottom: 14px;
+    }
+
+    .pillar-icon.green {
+      background: rgba(16, 185, 129, 0.15);
+      border-color: rgba(16, 185, 129, 0.3);
+      color: #34D399;
+    }
+
+    /* Сценарии пользователя на QR слайде */
+    .scenario-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      padding: 14px 18px;
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+    }
+
+    .scenario-tag {
+      background: rgba(208, 0, 0, 0.2);
+      color: #FF7070;
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      padding: 4px 8px;
+      border-radius: 6px;
+      white-space: nowrap;
+    }
+
     /* Блок с QR-кодом */
     .qr-slide-layout {
       display: grid;
-      grid-template-columns: 460px 1fr;
-      gap: 48px;
+      grid-template-columns: 420px 1fr;
+      gap: 40px;
       align-items: center;
       height: 100%;
     }
 
     .qr-frame {
       background: #FFFFFF;
-      padding: 24px;
-      border-radius: 24px;
+      padding: 22px;
+      border-radius: 20px;
       box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.1);
       display: flex;
       flex-direction: column;
@@ -450,13 +595,13 @@
     .qr-frame img {
       width: 100%;
       height: auto;
-      max-width: 380px;
+      max-width: 340px;
       display: block;
     }
 
     .qr-caption {
-      margin-top: 14px;
-      font-size: 14px;
+      margin-top: 12px;
+      font-size: 13px;
       font-weight: 700;
       color: #0F172A;
       letter-spacing: 0.05em;
@@ -466,7 +611,7 @@
     .qr-info {
       display: flex;
       flex-direction: column;
-      gap: 20px;
+      gap: 16px;
     }
 
     .url-badge {
@@ -475,10 +620,10 @@
       gap: 12px;
       background: rgba(255, 255, 255, 0.05);
       border: 1px solid rgba(255, 255, 255, 0.15);
-      padding: 14px 22px;
-      border-radius: 12px;
+      padding: 12px 20px;
+      border-radius: 10px;
       font-family: var(--font-mono);
-      font-size: 17px;
+      font-size: 16px;
       color: #FFFFFF;
       align-self: flex-start;
       word-break: break-all;
@@ -494,16 +639,16 @@
     .stat-card {
       background: var(--pres-card);
       border: 1px solid var(--pres-card-border);
-      padding: 18px 22px;
-      border-radius: 14px;
+      padding: 16px 20px;
+      border-radius: 12px;
     }
 
     .stat-num {
-      font-size: 32px;
+      font-size: 30px;
       font-weight: 800;
       color: #FFFFFF;
       line-height: 1.1;
-      margin-bottom: 6px;
+      margin-bottom: 4px;
     }
 
     .stat-num.red { color: var(--pres-red-light); }
@@ -518,8 +663,8 @@
     /* Навигационные кнопки в углу */
     .top-controls {
       position: fixed;
-      top: 18px;
-      right: 24px;
+      top: 16px;
+      right: 20px;
       z-index: 999;
       display: flex;
       gap: 10px;
@@ -597,12 +742,75 @@
 
         <div class="slide-footer">
           <div>Проект: <strong>ТарифДетокс</strong> (Open Source & 152-ФЗ Compliant)</div>
-          <div>Используйте клавиши <strong>← / → / Пробел</strong> для переключения слайдов</div>
+          <div>Используйте клавиши <strong>← / → / Пробел</strong> для переключения слайдов (1 из 12)</div>
         </div>
       </div>
     </section>
 
-    <!-- ==================== СЛАЙД 2: ИДЕЯ САЙТА ==================== -->
+    <!-- ==================== СЛАЙД 2: ПРОБЛЕМА РЫНКА ==================== -->
+    <section class="slide" data-screen-label="Проблема рынка">
+      <div class="slide-content">
+        <div class="slide-header">
+          <div>
+            <div class="slide-tag">
+              <span class="slide-tag-dot"></span>
+              Анализ контекста • Проблема
+            </div>
+            <h2 class="slide-title">Проблема: «тихая инфляция» и скрытые списания операторов</h2>
+            <p class="slide-subtitle">Цифровые расходы стали незаметной черной дырой в семейном бюджете из-за трех системных манипуляций.</p>
+          </div>
+          <div class="slide-brand-pill">ПРОБЛЕМА</div>
+        </div>
+
+        <div class="grid-3" style="margin-top: 8px;">
+          <div class="card">
+            <span class="card-badge badge-red">Манипуляция 1</span>
+            <div class="card-title">Архивные тарифы и рост цен</div>
+            <p class="card-text">
+              Операторы переводят старые тарифы в архив, ежегодно индексируя абонплату на 15–30%. Пользователь годами платит за устаревший пакет услуг в 1.5–2 раза выше рыночной стоимости.
+            </p>
+          </div>
+
+          <div class="card">
+            <span class="card-badge badge-red">Манипуляция 2</span>
+            <div class="card-title">Платные опции-«невидимки»</div>
+            <p class="card-text">
+              Автоматическое подключение мелодий вместо гудков, платных СМС-пакетов, страховки баланса и расширенных ТВ-пакетов, которые незаметно списывают от 150 до 400 ₽ ежемесячно.
+            </p>
+          </div>
+
+          <div class="card">
+            <span class="card-badge badge-red">Манипуляция 3</span>
+            <div class="card-title">Промо-ловушки и триалы</div>
+            <p class="card-text">
+              Рекламная ставка «199 ₽/мес» действует только первые 60–90 дней. Далее цена подскакивает до 750–990 ₽/мес, а бесплатные пробные подписки начинают списывать деньги на автопилоте.
+            </p>
+          </div>
+        </div>
+
+        <div class="stat-row">
+          <div class="stat-card">
+            <div class="stat-num red">18 400 ₽</div>
+            <div class="stat-label">Средняя годовая переплата домохозяйства за неоптимизированную связь и подписки</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-num">4.2 сервиса</div>
+            <div class="stat-label">Оплачивает средняя семья, при этом в 70% случаев каталоги фильмов и музыки дублируются</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-num">67% абонентов</div>
+            <div class="stat-label">Не пересматривали тарифные планы более 24 месяцев из-за сложности сравнения</div>
+          </div>
+        </div>
+
+        <div class="slide-footer">
+          <div>Диагностика: <strong>Скрытые списания съедают до 5% чистого семейного дохода</strong></div>
+          <div>Слайд 2 из 12</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== СЛАЙД 3: ИДЕЯ САЙТА ==================== -->
     <section class="slide" data-screen-label="Идея сайта">
       <div class="slide-content">
         <div class="slide-header">
@@ -611,62 +819,62 @@
               <span class="slide-tag-dot"></span>
               Раздел 1 • Миссия и концепция
             </div>
-            <h2 class="slide-title">Идея проекта: остановить скрытые переплаты без передачи личных данных</h2>
-            <p class="slide-subtitle">Большинство жителей годами переплачивают за услуги связи по инерции, а существующие инструменты навязывают новые кредиты и спам.</p>
+            <h2 class="slide-title">Идея проекта: потребительский детокс за 2 минуты без спама</h2>
+            <p class="slide-subtitle">Создать инструмент самообороны потребителя, который честно вскрывает переплаты и дает готовый план действий.</p>
           </div>
           <div class="slide-brand-pill">ИДЕЯ</div>
         </div>
 
-        <div class="grid-3" style="margin-top: 10px;">
+        <div class="grid-3" style="margin-top: 8px;">
           <div class="card">
-            <span class="card-badge badge-red">Проблема рынка</span>
-            <div class="card-title">Тихая инфляция тарифов</div>
+            <span class="card-badge badge-gray">Шаг 1 • Локализация</span>
+            <div class="card-title">Родная база городов ЛНР</div>
             <p class="card-text">
-              Операторы переводят клиентов на архивные тарифы с повышением абонплаты, добавляют платные опции (гудки, подписки, страхование баланса), о которых клиент узнает только из списаний.
+              Аудит начинается с выбора конкретного населенного пункта ЛНР (Луганск, Алчевск, Антрацит и др.). База учитывает реальных кабельных провайдеров, а не фантомные федеральные сети.
             </p>
           </div>
 
           <div class="card">
-            <span class="card-badge badge-red">Проблема дубликатов</span>
-            <div class="card-title">Фрагментация подписок</div>
+            <span class="card-badge badge-gray">Шаг 2 • Полный срез</span>
+            <div class="card-title">Комплексный анализ 3-в-1</div>
             <p class="card-text">
-              Средняя семья одновременно оплачивает 2–4 стриминговых сервиса с 70% совпадающим каталогом фильмов, плюс забытые триал-периоды, которые автоматически продлеваются каждый месяц.
+              Единый расчет объединяет сотовую связь (МКС), домашний интернет (ШПД/GPON) и стриминговые подписки в общую картину ежемесячных и годовых расходов семьи.
             </p>
           </div>
 
           <div class="card highlight">
-            <span class="card-badge badge-green">Наше решение</span>
-            <div class="card-title">Аудит за 2 минуты</div>
+            <span class="card-badge badge-green">Шаг 3 • Результат</span>
+            <div class="card-title">План отказа и экономии</div>
             <p class="card-text">
-              «ТарифДетокс» анализирует реальные потребности семьи, находит скрытые переплаты, подбирает выгодные альтернативы по конкретному городу ЛНР и выдает пошаговый план отказа.
+              Сервис не просто показывает цифры, а дает готовый чек-лист: какие услуги отключить, на какой тариф перейти и генерирует календарь отмены пробных периодов.
             </p>
           </div>
         </div>
 
         <div class="stat-row">
           <div class="stat-card">
-            <div class="stat-num red">3 500 – 7 200 ₽</div>
-            <div class="stat-label">Средняя ежегодная экономия семьи после прохождения честного детокса тарифов</div>
+            <div class="stat-num green">3 500 – 7 200 ₽</div>
+            <div class="stat-label">Средняя чистая экономия семьи в год без малейшего снижения качества связи</div>
           </div>
           <div class="stat-card">
-            <div class="stat-num green">0 байт</div>
-            <div class="stat-label">Персональных данных отправляется на внешние серверы — приватность гарантирована кодом</div>
+            <div class="stat-num">120 секунд</div>
+            <div class="stat-label">Время прохождения интерактивного аудита от первого клика до итогового отчета</div>
           </div>
           <div class="stat-card">
-            <div class="stat-num">8 городов ЛНР</div>
-            <div class="stat-label">Детализированная база тарифов Луганска, Алчевска, Антрацита, Стаханова и др.</div>
+            <div class="stat-num red">0 рублей</div>
+            <div class="stat-label">Стоимость сервиса: некоммерческий Open Source проект без рекламы и подписок</div>
           </div>
         </div>
 
         <div class="slide-footer">
           <div>Концепция: <strong>Честная экономия против навязчивого маркетинга</strong></div>
-          <div>Слайд 2 из 7</div>
+          <div>Слайд 3 из 12</div>
         </div>
       </div>
     </section>
 
-    <!-- ==================== СЛАЙД 3: АНАЛИЗ РЫНКА ==================== -->
-    <section class="slide" data-screen-label="Анализ рынка">
+    <!-- ==================== СЛАЙД 4: АНАЛИЗ СУЩЕСТВУЮЩИХ АГРЕГАТОРОВ ==================== -->
+    <section class="slide" data-screen-label="Анализ агрегаторов">
       <div class="slide-content">
         <div class="slide-header">
           <div>
@@ -674,8 +882,8 @@
               <span class="slide-tag-dot"></span>
               Раздел 2 • Конкурентный анализ
             </div>
-            <h2 class="slide-title">Анализ рынка: почему обычные агрегаторы работают против пользователя</h2>
-            <p class="slide-subtitle">Сравнение архитектуры «ТарифДетокс» с федеральными финансовыми витринами и сайтами сравнения тарифов.</p>
+            <h2 class="slide-title">Анализ рынка: почему обычные агрегаторы токсичны</h2>
+            <p class="slide-subtitle">Популярные финансовые и телеком-агрегаторы (Сравни.ру, Банки.ру, Дом.ру-партнеры) построены на продаже лидов.</p>
           </div>
           <div class="slide-brand-pill">КОНКУРЕНТЫ</div>
         </div>
@@ -684,25 +892,25 @@
           <!-- Колонка конкурентов -->
           <div class="vs-col bad">
             <div class="vs-header">
-              <span style="color: #F87171;">Типичные агрегаторы (Сравни.ру, Банки.ру)</span>
+              <span style="color: #F87171;">Коммерческие витрины (Сравни, Банки.ру, 101.ru)</span>
               <span class="card-badge badge-red">Лидогенерация</span>
             </div>
             <ul class="vs-list">
               <li>
                 <span class="vs-icon-bad">✕</span>
-                <div><strong>Обязательный сбор контактов:</strong> требуют телефон и email еще до показа тарифов, продавая лиды партнерским сетям.</div>
+                <div><strong>Принудительный сбор контактов:</strong> требуют телефон и email ДО показа результатов, чтобы передать лид в партнерскую CPA-сеть.</div>
               </li>
               <li>
                 <span class="vs-icon-bad">✕</span>
-                <div><strong>Шквал спама и звонков:</strong> данные моментально передаются в базы МФО, кредитных брокеров и отделов продаж.</div>
+                <div><strong>Шквал спам-звонков:</strong> номер мгновенно уходит колл-центрам провайдеров и кредитных брокеров (до 5–10 звонков в первый день).</div>
               </li>
               <li>
                 <span class="vs-icon-bad">✕</span>
-                <div><strong>Игнорируют ЛНР:</strong> федеральные базы не содержат провайдеров Луганска и городов республики (МКС, Луганет, Магистр, ЛДС).</div>
+                <div><strong>Продвижение выгодного провайдера:</strong> в топе выдачи оказываются не самые дешевые тарифы, а те, за которые оператор платит максимальную комиссию.</div>
               </li>
               <li>
                 <span class="vs-icon-bad">✕</span>
-                <div><strong>Промо-ловушки:</strong> рекламируют «199 ₽/мес», скрывая, что с 3-го месяца абонплата подскакивает до 890 ₽.</div>
+                <div><strong>Полное игнорирование ЛНР:</strong> базы ориентированы исключительно на федеральных гигантов (Ростелеком, МТС, Билайн, Дом.ру).</div>
               </li>
             </ul>
           </div>
@@ -711,117 +919,328 @@
           <div class="vs-col good">
             <div class="vs-header">
               <span style="color: #34D399;">Сервис «ТарифДетокс»</span>
-              <span class="card-badge badge-green">Privacy by Design</span>
+              <span class="card-badge badge-green">Этичный веб</span>
             </div>
             <ul class="vs-list">
               <li>
                 <span class="vs-icon-good">✓</span>
-                <div><strong>Абсолютная анонимность:</strong> никаких форм ввода телефонов, ФИО или банковских карт. Работает полностью оффлайн/клиентски.</div>
+                <div><strong>Абсолютная анонимность:</strong> ни одной формы ввода контактов. Нет необходимости авторизоваться, подтверждать смс или вводить имя.</div>
               </li>
               <li>
                 <span class="vs-icon-good">✓</span>
-                <div><strong>0 спам-звонков:</strong> в проекте физически нет серверной базы данных — ваши данные некому продать или слить.</div>
+                <div><strong>0 спам-звонков и сливов:</strong> базы данных на сервере физически не существует. Нечего взламывать, продавать или передавать рекламщикам.</div>
               </li>
               <li>
                 <span class="vs-icon-good">✓</span>
-                <div><strong>Реальные тарифы городов ЛНР:</strong> поддержка локальных операторов ШПД с учетом типов подключения и ТВ-пакетов.</div>
+                <div><strong>Объективный математический скоринг:</strong> тарифы сортируются по честному расчету TCO, а не по размеру партнерской комиссии.</div>
               </li>
               <li>
                 <span class="vs-icon-good">✓</span>
-                <div><strong>Честная формула TCO за 12 месяцев:</strong> математический расчет годовых расходов с учетом скачков цен и оборудования.</div>
+                <div><strong>Фокус на операторах ЛНР:</strong> детальные профили МКС, Луганет, Магистр, ЛДС, Спектр с честными скоростями и условиями.</div>
               </li>
             </ul>
           </div>
         </div>
 
         <div class="slide-footer">
-          <div>Преимущество: <strong>Этика, отсутствие скрытых монетизаций и глубокая региональная адаптация</strong></div>
-          <div>Слайд 3 из 7</div>
+          <div>Позиционирование: <strong>Мы защищаем потребителя, а не зарабатываем на продаже его номера телефона</strong></div>
+          <div>Слайд 4 из 12</div>
         </div>
       </div>
     </section>
 
-    <!-- ==================== СЛАЙД 4: ЭТАПЫ РЕАЛИЗАЦИИ ==================== -->
+    <!-- ==================== СЛАЙД 5: СРАВНИТЕЛЬНАЯ МАТРИЦА ==================== -->
+    <section class="slide" data-screen-label="Сравнительная матрица">
+      <div class="slide-content">
+        <div class="slide-header">
+          <div>
+            <div class="slide-tag">
+              <span class="slide-tag-dot"></span>
+              Раздел 2 • Матрица сравнения
+            </div>
+            <h2 class="slide-title">Сравнительная матрица: честность против скрытой коммерции</h2>
+            <p class="slide-subtitle">Наглядное сопоставление фундаментальных характеристик ТарифДетокс с типичными агрегаторами рунета.</p>
+          </div>
+          <div class="slide-brand-pill">МАТРИЦА</div>
+        </div>
+
+        <table class="matrix-table">
+          <thead>
+            <tr>
+              <th style="width: 28%;">Критерий оценки</th>
+              <th class="col-bad" style="width: 36%;">Традиционные агрегаторы (Сравни.ру, Банки.ру)</th>
+              <th class="col-accent" style="width: 36%;">Сервис «ТарифДетокс»</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Сбор персональных данных</strong></td>
+              <td class="col-bad">Обязателен (телефон, email, иногда ФИО и адрес)</td>
+              <td class="col-accent">Запрещен архитектурно (0 байт данных собирается)</td>
+            </tr>
+            <tr>
+              <td><strong>Спам-звонки и передача баз</strong></td>
+              <td class="col-bad">Да, основа бизнес-модели (продажа лидов в колл-центры)</td>
+              <td class="col-accent">Исключено (отсутствует серверная база данных)</td>
+            </tr>
+            <tr>
+              <td><strong>Учет региональных сетей ЛНР</strong></td>
+              <td class="col-bad">Нет (только крупные федеральные операторы РФ)</td>
+              <td class="col-accent">Да (полная база провайдеров Луганска и городов ЛНР)</td>
+            </tr>
+            <tr>
+              <td><strong>Расчет TCO за 12 месяцев</strong></td>
+              <td class="col-bad">Скрывают (показывают промо-цену первого месяца)</td>
+              <td class="col-accent">Да (учитывает рост абонплаты, аренду роутера и подключение)</td>
+            </tr>
+            <tr>
+              <td><strong>Детекция дубликатов подписок</strong></td>
+              <td class="col-bad">Нет (заинтересованы продать новую подписку)</td>
+              <td class="col-accent">Да (находит пересечения стримингов и считает переплату)</td>
+            </tr>
+            <tr>
+              <td><strong>Инструменты самообороны</strong></td>
+              <td class="col-bad">Нет (только форма оформления заявки)</td>
+              <td class="col-accent">iCal-напоминания об отмене, памятка по 152-ФЗ, чек-лист</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="slide-footer">
+          <div>Принцип проекта: <strong>Инженерная этика важнее коммерческой конверсии в лиды</strong></div>
+          <div>Слайд 5 из 12</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== СЛАЙД 6: РЕГИОНАЛЬНАЯ СПЕЦИФИКА ЛНР ==================== -->
+    <section class="slide" data-screen-label="Специфика ЛНР">
+      <div class="slide-content">
+        <div class="slide-header">
+          <div>
+            <div class="slide-tag">
+              <span class="slide-tag-dot"></span>
+              Раздел 3 • Региональный контекст
+            </div>
+            <h2 class="slide-title">Региональная специфика ЛНР: связь и домашний интернет 2026</h2>
+            <p class="slide-subtitle">Реальный телеком-рынок Луганской Народной Республики и его ключевые провайдеры.</p>
+          </div>
+          <div class="slide-brand-pill">РЕГИОН ЛНР</div>
+        </div>
+
+        <div class="grid-4" style="margin-top: 8px;">
+          <!-- МКС -->
+          <div class="card highlight">
+            <span class="card-badge badge-red">Мобильная связь</span>
+            <div class="card-title" style="font-size: 18px;">ООО «МКС»</div>
+            <p class="card-text" style="font-size: 13.5px;">
+              Базовый мобильный оператор республики. Тарифы «Основной», «Все включено», «Безлимит».<br><br>
+              <strong>Подводные камни:</strong> округление трафика сессий, платные уведомления, архивация старых пакетов.
+            </p>
+            <div style="margin-top: 10px; font-weight: 700; color: #FFF; font-size: 14px;">От 250 до 750 ₽/мес</div>
+          </div>
+
+          <!-- Луганет -->
+          <div class="card">
+            <span class="card-badge badge-gray">ШПД / Оптика</span>
+            <div class="card-title" style="font-size: 18px;">«Луганет»</div>
+            <p class="card-text" style="font-size: 13.5px;">
+              Крупнейший проводной провайдер Луганска и городов ЛНР. Скорости 50, 100, 300, 500 Мбит/с.<br><br>
+              <strong>Подводные камни:</strong> стоимость подключения GPON в частном секторе, аренда оптического терминала ONU.
+            </p>
+            <div style="margin-top: 10px; font-weight: 700; color: #FFF; font-size: 14px;">От 400 до 850 ₽/мес</div>
+          </div>
+
+          <!-- Магистр -->
+          <div class="card">
+            <span class="card-badge badge-gray">Городская сеть</span>
+            <div class="card-title" style="font-size: 18px;">«Магистр-Телеком»</div>
+            <p class="card-text" style="font-size: 13.5px;">
+              Развитая сеть в Луганске и пригороде. Популярные тарифы 60, 100 и 200 Мбит/с.<br><br>
+              <strong>Подводные камни:</strong> навязанные пакеты ТВ при подключении интернета, плата за повторную активацию при заморозке.
+            </p>
+            <div style="margin-top: 10px; font-weight: 700; color: #FFF; font-size: 14px;">От 380 до 700 ₽/мес</div>
+          </div>
+
+          <!-- ЛДС / Спектр -->
+          <div class="card">
+            <span class="card-badge badge-gray">Сети ЛНР</span>
+            <div class="card-title" style="font-size: 18px;">«ЛДС» и «Спектр»</div>
+            <p class="card-text" style="font-size: 13.5px;">
+              Операторы в Алчевске, Стаханове, Перевальске и Луганске. Скоростные линейки Ethernet и FTTH.<br><br>
+              <strong>Подводные камни:</strong> платный внешний белый IP-адрес, ограничения скорости в вечерние часы пик.
+            </p>
+            <div style="margin-top: 10px; font-weight: 700; color: #FFF; font-size: 14px;">От 350 до 800 ₽/мес</div>
+          </div>
+        </div>
+
+        <div class="card" style="margin-top: 14px; padding: 14px 22px; background: rgba(255, 255, 255, 0.02);">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <div style="font-size: 14.5px; color: #E2E8F0;">
+              <strong>Вывод исследования рынка:</strong> Житель ЛНР без регулярного аудита переплачивает провайдерам от 350 до 800 ₽ ежемесячно за навязанные опции и устаревшие тарифные планы.
+            </div>
+            <span class="card-badge badge-green" style="margin: 0; white-space: nowrap;">Актуально на 2026 год</span>
+          </div>
+        </div>
+
+        <div class="slide-footer">
+          <div>Региональная база: <strong>Все данные перепроверены по открытым тарифам операторов ЛНР</strong></div>
+          <div>Слайд 6 из 12</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== СЛАЙД 7: МЕТОДОЛОГИЯ РАСЧЕТОВ TCO ==================== -->
+    <section class="slide" data-screen-label="Методология TCO">
+      <div class="slide-content">
+        <div class="slide-header">
+          <div>
+            <div class="slide-tag">
+              <span class="slide-tag-dot"></span>
+              Раздел 4 • Математика аудита
+            </div>
+            <h2 class="slide-title">Методология расчетов: честная стоимость владения (TCO)</h2>
+            <p class="slide-subtitle">Сравнение по ценнику «первого месяца» — главная ловушка маркетинга. «ТарифДетокс» считает полную стоимость за 12 месяцев.</p>
+          </div>
+          <div class="slide-brand-pill">МЕТОДОЛОГИЯ</div>
+        </div>
+
+        <!-- Формула -->
+        <div class="formula-box">
+          <div>
+            <div style="font-size: 12.5px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--pres-dim); margin-bottom: 6px;">Формула годовой стоимости владения:</div>
+            <div class="formula-math">
+              TCO<span class="hl">₁₂</span> = (P<span class="hl">promo</span> × M<span class="hl">promo</span>) + (P<span class="hl">base</span> × M<span class="hl">base</span>) + C<span class="hl">setup</span> + C<span class="hl">equip</span> + C<span class="hl">hidden</span>
+            </div>
+          </div>
+          <div style="text-align: right; border-left: 1px solid rgba(255,255,255,0.1); padding-left: 24px;">
+            <div style="font-size: 13px; color: var(--pres-muted);">Средняя погрешность рекламы:</div>
+            <div style="font-size: 26px; font-weight: 800; color: var(--pres-red-light);">+42% к рекламе</div>
+          </div>
+        </div>
+
+        <div class="grid-4">
+          <div class="card">
+            <span class="card-badge badge-gray">Фактор 1</span>
+            <div class="card-title" style="font-size: 17px;">Промо-периоды</div>
+            <p class="card-text" style="font-size: 13.5px;">
+              Учет скачка цены: если тариф стоит 199 ₽ первые 3 месяца и 750 ₽ остальные 9 месяцев, реальная средняя цена — <strong>612 ₽/мес</strong>, а не 199 ₽.
+            </p>
+          </div>
+
+          <div class="card">
+            <span class="card-badge badge-gray">Фактор 2</span>
+            <div class="card-title" style="font-size: 17px;">Подключение (Setup)</div>
+            <p class="card-text" style="font-size: 13.5px;">
+              Стоимость прокладки кабеля, оптического патч-корда и первичной настройки (от 0 до 2 500 ₽), распределенная на 12 месяцев эксплуатации.
+            </p>
+          </div>
+
+          <div class="card">
+            <span class="card-badge badge-gray">Фактор 3</span>
+            <div class="card-title" style="font-size: 17px;">Аренда роутера</div>
+            <p class="card-text" style="font-size: 13.5px;">
+              Аренда за 150 ₽/мес обходится в 1 800 ₽ за год. Алгоритм показывает срок окупаемости покупки собственного Wi-Fi роутера (11–14 месяцев).
+            </p>
+          </div>
+
+          <div class="card">
+            <span class="card-badge badge-red">Фактор 4</span>
+            <div class="card-title" style="font-size: 17px;">Скрытые опции</div>
+            <p class="card-text" style="font-size: 13.5px;">
+              Платные ТВ-приставки, страхование абонентской линии и платные уведомления, которые не включены в базовый баннер провайдера.
+            </p>
+          </div>
+        </div>
+
+        <div class="slide-footer">
+          <div>Прозрачность: <strong>Пользователь видит точную сумму списаний за год без маркетинговых уловок</strong></div>
+          <div>Слайд 7 из 12</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== СЛАЙД 8: ЭТАПЫ РЕАЛИЗАЦИИ ==================== -->
     <section class="slide" data-screen-label="Этапы реализации">
       <div class="slide-content">
         <div class="slide-header">
           <div>
             <div class="slide-tag">
               <span class="slide-tag-dot"></span>
-              Раздел 3 • Архитектура пайплайна
+              Раздел 5 • Инженерный маршрут
             </div>
-            <h2 class="slide-title">Этапы реализации проекта: от идеи к автономному веб-приложению</h2>
-            <p class="slide-subtitle">Поэтапный инженерный маршрут создания легкого, доступного и надежного сервиса.</p>
+            <h2 class="slide-title">Архитектура: 5 этапов инженерной реализации проекта</h2>
+            <p class="slide-subtitle">От исследования локального рынка связи до полностью автономного клиентского веб-приложения.</p>
           </div>
           <div class="slide-brand-pill">ПРОЦЕСС</div>
         </div>
 
-        <div class="grid-5" style="margin-top: 10px;">
+        <div class="grid-5" style="margin-top: 8px;">
           <div class="card">
             <span class="card-badge badge-gray">Этап 1</span>
-            <div class="card-title" style="font-size: 17px;">База данных тарифов</div>
-            <p class="card-text" style="font-size: 13.5px;">
-              Формирование открытой JSON-базы провайдеров ЛНР с проверкой скоростей, скрытых условий и ссылок на первоисточники.
+            <div class="card-title" style="font-size: 16px;">Сбор и аудит тарифов</div>
+            <p class="card-text" style="font-size: 13px;">
+              Сбор сеток тарифов МКС, Луганет, Магистр, ЛДС. Нормализация данных, фильтрация архивных планов в единую структуру.
             </p>
           </div>
 
           <div class="card">
             <span class="card-badge badge-gray">Этап 2</span>
-            <div class="card-title" style="font-size: 17px;">Пошаговый Wizard</div>
-            <p class="card-text" style="font-size: 13.5px;">
-              Разработка 5-шагового SPA-мастера (Город → Мобильная связь → Интернет → Подписки → Готовый отчет) с сохранением состояния.
+            <div class="card-title" style="font-size: 16px;">SPA-мастер шагов</div>
+            <p class="card-text" style="font-size: 13px;">
+              Разработка 4-шагового интерактивного мастера аудита с динамическим расчетом переплат без перезагрузки страницы.
             </p>
           </div>
 
           <div class="card highlight">
             <span class="card-badge badge-red">Этап 3</span>
-            <div class="card-title" style="font-size: 17px;">Математика TCO</div>
-            <p class="card-text" style="font-size: 13.5px;">
-              Алгоритм вычисления полной годовой стоимости (Total Cost of Ownership), учет промо-периодов и цен на роутеры.
+            <div class="card-title" style="font-size: 16px;">Математика TCO</div>
+            <p class="card-text" style="font-size: 13px;">
+              Реализация чистых алгоритмических функций: расчет годовой стоимости, матрица подбора альтернатив, детектор дубликатов.
             </p>
           </div>
 
           <div class="card">
             <span class="card-badge badge-gray">Этап 4</span>
-            <div class="card-title" style="font-size: 17px;">Утилиты и экспорт</div>
-            <p class="card-text" style="font-size: 13.5px;">
-              Генерация iCal/ICS-календаря напоминаний об отмене платных услуг, оптимизация `@media print` для чистой печати отчета.
+            <div class="card-title" style="font-size: 16px;">Клиентский iCal</div>
+            <p class="card-text" style="font-size: 13px;">
+              Генерация .ics календаря напоминаний прямо в памяти браузера через Blob URL + оптимизация стилей @media print.
             </p>
           </div>
 
           <div class="card">
             <span class="card-badge badge-green">Этап 5</span>
-            <div class="card-title" style="font-size: 17px;">Mobile & Security</div>
-            <p class="card-text" style="font-size: 13.5px;">
-              Mobile-first адаптивность, отказ от эмодзи в пользу чистых векторных SVG, аудит безопасности по 152-ФЗ.
+            <div class="card-title" style="font-size: 16px;">Privacy & Mobile</div>
+            <p class="card-text" style="font-size: 13px;">
+              Mobile-first оптимизация под смартфоны, отказ от эмодзи в пользу чистых SVG, строгое соответствие 152-ФЗ.
             </p>
           </div>
         </div>
 
-        <div class="card" style="margin-top: 16px; padding: 18px 24px; background: rgba(255, 255, 255, 0.02);">
+        <div class="card" style="margin-top: 14px; padding: 16px 24px; background: rgba(255, 255, 255, 0.02);">
           <div style="display: flex; justify-content: space-between; align-items: center;">
-            <div style="font-size: 15px; color: #FFFFFF;">
-              <strong>Итог сборки:</strong> Единый оптимизированный бандл <code style="color: #38BDF8; font-family: var(--font-mono);">js/app.js</code>, собираемый скриптом с нулевым оверхедом и мгновенной загрузкой на любом смартфоне.
+            <div style="font-size: 14.5px; color: #FFFFFF;">
+              <strong>Архитектурный результат:</strong> 100% автономный бандл без бэкенда, моментальная загрузка за 0.2 сек, работа в медленных 3G/LTE сетях без потери функционала.
             </div>
             <span class="card-badge badge-green" style="margin: 0;">Lighthouse 100/100</span>
           </div>
         </div>
 
         <div class="slide-footer">
-          <div>Архитектура: <strong>Vanilla JavaScript + CSS Custom Properties + SPA без сборщиков-монстров</strong></div>
-          <div>Слайд 4 из 7</div>
+          <div>Стек: <strong>Vanilla JavaScript (ES2022) + CSS Custom Properties + Zero External Dependencies</strong></div>
+          <div>Слайд 8 из 12</div>
         </div>
       </div>
     </section>
 
-    <!-- ==================== СЛАЙД 5: ФРАГМЕНТЫ КОДА ==================== -->
+    <!-- ==================== СЛАЙД 9: ФРАГМЕНТЫ КОДА ==================== -->
     <section class="slide" data-screen-label="Фрагменты кода">
       <div class="slide-content">
         <div class="slide-header">
           <div>
             <div class="slide-tag">
               <span class="slide-tag-dot"></span>
-              Раздел 4 • Инженерные решения
+              Раздел 6 • Исходный код
             </div>
             <h2 class="slide-title">Интересные фрагменты кода: надежные клиентские алгоритмы</h2>
             <p class="slide-subtitle">Реализация математики TCO, выявления пересечений стриминга и генерации календаря без бэкенда.</p>
@@ -898,22 +1317,80 @@
 
         <div class="slide-footer">
           <div>Особенность: <strong>Zero External Dependencies — чистая математика прямо в браузере клиента</strong></div>
-          <div>Слайд 5 из 7</div>
+          <div>Слайд 9 из 12</div>
         </div>
       </div>
     </section>
 
-    <!-- ==================== СЛАЙД 6: QR-КОД ==================== -->
+    <!-- ==================== СЛАЙД 10: АРХИТЕКТУРА ПРИВАТНОСТИ ==================== -->
+    <section class="slide" data-screen-label="Приватность 152-ФЗ">
+      <div class="slide-content">
+        <div class="slide-header">
+          <div>
+            <div class="slide-tag">
+              <span class="slide-tag-dot"></span>
+              Раздел 7 • Безопасность данных
+            </div>
+            <h2 class="slide-title">Архитектура приватности: Privacy by Design и 152-ФЗ</h2>
+            <p class="slide-subtitle">Мы решили проблему защиты персональных данных радикально: приложение физически не способно их собрать.</p>
+          </div>
+          <div class="slide-brand-pill">152-ФЗ COMPLIANT</div>
+        </div>
+
+        <div class="grid-3" style="margin-top: 8px;">
+          <div class="pillar-card">
+            <div class="pillar-icon">0B</div>
+            <div class="card-title">Zero Server-Side Data</div>
+            <p class="card-text">
+              На сервере хостинга размещены только статичные файлы (HTML, CSS, JS). Отсутствует серверный бэкенд, базы данных пользователей и логи сессий. Утечка данных невозможна по определению.
+            </p>
+          </div>
+
+          <div class="pillar-card">
+            <div class="pillar-icon green">✓</div>
+            <div class="card-title">Чистота от трекеров и рекламы</div>
+            <p class="card-text">
+              В проекте нет Яндекс.Метрики, Google Analytics, пикселей ВКонтакте или рекламных скриптов. Браузер пользователя не передает цифровой отпечаток (fingerprint) третьим сторонам.
+            </p>
+          </div>
+
+          <div class="pillar-card">
+            <div class="pillar-icon green">100%</div>
+            <div class="card-title">Локальные вычисления</div>
+            <p class="card-text">
+              Все расчеты выполняются исключительно в оперативной памяти JavaScript-движка вашего устройства. При закрытии или обновлении вкладки браузера все временные параметры стираются.
+            </p>
+          </div>
+        </div>
+
+        <div class="card highlight" style="margin-top: 16px; padding: 18px 26px;">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <div>
+              <div style="font-size: 16.5px; font-weight: 700; color: #FFFFFF;">Полное соответствие Федеральному закону РФ № 152-ФЗ «О персональных данных»</div>
+              <div style="font-size: 13.5px; color: var(--pres-muted); margin-top: 4px;">Сервис не является оператором персональных данных, так как не запрашивает, не хранит и не обрабатывает личную информацию.</div>
+            </div>
+            <span class="card-badge badge-green" style="margin: 0; white-space: nowrap;">Гарантия безопасности</span>
+          </div>
+        </div>
+
+        <div class="slide-footer">
+          <div>Стандарт: <strong>Этичный цифровой сервис без слежки, рекламы и скрытых монетизаций</strong></div>
+          <div>Слайд 10 из 12</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== СЛАЙД 11: ИНТЕРАКТИВНЫЙ ДОСТУП И QR ==================== -->
     <section class="slide" data-screen-label="QR на сайт">
       <div class="slide-content">
         <div class="slide-header">
           <div>
             <div class="slide-tag">
               <span class="slide-tag-dot"></span>
-              Раздел 5 • Интерактивный доступ
+              Раздел 8 • Интерактивный доступ
             </div>
             <h2 class="slide-title">Отсканируйте QR-код и проверьте свои тарифы онлайн</h2>
-            <p class="slide-subtitle">Сервис доступен с любого смартфона, планшета или компьютера без установки приложений.</p>
+            <p class="slide-subtitle">Сервис доступен с любого смартфона, планшета или компьютера прямо сейчас без установки приложений.</p>
           </div>
           <div class="slide-brand-pill">ЖИВОЙ САЙТ</div>
         </div>
@@ -921,42 +1398,42 @@
         <div class="qr-slide-layout">
           <!-- Фрейм с чистым векторным QR-кодом -->
           <div class="qr-frame">
-            <img src="assets/qr-site.svg" alt="QR-код сайта ТарифДетокс" width="380" height="380">
+            <img src="assets/qr-site.svg" alt="QR-код сайта ТарифДетокс" width="340" height="340">
             <div class="qr-caption">Наведите камеру смартфона</div>
           </div>
 
-          <!-- Описание и статистика -->
+          <!-- Описание и сценарии -->
           <div class="qr-info">
             <div>
-              <div style="font-size: 14px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--pres-dim); margin-bottom: 8px;">Прямая ссылка на сайт:</div>
+              <div style="font-size: 13px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--pres-dim); margin-bottom: 6px;">Прямая ссылка на сайт сервиса:</div>
               <a href="https://artboi5436-svg.github.io/nepereplachivay/" target="_blank" class="url-badge" style="text-decoration: none;">
                 <span style="color: var(--pres-red-light);">https://</span>artboi5436-svg.github.io/nepereplachivay/
               </a>
             </div>
 
-            <div class="grid-2">
-              <div class="card" style="padding: 22px;">
-                <div class="card-title" style="font-size: 18px;">Быстрый аудит расходов</div>
-                <p class="card-text">
-                  Всего 4 простых шага. Укажите ваш город в ЛНР, текущий расход и получите точный расчет переплат.
-                </p>
-              </div>
-
-              <div class="card" style="padding: 22px;">
-                <div class="card-title" style="font-size: 18px;">Готовый план отказа</div>
-                <p class="card-text">
-                  Автоматическая выгрузка напоминаний в календарь, прямые инструкции и ссылки на отключение платных услуг.
-                </p>
-              </div>
-            </div>
-
-            <div class="card highlight" style="padding: 20px 24px;">
-              <div style="display: flex; align-items: center; justify-content: space-between;">
+            <div style="display: flex; flex-direction: column; gap: 10px;">
+              <div class="scenario-card">
+                <span class="scenario-tag">Сценарий 1</span>
                 <div>
-                  <div style="font-size: 16px; font-weight: 700; color: #FFFFFF;">Полная конфиденциальность по 152-ФЗ</div>
-                  <div style="font-size: 13.5px; color: var(--pres-muted); margin-top: 4px;">Никаких файлов куки для слежки, аналитики и передачи третьим лицам.</div>
+                  <div style="font-weight: 700; color: #FFF; font-size: 14.5px;">Студент / Молодежь: отказ от дубликатов стримингов</div>
+                  <div style="color: var(--pres-muted); font-size: 13px; margin-top: 2px;">Аудит мобильного тарифа МКС + отключение забытой Яндекс Музыки или СберПрайма. Экономия: <strong>~500 ₽/мес</strong>.</div>
                 </div>
-                <span class="card-badge badge-green" style="margin: 0;">100% Анонимно</span>
+              </div>
+
+              <div class="scenario-card">
+                <span class="scenario-tag">Сценарий 2</span>
+                <div>
+                  <div style="font-weight: 700; color: #FFF; font-size: 14.5px;">Семья: переход с архивного ШПД и выкуп роутера</div>
+                  <div style="color: var(--pres-muted); font-size: 13px; margin-top: 2px;">Оптимизация кабельного интернета Луганет/Магистр, отказ от аренды оборудования. Экономия: <strong>~850 ₽/мес</strong>.</div>
+                </div>
+              </div>
+
+              <div class="scenario-card">
+                <span class="scenario-tag">Сценарий 3</span>
+                <div>
+                  <div style="font-weight: 700; color: #FFF; font-size: 14.5px;">Пенсионер: отключение навязанных платных опций</div>
+                  <div style="color: var(--pres-muted); font-size: 13px; margin-top: 2px;">Выявление скрытых подписок на короткие номера и переход на базовый тариф без переплат. Экономия: <strong>~300 ₽/мес</strong>.</div>
+                </div>
               </div>
             </div>
           </div>
@@ -964,67 +1441,67 @@
 
         <div class="slide-footer">
           <div>URL проекта: <strong>artboi5436-svg.github.io/nepereplachivay</strong></div>
-          <div>Слайд 6 из 7</div>
+          <div>Слайд 11 из 12</div>
         </div>
       </div>
     </section>
 
-    <!-- ==================== СЛАЙД 7: ИТОГИ ==================== -->
-    <section class="slide" data-screen-label="Итоги">
+    <!-- ==================== СЛАЙД 12: ИТОГИ И ROADMAP ==================== -->
+    <section class="slide" data-screen-label="Итоги и Roadmap">
       <div class="slide-content">
         <div class="slide-header">
           <div>
             <div class="slide-tag">
               <span class="slide-tag-dot"></span>
-              Раздел 6 • Результаты и перспективы
+              Раздел 9 • Результаты и дорожная карта
             </div>
-            <h2 class="slide-title">Итоги проекта: этичный веб без манипуляций и скрытых комиссий</h2>
-            <p class="slide-subtitle">«ТарифДетокс» доказал, что полезный региональный сервис может быть быстрым, честным и безопасным.</p>
+            <h2 class="slide-title">Итоги проекта и дорожная карта развития (2026–2027)</h2>
+            <p class="slide-subtitle">«ТарифДетокс» доказал, что полезный региональный сервис может быть быстрым, честным и абсолютно безопасным.</p>
           </div>
-          <div class="slide-brand-pill">РЕЗЮМЕ</div>
+          <div class="slide-brand-pill">ROADMAP</div>
         </div>
 
-        <div class="grid-3" style="margin-top: 10px;">
+        <div class="grid-3" style="margin-top: 8px;">
           <div class="card highlight">
-            <span class="card-badge badge-red">Экономический эффект</span>
-            <div class="card-title">Реальная польза семье</div>
+            <span class="card-badge badge-red">Q1–Q2 2026</span>
+            <div class="card-title">Семейные конвергенты</div>
             <p class="card-text">
-              Отказ от 1 дублирующейся подписки + переход с архивного тарифа экономят от <strong>350 до 800 ₽ в месяц</strong> без потери качества контента и связи.
+              Добавление расчета пакетных конвергентных тарифов (Интернет + ТВ + Моб. связь в одном счете) и автономного PWA-режима для работы офлайн.
             </p>
           </div>
 
           <div class="card">
-            <span class="card-badge badge-green">Технологический стек</span>
-            <div class="card-title">Автономность и скорость</div>
+            <span class="card-badge badge-gray">Q3–Q4 2026</span>
+            <div class="card-title">Масштабирование регионов</div>
             <p class="card-text">
-              Легковесный стек без бэкенда: статический хостинг GitHub Pages, нулевая стоимость инфраструктуры и моментальный отклик интерфейса.
+              Подключение базы тарифов ДНР, Запорожской, Херсонской и Ростовской областей. Интеграция OCR-сканирования квитанций прямо на смартфоне без сервера.
             </p>
           </div>
 
           <div class="card">
-            <span class="card-badge badge-gray">Планы развития</span>
-            <div class="card-title">Масштабирование</div>
+            <span class="card-badge badge-green">2027+</span>
+            <div class="card-title">Open Tariff Standard</div>
             <p class="card-text">
-              Расширение базы на соседние регионы, добавление мониторинга пакетных тарифов (семейные конвергенты) и offline-ready PWA.
+              Разработка открытого стандарта машиночитаемых тарифных планов и создание общедоступного API независимой проверки скрытых условий связи.
             </p>
           </div>
         </div>
 
-        <div style="margin-top: 16px; display: flex; justify-content: center; gap: 16px;">
-          <a href="presentation.pptx" download class="control-btn" style="padding: 14px 28px; font-size: 16px; background: #252D3D; border-color: rgba(255, 255, 255, 0.2);">
+        <div style="margin-top: 14px; display: flex; justify-content: center; gap: 16px;">
+          <a href="presentation.pptx" download class="control-btn" style="padding: 12px 26px; font-size: 15px; background: #252D3D; border-color: rgba(255, 255, 255, 0.2);">
             Скачать презентацию (.PPTX)
           </a>
-          <a href="index.html" class="control-btn" style="padding: 14px 32px; font-size: 16px; background: var(--pres-red); border-color: var(--pres-red);">
+          <a href="index.html" class="control-btn" style="padding: 12px 30px; font-size: 15px; background: var(--pres-red); border-color: var(--pres-red);">
             Перейти в калькулятор «ТарифДетокс» →
           </a>
-          <a href="https://github.com/artboi5436-svg/nepereplachivay" target="_blank" class="control-btn" style="padding: 14px 28px; font-size: 16px;">
+          <a href="https://github.com/artboi5436-svg/nepereplachivay" target="_blank" class="control-btn" style="padding: 12px 26px; font-size: 15px;">
             Исходный код на GitHub
           </a>
         </div>
 
         <div class="slide-footer">
-          <div>© 2026 Проект «ТарифДетокс». Разработано для жителей ЛНР.</div>
-          <div>Слайд 7 из 7 • Финал</div>
+          <div>© 2026 Проект «ТарифДетокс». Разработано для жителей ЛНР. MIT License.</div>
+          <div>Слайд 12 из 12 • Финал</div>
         </div>
       </div>
     </section>
