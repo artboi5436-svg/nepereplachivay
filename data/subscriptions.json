@@ -112,20 +112,6 @@
     "notes": "Музыкальный стриминг ВКонтакте."
   },
   {
-    "id": "telegram-premium",
-    "name": "Telegram Premium",
-    "category": "other",
-    "monthlyPrice": 299,
-    "annualPrice": 1990,
-    "isDemo": true,
-    "updatedAt": "2026-11-01",
-    "bundledInside": null,
-    "cancelUrl": "https://t.me/PremiumBot",
-    "refundPolicyTip": "Через @PremiumBot оформляется и отменяется дешевле, чем через App Store / Google Play (где комиссия повышает цену).",
-    "officialUrl": "https://telegram.org",
-    "notes": "Экономия при оплате за год или через бота @PremiumBot."
-  },
-  {
     "id": "yandex-disk",
     "name": "Яндекс 360 / Диск",
     "category": "cloud",
