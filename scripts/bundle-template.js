@@ -261,10 +261,14 @@
     const userGb = Number(user.gb) || 0;
     const userMin = Number(user.minutes) || 0;
     const userSms = Number(user.sms) || 0;
-    const userRegion = user.region || 'Все регионы';
+    const userCity = user.region || 'Все города ЛНР';
 
     const matchingTariffs = tariffs.filter(t => {
-      const regionMatch = t.region === userRegion || t.region === 'Все регионы' || userRegion === 'Все регионы';
+      const regionMatch = t.region === userCity || 
+                          t.region === 'Все города ЛНР' || 
+                          userCity === 'Все города ЛНР' ||
+                          t.region === 'Луганская Народная Республика (ЛНР)' ||
+                          userCity === 'Луганская Народная Республика (ЛНР)';
       const gbMatch = Number(t.includedGb) >= userGb;
       const minMatch = Number(t.includedMinutes) >= userMin;
       const smsMatch = userSms === 0 || Number(t.includedSms) >= userSms;
@@ -330,11 +334,15 @@
     const currentMonthly = Number(user.currentPrice) || 0;
     const currentAnnualTCO = currentMonthly * 12;
     const userSpeed = Number(user.minSpeedMbps) || 100;
-    const userRegion = user.region || 'Все регионы';
+    const userCity = user.region || 'Все города ЛНР';
     const needsRouter = Boolean(user.needsRouter);
 
     const matchingTariffs = tariffs.filter(t => {
-      const regionMatch = t.region === userRegion || t.region === 'Все регионы' || userRegion === 'Все регионы';
+      const regionMatch = t.region === userCity || 
+                          t.region === 'Все города ЛНР' || 
+                          userCity === 'Все города ЛНР' ||
+                          t.region === 'Луганская Народная Республика (ЛНР)' ||
+                          userCity === 'Луганская Народная Республика (ЛНР)';
       const speedMatch = Number(t.speedMbps) >= userSpeed;
       return regionMatch && speedMatch;
     });
@@ -733,7 +741,7 @@
         mobile: {
           skipped: false,
           operator: 'МКС',
-          region: 'Луганская Народная Республика (ЛНР)',
+          region: 'Луганск',
           currentPrice: 500,
           gb: 25,
           minutes: 400,
@@ -742,7 +750,7 @@
         internet: {
           skipped: false,
           operator: 'Луганет',
-          region: 'Луганская Народная Республика (ЛНР)',
+          region: 'Луганск',
           currentPrice: 650,
           minSpeedMbps: 200,
           needsRouter: false
@@ -932,7 +940,7 @@
     if (step === 1) {
       return {
         operator: document.getElementById('mob-operator')?.value || 'МКС',
-        region: document.getElementById('mob-region')?.value || 'Все регионы',
+        region: document.getElementById('mob-region')?.value || 'Луганск',
         currentPrice: Number(document.getElementById('mob-price')?.value) || 0,
         gb: Number(document.getElementById('mob-gb')?.value) || 0,
         minutes: Number(document.getElementById('mob-min')?.value) || 0,
@@ -941,7 +949,7 @@
     } else if (step === 2) {
       return {
         operator: document.getElementById('net-operator')?.value || 'Луганет',
-        region: document.getElementById('net-region')?.value || 'Все регионы',
+        region: document.getElementById('net-region')?.value || 'Луганск',
         currentPrice: Number(document.getElementById('net-price')?.value) || 0,
         minSpeedMbps: Number(document.getElementById('net-speed')?.value) || 100,
         needsRouter: Boolean(document.getElementById('net-router-rent')?.checked)

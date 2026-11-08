@@ -1,26 +1,26 @@
 :root {
-  /* Цветовая палитра - Светлая тема (Спокойные тона, высокая контрастность) */
-  --bg-primary: #f8fafc;
+  /* Цветовая палитра - Светлая тема (Алый #D00000 и глубокий чёрный #000000) */
+  --bg-primary: #fbfbfb;
   --bg-surface: #ffffff;
-  --bg-surface-elevated: #f1f5f9;
-  --border-color: #e2e8f0;
-  --border-focus: #0d9488;
+  --bg-surface-elevated: #f4f4f5;
+  --border-color: #e4e4e7;
+  --border-focus: #D00000;
 
-  --text-main: #0f172a;
-  --text-muted: #475569;
-  --text-subtle: #64748b;
+  --text-main: #000000;
+  --text-muted: #27272a;
+  --text-subtle: #71717a;
 
-  /* Акцентные цвета: доверительный изумрудно-бирюзовый для экономии */
-  --primary: #0d9488;
-  --primary-hover: #0f766e;
-  --primary-light: #ccfbf1;
-  --primary-text: #115e59;
+  /* Акцентные цвета: алый #D00000 */
+  --primary: #D00000;
+  --primary-hover: #b00000;
+  --primary-light: #fee2e2;
+  --primary-text: #D00000;
 
-  --savings-green: #15803d;
-  --savings-bg: #dcfce7;
+  --savings-green: #D00000;
+  --savings-bg: #fee2e2;
   --warning-amber: #b45309;
   --warning-bg: #fef3c7;
-  --danger-red: #b91c1c;
+  --danger-red: #D00000;
   --danger-bg: #fee2e2;
 
   --radius-sm: 6px;
@@ -28,37 +28,38 @@
   --radius-lg: 16px;
   --radius-full: 9999px;
 
-  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.06);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.12), 0 2px 4px -2px rgb(0 0 0 / 0.08);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.15), 0 4px 6px -4px rgb(0 0 0 / 0.1);
 
   --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
 
 [data-theme="dark"] {
-  --bg-primary: #0f172a;
-  --bg-surface: #1e293b;
-  --bg-surface-elevated: #334155;
-  --border-color: #334155;
-  --border-focus: #2dd4bf;
+  /* Тёмная тема: глубокий чёрный #000000 и контрастный алый #D00000 */
+  --bg-primary: #000000;
+  --bg-surface: #0a0a0a;
+  --bg-surface-elevated: #161618;
+  --border-color: #27272a;
+  --border-focus: #D00000;
 
-  --text-main: #f8fafc;
-  --text-muted: #cbd5e1;
-  --text-subtle: #94a3b8;
+  --text-main: #ffffff;
+  --text-muted: #d4d4d8;
+  --text-subtle: #a1a1aa;
 
-  --primary: #2dd4bf;
-  --primary-hover: #14b8a6;
-  --primary-light: #134e4a;
-  --primary-text: #ccfbf1;
+  --primary: #D00000;
+  --primary-hover: #e61919;
+  --primary-light: #2b0303;
+  --primary-text: #ff4d4d;
 
-  --savings-green: #4ade80;
-  --savings-bg: #064e3b;
+  --savings-green: #ff3333;
+  --savings-bg: #2b0000;
   --warning-amber: #fbbf24;
-  --warning-bg: #451a03;
-  --danger-red: #f87171;
-  --danger-bg: #450a0a;
+  --warning-bg: #331d04;
+  --danger-red: #ff4d4d;
+  --danger-bg: #330505;
 
-  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.5);
-  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.5);
-  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.5);
+  --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.7);
+  --shadow-md: 0 4px 8px -1px rgb(0 0 0 / 0.8);
+  --shadow-lg: 0 10px 20px -3px rgb(0 0 0 / 0.9);
 }

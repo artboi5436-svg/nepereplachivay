@@ -14,150 +14,10 @@
   const DEFAULT_DATA = {
     mobile: [
   {
-    "id": "t2-my-online-msk",
-    "operator": "Т2",
-    "tariffName": "Мой онлайн",
-    "region": "Москва и Московская область",
-    "isDemo": true,
-    "updatedAt": "2026-11-01",
-    "monthlyPrice": 650,
-    "promoMonthlyPrice": 450,
-    "promoDurationMonths": 3,
-    "setupFee": 100,
-    "includedGb": 35,
-    "includedMinutes": 400,
-    "includedSms": 0,
-    "unlimitedApps": ["Telegram", "WhatsApp", "VK"],
-    "officialUrl": "https://msk.t2.ru/tariffs",
-    "isPartner": false,
-    "adErid": null,
-    "notes": "Плата за перенос номера (MNP) составляет 100 ₽ согласно ФЗ «О связи» [ПРОВЕРИТЬ: максимальный размер платы 100 ₽ по ст. 46 ФЗ «О связи»]."
-  },
-  {
-    "id": "t2-classic-spb",
-    "operator": "Т2",
-    "tariffName": "Мой разговор",
-    "region": "Санкт-Петербург и ЛО",
-    "isDemo": true,
-    "updatedAt": "2026-11-01",
-    "monthlyPrice": 450,
-    "promoMonthlyPrice": null,
-    "promoDurationMonths": 0,
-    "setupFee": 100,
-    "includedGb": 10,
-    "includedMinutes": 300,
-    "includedSms": 0,
-    "unlimitedApps": ["Telegram", "VK"],
-    "officialUrl": "https://spb.t2.ru/tariffs",
-    "isPartner": false,
-    "adErid": null,
-    "notes": "Базовый пакет для умеренного интернета."
-  },
-  {
-    "id": "mts-prosto-all",
-    "operator": "МТС",
-    "tariffName": "МТС Больше",
-    "region": "Все регионы",
-    "isDemo": true,
-    "updatedAt": "2026-11-01",
-    "monthlyPrice": 790,
-    "promoMonthlyPrice": 550,
-    "promoDurationMonths": 2,
-    "setupFee": 100,
-    "includedGb": 40,
-    "includedMinutes": 700,
-    "includedSms": 100,
-    "unlimitedApps": ["VK", "Telegram", "OK"],
-    "officialUrl": "https://mts.ru/personal/mobilnaya-svyaz/tarifi",
-    "isPartner": false,
-    "adErid": null,
-    "notes": "Популярный тариф для активных звонков и серфинга."
-  },
-  {
-    "id": "megafon-start-msk",
-    "operator": "МегаФон",
-    "tariffName": "МегаФон Минимум",
-    "region": "Москва и Московская область",
-    "isDemo": true,
-    "updatedAt": "2026-11-01",
-    "monthlyPrice": 590,
-    "promoMonthlyPrice": null,
-    "promoDurationMonths": 0,
-    "setupFee": 100,
-    "includedGb": 15,
-    "includedMinutes": 400,
-    "includedSms": 30,
-    "unlimitedApps": ["Мессенджеры"],
-    "officialUrl": "https://moscow.megafon.ru/tariffs",
-    "isPartner": false,
-    "adErid": null,
-    "notes": "Несгораемые остатки минут и гигабайтов при своевременной оплате."
-  },
-  {
-    "id": "beeline-up-msk",
-    "operator": "билайн",
-    "tariffName": "Тариф UP (План Базовый)",
-    "region": "Москва и Московская область",
-    "isDemo": true,
-    "updatedAt": "2026-11-01",
-    "monthlyPrice": 620,
-    "promoMonthlyPrice": 430,
-    "promoDurationMonths": 3,
-    "setupFee": 100,
-    "includedGb": 30,
-    "includedMinutes": 500,
-    "includedSms": 50,
-    "unlimitedApps": ["WhatsApp", "Telegram"],
-    "officialUrl": "https://moskva.beeline.ru/customers/products/mobile/tariffs",
-    "isPartner": false,
-    "adErid": null,
-    "notes": "Настраиваемый тариф-конструктор апперов."
-  },
-  {
-    "id": "tbank-mobile-all",
-    "operator": "Т-Мобайл",
-    "tariffName": "Конструктор (Оптимум)",
-    "region": "Все регионы",
-    "isDemo": true,
-    "updatedAt": "2026-11-01",
-    "monthlyPrice": 489,
-    "promoMonthlyPrice": 299,
-    "promoDurationMonths": 2,
-    "setupFee": 0,
-    "includedGb": 25,
-    "includedMinutes": 600,
-    "includedSms": 0,
-    "unlimitedApps": ["Мессенджеры", "Музыка"],
-    "officialUrl": "https://www.tbank.ru/mobile-operator",
-    "isPartner": true,
-    "adErid": "2VtzquDEMOerid9871",
-    "notes": "Бесплатная доставка SIM-карты, бонусные рубли при переносе номера."
-  },
-  {
-    "id": "sber-mobile-all",
-    "operator": "СберМобайл",
-    "tariffName": "Оптимальный",
-    "region": "Все регионы",
-    "isDemo": true,
-    "updatedAt": "2026-11-01",
-    "monthlyPrice": 450,
-    "promoMonthlyPrice": 315,
-    "promoDurationMonths": 3,
-    "setupFee": 0,
-    "includedGb": 20,
-    "includedMinutes": 400,
-    "includedSms": 50,
-    "unlimitedApps": ["Мессенджеры", "Сервисы Сбера"],
-    "officialUrl": "https://sbermobile.ru",
-    "isPartner": false,
-    "adErid": null,
-    "notes": "Скидка до 40% при наличии подписки СберПрайм."
-  },
-  {
     "id": "mks-optimal-lnr",
     "operator": "МКС",
     "tariffName": "Оптимальный",
-    "region": "Луганская Народная Республика (ЛНР)",
+    "region": "Все города ЛНР",
     "isDemo": true,
     "updatedAt": "2026-11-01",
     "monthlyPrice": 350,
@@ -171,13 +31,13 @@
     "officialUrl": "https://mks-gsm.ru/tariffs",
     "isPartner": false,
     "adErid": null,
-    "notes": "Основной региональный оператор ЛНР (код +7 959). Включает пакет минут на все номера РФ [ПРОВЕРИТЬ: условия звонков в другие регионы РФ и статус MNP]."
+    "notes": "Основной региональный оператор ЛНР (+7 959). Включает пакет минут на все номера РФ, безлимитные мессенджеры и стабильное покрытие по всей республике."
   },
   {
     "id": "mks-narodny-lnr",
     "operator": "МКС",
     "tariffName": "Народный (Эконом)",
-    "region": "Луганская Народная Республика (ЛНР)",
+    "region": "Все города ЛНР",
     "isDemo": true,
     "updatedAt": "2026-11-01",
     "monthlyPrice": 220,
@@ -191,13 +51,33 @@
     "officialUrl": "https://mks-gsm.ru/tariffs",
     "isPartner": false,
     "adErid": null,
-    "notes": "Экономичный тариф для базовых звонков и новостей в мессенджерах."
+    "notes": "Самый доступный тариф в ЛНР для повседневных звонков и чтения новостей в Telegram."
+  },
+  {
+    "id": "mks-maximum-lnr",
+    "operator": "МКС",
+    "tariffName": "Максимум",
+    "region": "Все города ЛНР",
+    "isDemo": true,
+    "updatedAt": "2026-11-01",
+    "monthlyPrice": 500,
+    "promoMonthlyPrice": 380,
+    "promoDurationMonths": 2,
+    "setupFee": 100,
+    "includedGb": 50,
+    "includedMinutes": 800,
+    "includedSms": 100,
+    "unlimitedApps": ["Telegram", "WhatsApp", "VK", "YouTube"],
+    "officialUrl": "https://mks-gsm.ru/tariffs",
+    "isPartner": false,
+    "adErid": null,
+    "notes": "Тариф для активных пользователей: 50 ГБ трафика, большой пакет минут по всей России и скидка в первые 2 месяца."
   },
   {
     "id": "7telecom-na-svyazi-lnr",
     "operator": "+7Телеком",
     "tariffName": "На связи",
-    "region": "Луганская Народная Республика (ЛНР)",
+    "region": "Все города ЛНР",
     "isDemo": true,
     "updatedAt": "2026-11-01",
     "monthlyPrice": 300,
@@ -211,13 +91,33 @@
     "officialUrl": "https://7telecom.ru/tariffs",
     "isPartner": false,
     "adErid": null,
-    "notes": "Оператор связи в новых регионах РФ. Безлимитные звонки внутри сети +7Телеком и МирТелеком."
+    "notes": "Оператор связи в новых регионах РФ. Бесплатные вызовы внутри сетей +7Телеком и МирТелеком."
+  },
+  {
+    "id": "7telecom-vyshe-kryshi-lnr",
+    "operator": "+7Телеком",
+    "tariffName": "Выше крыши",
+    "region": "Все города ЛНР",
+    "isDemo": true,
+    "updatedAt": "2026-11-01",
+    "monthlyPrice": 450,
+    "promoMonthlyPrice": 320,
+    "promoDurationMonths": 3,
+    "setupFee": 100,
+    "includedGb": 35,
+    "includedMinutes": 600,
+    "includedSms": 50,
+    "unlimitedApps": ["Мессенджеры", "Социальные сети"],
+    "officialUrl": "https://7telecom.ru/tariffs",
+    "isPartner": false,
+    "adErid": null,
+    "notes": "Выгодная цена по акции на первые 3 месяца: 35 ГБ и 600 минут на номера РФ."
   },
   {
     "id": "beeline-lnr-up",
     "operator": "билайн",
     "tariffName": "План для новых регионов",
-    "region": "Луганская Народная Республика (ЛНР)",
+    "region": "Все города ЛНР",
     "isDemo": true,
     "updatedAt": "2026-11-01",
     "monthlyPrice": 450,
@@ -232,120 +132,54 @@
     "isPartner": false,
     "adErid": null,
     "notes": "Федеральный оператор с собственной зоной покрытия и прямым роумингом по РФ без доплат."
-  }
-]
-,
-    internet: [
-  {
-    "id": "rtk-tech-200-msk",
-    "operator": "Ростелеком",
-    "tariffName": "Технологии доступа 200",
-    "region": "Москва и Московская область",
-    "isDemo": true,
-    "updatedAt": "2026-11-01",
-    "speedMbps": 200,
-    "monthlyPrice": 550,
-    "promoMonthlyPrice": 390,
-    "promoDurationMonths": 3,
-    "setupFee": 0,
-    "routerRentMonthly": 120,
-    "hasTv": false,
-    "tvChannelsCount": 0,
-    "officialUrl": "https://msk.rt.ru/internet",
-    "isPartner": false,
-    "adErid": null,
-    "earlyTerminationFeeTerms": "При расторжении договора до истечения 12 месяцев может взиматься компенсация за предоставленную скидку на подключение [ПРОВЕРИТЬ: законность условий неустойки в договоре по ст. 32 Закона РФ 'О защите прав потребителей'].",
-    "notes": "Оптический терминал или роутер можно использовать свой при совместимости с технологией GPON."
   },
   {
-    "id": "rtk-tech-500-spb",
-    "operator": "Ростелеком",
-    "tariffName": "Технологии доступа 500",
-    "region": "Санкт-Петербург и ЛО",
+    "id": "tbank-mobile-lnr",
+    "operator": "Т-Мобайл",
+    "tariffName": "Конструктор (ЛНР)",
+    "region": "Все города ЛНР",
     "isDemo": true,
     "updatedAt": "2026-11-01",
-    "speedMbps": 500,
-    "monthlyPrice": 700,
-    "promoMonthlyPrice": 490,
-    "promoDurationMonths": 3,
+    "monthlyPrice": 420,
+    "promoMonthlyPrice": 299,
+    "promoDurationMonths": 2,
     "setupFee": 0,
-    "routerRentMonthly": 150,
-    "hasTv": false,
-    "tvChannelsCount": 0,
-    "officialUrl": "https://spb.rt.ru/internet",
-    "isPartner": false,
-    "adErid": null,
-    "earlyTerminationFeeTerms": "Проверьте договор на наличие пункта об обязательном минимальном сроке пользования [ПРОВЕРИТЬ].",
-    "notes": "Высокоскоростной тариф для стриминга и игр."
+    "includedGb": 25,
+    "includedMinutes": 500,
+    "includedSms": 0,
+    "unlimitedApps": ["Мессенджеры"],
+    "officialUrl": "https://www.tbank.ru/mobile-operator",
+    "isPartner": true,
+    "adErid": "2VtzquDEMOerid9871",
+    "notes": "Быстрое подключение через eSIM без необходимости посещать салон связи, запись звонков и секретарь."
   },
   {
-    "id": "domru-speed-300-all",
-    "operator": "Дом.ру",
-    "tariffName": "Мега Скорость 300",
-    "region": "Все регионы",
+    "id": "mts-lnr-fit",
+    "operator": "МТС",
+    "tariffName": "МТС Больше (ЛНР)",
+    "region": "Все города ЛНР",
     "isDemo": true,
     "updatedAt": "2026-11-01",
-    "speedMbps": 300,
-    "monthlyPrice": 650,
+    "monthlyPrice": 590,
     "promoMonthlyPrice": 450,
     "promoDurationMonths": 2,
     "setupFee": 100,
-    "routerRentMonthly": 130,
-    "hasTv": false,
-    "tvChannelsCount": 0,
-    "officialUrl": "https://dom.ru/internet",
+    "includedGb": 35,
+    "includedMinutes": 600,
+    "includedSms": 100,
+    "unlimitedApps": ["VK", "Telegram"],
+    "officialUrl": "https://mts.ru",
     "isPartner": false,
     "adErid": null,
-    "earlyTerminationFeeTerms": "При расторжении требуется вернуть арендованное оборудование по акту приема-передачи.",
-    "notes": "Стабильное соединение Ethernet."
-  },
-  {
-    "id": "mts-home-200-all",
-    "operator": "МТС Домашний",
-    "tariffName": "ФИТ 200 Мбит/с",
-    "region": "Все регионы",
-    "isDemo": true,
-    "updatedAt": "2026-11-01",
-    "speedMbps": 200,
-    "monthlyPrice": 500,
-    "promoMonthlyPrice": 350,
-    "promoDurationMonths": 3,
-    "setupFee": 0,
-    "routerRentMonthly": 99,
-    "hasTv": false,
-    "tvChannelsCount": 0,
-    "officialUrl": "https://mts.ru/personal/dlya-doma/tarifi",
-    "isPartner": false,
-    "adErid": null,
-    "earlyTerminationFeeTerms": "Оборудование передается в аренду, требуется сдать в салон при расторжении.",
-    "notes": "Скидка до 20% при объединении с мобильным тарифом МТС (конвергент)."
-  },
-  {
-    "id": "beeline-home-100-msk",
-    "operator": "билайн Домашний",
-    "tariffName": "Для дома 100",
-    "region": "Москва и Московская область",
-    "isDemo": true,
-    "updatedAt": "2026-11-01",
-    "speedMbps": 100,
-    "monthlyPrice": 450,
-    "promoMonthlyPrice": null,
-    "promoDurationMonths": 0,
-    "setupFee": 0,
-    "routerRentMonthly": 100,
-    "hasTv": false,
-    "tvChannelsCount": 0,
-    "officialUrl": "https://moskva.beeline.ru/customers/products/home/internet",
-    "isPartner": false,
-    "adErid": null,
-    "earlyTerminationFeeTerms": "Без штрафов за досрочное расторжение.",
-    "notes": "Экономичный тариф для серфинга и работы с документами."
-  },
+    "notes": "Федеральный тариф с работой в ЛНР, остатки минут и гигабайтов переносятся на следующий месяц."
+  }
+],
+    internet: [
   {
     "id": "luganet-start-100-lnr",
     "operator": "Луганет",
     "tariffName": "Старт 100",
-    "region": "Луганская Народная Республика (ЛНР)",
+    "region": "Все города ЛНР",
     "isDemo": true,
     "updatedAt": "2026-11-01",
     "speedMbps": 100,
@@ -359,14 +193,35 @@
     "officialUrl": "https://luganet.ru",
     "isPartner": false,
     "adErid": null,
-    "earlyTerminationFeeTerms": "При расторжении договора требуется вернуть арендованное абонентское оборудование.",
-    "notes": "Крупнейший интернет-провайдер Луганска и городов республики (GPON / Ethernet)."
+    "earlyTerminationFeeTerms": "При расторжении договора требуется вернуть арендованное оборудование без штрафов.",
+    "notes": "Крупнейший интернет-провайдер ЛНР (Луганск, Алчевск, Краснодон, Свердловск, Стаханов, Ровеньки, Антрацит, Брянка, Красный Луч)."
+  },
+  {
+    "id": "luganet-comfort-200-lnr",
+    "operator": "Луганет",
+    "tariffName": "Комфорт 200",
+    "region": "Все города ЛНР",
+    "isDemo": true,
+    "updatedAt": "2026-11-01",
+    "speedMbps": 200,
+    "monthlyPrice": 550,
+    "promoMonthlyPrice": 390,
+    "promoDurationMonths": 3,
+    "setupFee": 100,
+    "routerRentMonthly": 100,
+    "hasTv": true,
+    "tvChannelsCount": 80,
+    "officialUrl": "https://luganet.ru",
+    "isPartner": false,
+    "adErid": null,
+    "earlyTerminationFeeTerms": "Без скрытых штрафов при соблюдении стандартных условий договора.",
+    "notes": "Скоростной домашний интернет 200 Мбит/с со скидкой на первые 3 месяца и интерактивным ТВ."
   },
   {
     "id": "luganet-comfort-300-lnr",
     "operator": "Луганет",
     "tariffName": "Комфорт 300 (GPON)",
-    "region": "Луганская Народная Республика (ЛНР)",
+    "region": "Все города ЛНР",
     "isDemo": true,
     "updatedAt": "2026-11-01",
     "speedMbps": 300,
@@ -380,14 +235,14 @@
     "officialUrl": "https://luganet.ru",
     "isPartner": false,
     "adErid": null,
-    "earlyTerminationFeeTerms": "Без скрытых штрафов при возврате оборудования.",
-    "notes": "Высокоскоростной оптический интернет для частного сектора и многоквартирных домов."
+    "earlyTerminationFeeTerms": "Без скрытых комиссий при возврате оборудования по акту.",
+    "notes": "Высокоскоростной оптический интернет GPON для квартир и частного сектора с расширенным ТВ."
   },
   {
     "id": "ltk-home-100-lnr",
     "operator": "Луганские коммуникации (ЛТК)",
     "tariffName": "Домашний 100",
-    "region": "Луганская Народная Республика (ЛНР)",
+    "region": "Все города ЛНР",
     "isDemo": true,
     "updatedAt": "2026-11-01",
     "speedMbps": 100,
@@ -402,10 +257,93 @@
     "isPartner": false,
     "adErid": null,
     "earlyTerminationFeeTerms": "Стандартный договор на оказание услуг связи без обязательной минимальной отработки.",
-    "notes": "Городская фиксированная связь и проводной интернет."
+    "notes": "Городская фиксированная связь и проводной интернет от республиканского оператора ЛТК."
+  },
+  {
+    "id": "ltk-home-200-lnr",
+    "operator": "Луганские коммуникации (ЛТК)",
+    "tariffName": "Домашний 200",
+    "region": "Все города ЛНР",
+    "isDemo": true,
+    "updatedAt": "2026-11-01",
+    "speedMbps": 200,
+    "monthlyPrice": 520,
+    "promoMonthlyPrice": 380,
+    "promoDurationMonths": 3,
+    "setupFee": 100,
+    "routerRentMonthly": 90,
+    "hasTv": false,
+    "tvChannelsCount": 0,
+    "officialUrl": "https://ltk.su",
+    "isPartner": false,
+    "adErid": null,
+    "earlyTerminationFeeTerms": "Без штрафов за досрочное расторжение договора.",
+    "notes": "Оптический интернет 200 Мбит/с со стабильной скоростью в часы пик."
+  },
+  {
+    "id": "magistr-skynet-alchevsk",
+    "operator": "Магистр-Телеком / Скайнет",
+    "tariffName": "Городской 100",
+    "region": "Алчевск",
+    "isDemo": true,
+    "updatedAt": "2026-11-01",
+    "speedMbps": 100,
+    "monthlyPrice": 420,
+    "promoMonthlyPrice": null,
+    "promoDurationMonths": 0,
+    "setupFee": 0,
+    "routerRentMonthly": 80,
+    "hasTv": true,
+    "tvChannelsCount": 60,
+    "officialUrl": "https://luganet.ru",
+    "isPartner": false,
+    "adErid": null,
+    "earlyTerminationFeeTerms": "Без штрафов.",
+    "notes": "Популярный локальный тариф в городах Алчевск, Стаханов, Брянка."
+  },
+  {
+    "id": "sverdlovsk-optika-200",
+    "operator": "Свердловск-Телеком",
+    "tariffName": "Оптика 200",
+    "region": "Свердловск",
+    "isDemo": true,
+    "updatedAt": "2026-11-01",
+    "speedMbps": 200,
+    "monthlyPrice": 500,
+    "promoMonthlyPrice": 350,
+    "promoDurationMonths": 2,
+    "setupFee": 0,
+    "routerRentMonthly": 90,
+    "hasTv": false,
+    "tvChannelsCount": 0,
+    "officialUrl": "https://ltk.su",
+    "isPartner": false,
+    "adErid": null,
+    "earlyTerminationFeeTerms": "Возврат оборудования без дополнительных платежей.",
+    "notes": "Локальная сеть в городах Свердловск (Должанск) и Ровеньки."
+  },
+  {
+    "id": "severodonetsk-online-100",
+    "operator": "Северодонецк Онлайн",
+    "tariffName": "Восстановление 100",
+    "region": "Северодонецк",
+    "isDemo": true,
+    "updatedAt": "2026-11-01",
+    "speedMbps": 100,
+    "monthlyPrice": 450,
+    "promoMonthlyPrice": null,
+    "promoDurationMonths": 0,
+    "setupFee": 0,
+    "routerRentMonthly": 100,
+    "hasTv": false,
+    "tvChannelsCount": 0,
+    "officialUrl": "https://luganet.ru",
+    "isPartner": false,
+    "adErid": null,
+    "earlyTerminationFeeTerms": "Без штрафов.",
+    "notes": "Подключение жителей Северодонецка, Лисичанска и Рубежного к оптоволоконной сети."
   }
-]
-,
+],
     subscriptions: [
   {
     "id": "yandex-plus",
@@ -876,10 +814,14 @@
     const userGb = Number(user.gb) || 0;
     const userMin = Number(user.minutes) || 0;
     const userSms = Number(user.sms) || 0;
-    const userRegion = user.region || 'Все регионы';
+    const userCity = user.region || 'Все города ЛНР';
 
     const matchingTariffs = tariffs.filter(t => {
-      const regionMatch = t.region === userRegion || t.region === 'Все регионы' || userRegion === 'Все регионы';
+      const regionMatch = t.region === userCity || 
+                          t.region === 'Все города ЛНР' || 
+                          userCity === 'Все города ЛНР' ||
+                          t.region === 'Луганская Народная Республика (ЛНР)' ||
+                          userCity === 'Луганская Народная Республика (ЛНР)';
       const gbMatch = Number(t.includedGb) >= userGb;
       const minMatch = Number(t.includedMinutes) >= userMin;
       const smsMatch = userSms === 0 || Number(t.includedSms) >= userSms;
@@ -945,11 +887,15 @@
     const currentMonthly = Number(user.currentPrice) || 0;
     const currentAnnualTCO = currentMonthly * 12;
     const userSpeed = Number(user.minSpeedMbps) || 100;
-    const userRegion = user.region || 'Все регионы';
+    const userCity = user.region || 'Все города ЛНР';
     const needsRouter = Boolean(user.needsRouter);
 
     const matchingTariffs = tariffs.filter(t => {
-      const regionMatch = t.region === userRegion || t.region === 'Все регионы' || userRegion === 'Все регионы';
+      const regionMatch = t.region === userCity || 
+                          t.region === 'Все города ЛНР' || 
+                          userCity === 'Все города ЛНР' ||
+                          t.region === 'Луганская Народная Республика (ЛНР)' ||
+                          userCity === 'Луганская Народная Республика (ЛНР)';
       const speedMatch = Number(t.speedMbps) >= userSpeed;
       return regionMatch && speedMatch;
     });
@@ -1348,7 +1294,7 @@
         mobile: {
           skipped: false,
           operator: 'МКС',
-          region: 'Луганская Народная Республика (ЛНР)',
+          region: 'Луганск',
           currentPrice: 500,
           gb: 25,
           minutes: 400,
@@ -1357,7 +1303,7 @@
         internet: {
           skipped: false,
           operator: 'Луганет',
-          region: 'Луганская Народная Республика (ЛНР)',
+          region: 'Луганск',
           currentPrice: 650,
           minSpeedMbps: 200,
           needsRouter: false
@@ -1547,7 +1493,7 @@
     if (step === 1) {
       return {
         operator: document.getElementById('mob-operator')?.value || 'МКС',
-        region: document.getElementById('mob-region')?.value || 'Все регионы',
+        region: document.getElementById('mob-region')?.value || 'Луганск',
         currentPrice: Number(document.getElementById('mob-price')?.value) || 0,
         gb: Number(document.getElementById('mob-gb')?.value) || 0,
         minutes: Number(document.getElementById('mob-min')?.value) || 0,
@@ -1556,7 +1502,7 @@
     } else if (step === 2) {
       return {
         operator: document.getElementById('net-operator')?.value || 'Луганет',
-        region: document.getElementById('net-region')?.value || 'Все регионы',
+        region: document.getElementById('net-region')?.value || 'Луганск',
         currentPrice: Number(document.getElementById('net-price')?.value) || 0,
         minSpeedMbps: Number(document.getElementById('net-speed')?.value) || 100,
         needsRouter: Boolean(document.getElementById('net-router-rent')?.checked)

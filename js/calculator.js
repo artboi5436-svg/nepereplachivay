@@ -55,11 +55,17 @@ export function findBestMobileTariff(user, tariffs = []) {
   const userGb = Number(user.gb) || 0;
   const userMin = Number(user.minutes) || 0;
   const userSms = Number(user.sms) || 0;
-  const userRegion = user.region || 'Все регионы';
+  const userRegion = user.region || 'Все города ЛНР';
 
   // Фильтруем тарифы по региону и достаточности пакета
   const matchingTariffs = tariffs.filter(t => {
-    const regionMatch = t.region === userRegion || t.region === 'Все регионы' || userRegion === 'Все регионы';
+    const regionMatch = t.region === userRegion || 
+                        t.region === 'Все города ЛНР' || 
+                        userRegion === 'Все города ЛНР' ||
+                        t.region === 'Все регионы' || 
+                        userRegion === 'Все регионы' ||
+                        t.region === 'Луганская Народная Республика (ЛНР)' ||
+                        userRegion === 'Луганская Народная Республика (ЛНР)';
     const gbMatch = Number(t.includedGb) >= userGb;
     const minMatch = Number(t.includedMinutes) >= userMin;
     const smsMatch = userSms === 0 || Number(t.includedSms) >= userSms;
@@ -135,11 +141,17 @@ export function findBestInternetTariff(user, tariffs = []) {
   const currentMonthly = Number(user.currentPrice) || 0;
   const currentAnnualTCO = currentMonthly * 12;
   const userSpeed = Number(user.minSpeedMbps) || 100;
-  const userRegion = user.region || 'Все регионы';
+  const userRegion = user.region || 'Все города ЛНР';
   const needsRouter = Boolean(user.needsRouter);
 
   const matchingTariffs = tariffs.filter(t => {
-    const regionMatch = t.region === userRegion || t.region === 'Все регионы' || userRegion === 'Все регионы';
+    const regionMatch = t.region === userRegion || 
+                        t.region === 'Все города ЛНР' || 
+                        userRegion === 'Все города ЛНР' ||
+                        t.region === 'Все регионы' || 
+                        userRegion === 'Все регионы' ||
+                        t.region === 'Луганская Народная Республика (ЛНР)' ||
+                        userRegion === 'Луганская Народная Республика (ЛНР)';
     const speedMatch = Number(t.speedMbps) >= userSpeed;
     return regionMatch && speedMatch;
   });

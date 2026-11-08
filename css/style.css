@@ -243,7 +243,7 @@ a:hover {
 .form-input:focus, .form-select:focus {
   outline: none;
   border-color: var(--border-focus);
-  box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.15);
+  box-shadow: 0 0 0 3px rgba(208, 0, 0, 0.15);
 }
 
 .range-slider-wrap {
@@ -370,7 +370,7 @@ a:hover {
 
 .sub-item-card.active {
   border-color: var(--primary);
-  background-color: rgba(13, 148, 136, 0.04);
+  background-color: rgba(208, 0, 0, 0.05);
 }
 
 .sub-header-row {
@@ -489,7 +489,7 @@ a:hover {
 
 .insurance-item-card.selected {
   border-color: var(--primary);
-  background-color: rgba(13, 148, 136, 0.04);
+  background-color: rgba(208, 0, 0, 0.05);
 }
 
 .ins-desc {
@@ -623,7 +623,7 @@ a:hover {
 
 .comp-col.target {
   border-color: var(--primary);
-  background-color: rgba(13, 148, 136, 0.03);
+  background-color: rgba(208, 0, 0, 0.04);
 }
 
 .comp-label {

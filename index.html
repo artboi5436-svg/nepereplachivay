@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Не переплачивай — честный расчёт экономии на связи, интернете и подписках</title>
-  <meta name="description" content="Бесплатный сервис оптимизации ежемесячных расходов: мобильная связь, домашний интернет, подписки. Считаем чистую экономию за 12 месяцев прямо в браузере без регистрации.">
+  <title>Не переплачивай — честный расчёт экономии на связи, интернете и подписках в ЛНР</title>
+  <meta name="description" content="Бесплатный сервис оптимизации ежемесячных расходов: мобильная связь, домашний интернет, подписки в городах ЛНР. Считаем чистую экономию за 12 месяцев прямо в браузере.">
   <link rel="stylesheet" href="css/variables.css">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/print.css" media="print">
@@ -13,19 +13,19 @@
 
   <!-- Баннер демо-данных -->
   <aside class="demo-banner" role="alert">
-    ⚠️ <strong>ДЕМО-ДАННЫЕ:</strong> Тарифы и цены в каталоге являются демонстрационными. Перед переходом обязательно проверяйте условия на официальных сайтах операторов.
+    ⚠️ <strong>ТАРИФЫ ДЛЯ ЛНР:</strong> Актуальные тарифы операторов связи и интернет-провайдеров в городах Луганской Народной Республики.
   </aside>
 
   <!-- Шапка сайта -->
   <header class="site-header">
     <div class="header-container">
       <a href="#calculator" class="site-logo" data-tab="calculator">
-        Не переплачивай <span class="badge">Калькулятор</span>
+        Не переплачивай <span class="badge">ЛНР</span>
       </a>
       <nav class="header-nav">
         <a href="#calculator" class="nav-link active" data-tab="calculator">Калькулятор</a>
         <a href="#how-we-calculate" class="nav-link" data-tab="how-we-calculate">Как мы считаем</a>
-        <a href="#how-we-earn" class="nav-link" data-tab="how-we-earn">Как мы зарабатываем</a>
+        <a href="#how-we-earn" class="nav-link" data-tab="how-we-earn">Как мы планируем зарабатывать</a>
         <button type="button" class="theme-toggle-btn" id="theme-toggle" title="Переключить тему" aria-label="Сменить тему">
           <span id="theme-icon">🌙</span>
         </button>
@@ -41,7 +41,7 @@
 
       <!-- Вводный блок -->
       <section class="hero-intro">
-        <h1>Хватит переплачивать за связь и подписки</h1>
+        <h1>Хватит переплачивать за связь и интернет в ЛНР</h1>
         <p>Введите, сколько вы платите сейчас — сервис честно посчитает выгоду за 12 месяцев с учётом скрытых условий и акций, и поможет перейти без стресса.</p>
         <div class="privacy-pill">
           🔒 <span>Без регистрации. Расчёты и данные остаются только в вашем браузере (152-ФЗ)</span>
@@ -67,33 +67,41 @@
           <p class="step-subtitle">Узнаем, сколько вы тратите сейчас и сколько минут и гигабайт вам действительно нужно.</p>
 
           <div class="form-group">
-            <label for="mob-region">Ваш регион</label>
+            <label for="mob-region">Ваш город (ЛНР)</label>
             <select id="mob-region" class="form-select">
-              <option value="Все регионы">Все регионы РФ</option>
-              <option value="Москва и Московская область">Москва и Московская область</option>
-              <option value="Санкт-Петербург и ЛО">Санкт-Петербург и ЛО</option>
-              <option value="Луганская Народная Республика (ЛНР)" selected>Луганская Народная Республика (ЛНР)</option>
+              <option value="Все города ЛНР">Все города ЛНР</option>
+              <option value="Луганск" selected>Луганск</option>
+              <option value="Алчевск">Алчевск</option>
+              <option value="Краснодон">Краснодон</option>
+              <option value="Свердловск">Свердловск (Должанск)</option>
+              <option value="Стаханов">Стаханов (Кадиевка)</option>
+              <option value="Ровеньки">Ровеньки</option>
+              <option value="Антрацит">Антрацит</option>
+              <option value="Брянка">Брянка</option>
+              <option value="Красный Луч">Красный Луч (Хрустальный)</option>
+              <option value="Северодонецк">Северодонецк</option>
+              <option value="Лисичанск">Лисичанск</option>
+              <option value="Рубежное">Рубежное</option>
+              <option value="Первомайск">Первомайск</option>
             </select>
           </div>
 
           <div class="form-group">
-            <label for="mob-operator">Текущий оператор</label>
+            <label for="mob-operator">Текущий оператор связи</label>
             <select id="mob-operator" class="form-select">
               <option value="МКС" selected>МКС (Лугаком)</option>
               <option value="+7Телеком">+7Телеком</option>
               <option value="билайн">билайн</option>
               <option value="МТС">МТС</option>
-              <option value="МегаФон">МегаФон</option>
-              <option value="Т2">Т2</option>
               <option value="Т-Мобайл">Т-Мобайл</option>
-              <option value="СберМобайл">СберМобайл</option>
+              <option value="МегаФон">МегаФон</option>
               <option value="Другой">Другой оператор</option>
             </select>
           </div>
 
           <div class="form-group">
             <label for="mob-price">Сколько вы платите в месяц (₽)</label>
-            <input type="number" id="mob-price" class="form-input" min="0" step="10" value="650" placeholder="Например: 650">
+            <input type="number" id="mob-price" class="form-input" min="0" step="10" value="500" placeholder="Например: 500">
           </div>
 
           <div class="form-group">
@@ -131,24 +139,33 @@
           <p class="step-subtitle">Проверим, не переплачиваете ли вы за архивную скорость или скрытую аренду оборудования.</p>
 
           <div class="form-group">
-            <label for="net-region">Регион подключения</label>
+            <label for="net-region">Город подключения (ЛНР)</label>
             <select id="net-region" class="form-select">
-              <option value="Все регионы">Все регионы РФ</option>
-              <option value="Москва и Московская область">Москва и Московская область</option>
-              <option value="Санкт-Петербург и ЛО">Санкт-Петербург и ЛО</option>
-              <option value="Луганская Народная Республика (ЛНР)" selected>Луганская Народная Республика (ЛНР)</option>
+              <option value="Все города ЛНР">Все города ЛНР</option>
+              <option value="Луганск" selected>Луганск</option>
+              <option value="Алчевск">Алчевск</option>
+              <option value="Краснодон">Краснодон</option>
+              <option value="Свердловск">Свердловск (Должанск)</option>
+              <option value="Стаханов">Стаханов (Кадиевка)</option>
+              <option value="Ровеньки">Ровеньки</option>
+              <option value="Антрацит">Антрацит</option>
+              <option value="Брянка">Брянка</option>
+              <option value="Красный Луч">Красный Луч (Хрустальный)</option>
+              <option value="Северодонецк">Северодонецк</option>
+              <option value="Лисичанск">Лисичанск</option>
+              <option value="Рубежное">Рубежное</option>
+              <option value="Первомайск">Первомайск</option>
             </select>
           </div>
 
           <div class="form-group">
             <label for="net-operator">Текущий интернет-провайдер</label>
             <select id="net-operator" class="form-select">
-              <option value="Луганет" selected>Луганет</option>
+              <option value="Луганет" selected>Луганет (LugaNet)</option>
               <option value="Луганские коммуникации (ЛТК)">Луганские коммуникации (ЛТК)</option>
-              <option value="Ростелеком">Ростелеком</option>
-              <option value="МТС Домашний">МТС Домашний</option>
-              <option value="билайн Домашний">билайн Домашний</option>
-              <option value="Дом.ру">Дом.ру</option>
+              <option value="Магистр-Телеком / Скайнет">Магистр-Телеком / Скайнет</option>
+              <option value="Свердловск-Телеком">Свердловск-Телеком</option>
+              <option value="Северодонецк Онлайн">Северодонецк Онлайн</option>
               <option value="Другой">Другой провайдер</option>
             </select>
           </div>
@@ -163,7 +180,7 @@
             <select id="net-speed" class="form-select">
               <option value="100">100 Мбит/с (достаточно для серфинга и Full HD видео)</option>
               <option value="200" selected>200–300 Мбит/с (для семьи, 4K видео и удалённой работы)</option>
-              <option value="500">500+ Мбит/с (для тяжелых скачиваний и онлайн-игр)</option>
+              <option value="300">300+ Мбит/с (для тяжелых скачиваний и онлайн-игр)</option>
             </select>
           </div>
 
@@ -255,7 +272,7 @@
           </div>
           <p class="banner-note" id="grand-banner-note"></p>
           <small style="display:block; margin-top:10px; color:var(--text-subtle);">
-            📅 Тарифы проверены по состоянию на ноябрь 2026. Условия могут меняться операторами, всегда сверяйте перед заключением договора.
+            📅 Тарифы по городам ЛНР проверены по состоянию на ноябрь 2026. Условия могут меняться операторами, всегда сверяйте перед заключением договора.
           </small>
         </div>
 
@@ -357,9 +374,9 @@
       </div>
     </article>
 
-    <!-- Вкладка 3: Как мы зарабатываем -->
+    <!-- Вкладка 3: Как мы планируем зарабатывать -->
     <article id="view-how-we-earn" class="step-card doc-view hidden">
-      <h1>Как мы зарабатываем и почему нам можно доверять</h1>
+      <h1>Как мы планируем зарабатывать и почему нам можно доверять</h1>
       <p class="step-subtitle">Мы выступаем на стороне потребителя. Доверие пользователей — наш главный актив.</p>
 
       <section style="margin-bottom: 24px;">
@@ -370,12 +387,12 @@
 
       <section style="margin-bottom: 24px;">
         <h3>2. Партнёрские ссылки и маркировка рекламы (erid)</h3>
-        <p>Некоторые ссылки на подключение могут быть партнёрскими: если вы перейдёте по такой ссылке и оформите тариф, оператор может выплатить сервису небольшое вознаграждение на оплату хостинга и поддержку проекта.</p>
+        <p>В будущем некоторые ссылки на подключение могут стать партнёрскими: если вы перейдёте по такой ссылке и оформите тариф, оператор сможет выплатить сервису небольшое вознаграждение на оплату хостинга и поддержку проекта.</p>
         <p>В строгом соответствии с требованиями Федерального закона «О рекламе» № 38-ФЗ (ст. 18.1):</p>
         <ul>
-          <li>Любая партнёрская ссылка явно помечена плашкой <strong>«Реклама»</strong>;</li>
+          <li>Любая партнёрская ссылка явно помечается плашкой <strong>«Реклама»</strong>;</li>
           <li>В карточке тарифа отображается уникальный идентификатор интернет-рекламы — <strong>токен erid</strong>;</li>
-          <li>Наличие или отсутствие партнёрской интеграции никак не влияет на формулу расчёта экономии.</li>
+          <li>Наличие или отсутствие партнёрской интеграции никогда не повлияет на честность формулы расчёта.</li>
         </ul>
       </section>
 
@@ -437,12 +454,12 @@
   <footer class="site-footer">
     <div class="footer-container">
       <div>
-        <strong>«Не переплачивай»</strong> © 2026. Сервис честной потребительской оптимизации расходов.
+        <strong>«Не переплачивай»</strong> © 2026. Сервис честной потребительской оптимизации расходов в ЛНР.
       </div>
       <div class="footer-links">
         <a href="#calculator" class="footer-nav-link" data-tab="calculator">Калькулятор</a>
         <a href="#how-we-calculate" class="footer-nav-link" data-tab="how-we-calculate">Как мы считаем</a>
-        <a href="#how-we-earn" class="footer-nav-link" data-tab="how-we-earn">Как мы зарабатываем</a>
+        <a href="#how-we-earn" class="footer-nav-link" data-tab="how-we-earn">Как мы планируем зарабатывать</a>
         <a href="#privacy" class="footer-nav-link" data-tab="privacy">Конфиденциальность</a>
       </div>
     </div>
