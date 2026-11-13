@@ -52,36 +52,95 @@ export function calculateTariffTCO12(tariff, options = {}) {
 export function findBestMobileTariff(user, tariffs = []) {
   const currentMonthly = Number(user.currentPrice) || 0;
   const currentAnnualTCO = currentMonthly * 12;
-  const userGb = Number(user.gb) || 0;
-  const userMin = Number(user.minutes) || 0;
-  const userSms = Number(user.sms) || 0;
+
+  const isUnlimitedGb = Boolean(user.isUnlimitedGb || user.unlimitedGb || Number(user.gb) >= 999);
+  const isUnlimitedMin = Boolean(user.isUnlimitedMinutes || user.unlimitedMinutes || Number(user.minutes) >= 5000);
+  const isUnlimitedSms = Boolean(user.isUnlimitedSms || user.unlimitedSms);
+
+  const userGb = isUnlimitedGb ? 9999 : (Number(user.gb) || 0);
+  const userMin = isUnlimitedMin ? 9999 : (Number(user.minutes) || 0);
+  const userSms = isUnlimitedSms ? 100 : (Number(user.sms) || 0);
   const userRegion = user.region || 'Все города ЛНР';
 
-  // Фильтруем тарифы по региону и достаточности пакета
-  const matchingTariffs = tariffs.filter(t => {
-    const regionMatch = t.region === userRegion || 
-                        t.region === 'Все города ЛНР' || 
-                        userRegion === 'Все города ЛНР' ||
-                        t.region === 'Все регионы' || 
-                        userRegion === 'Все регионы' ||
-                        t.region === 'Луганская Народная Республика (ЛНР)' ||
-                        userRegion === 'Луганская Народная Республика (ЛНР)';
-    const gbMatch = Number(t.includedGb) >= userGb;
-    const minMatch = Number(t.includedMinutes) >= userMin;
-    const smsMatch = userSms === 0 || Number(t.includedSms) >= userSms;
-    return regionMatch && gbMatch && minMatch && smsMatch;
+  // Фильтруем тарифы по региону
+  const regionalTariffs = tariffs.filter(t => {
+    return t.region === userRegion || 
+           t.region === 'Все города ЛНР' || 
+           userRegion === 'Все города ЛНР' ||
+           t.region === 'Все регионы' || 
+           userRegion === 'Все регионы' ||
+           t.region === 'Луганская Народная Республика (ЛНР)' ||
+           userRegion === 'Луганская Народная Республика (ЛНР)';
   });
 
+  // Строгое соответствие критериям
+  const matchingTariffs = regionalTariffs.filter(t => {
+    const gbMatch = isUnlimitedGb
+      ? (Boolean(t.isUnlimitedGb) || Number(t.includedGb) >= 999)
+      : (Number(t.includedGb) >= userGb);
+
+    const minMatch = isUnlimitedMin
+      ? (Boolean(t.isUnlimitedMinutes) || Number(t.includedMinutes) >= 1500)
+      : (Number(t.includedMinutes) >= userMin);
+
+    const smsMatch = userSms === 0 || Number(t.includedSms) >= userSms;
+
+    return gbMatch && minMatch && smsMatch;
+  });
+
+  // Подбор близких тарифов (по максимальному объёму пакетов и выгодности)
+  const scoredRegional = regionalTariffs.map(t => {
+    const tco = calculateTariffTCO12(t);
+    const tGb = Boolean(t.isUnlimitedGb) ? 9999 : (Number(t.includedGb) || 0);
+    const tMin = Boolean(t.isUnlimitedMinutes) ? 9999 : (Number(t.includedMinutes) || 0);
+
+    const targetGb = isUnlimitedGb ? 100 : Math.max(1, userGb);
+    const targetMin = isUnlimitedMin ? 1000 : Math.max(1, userMin);
+
+    const gbRatio = Math.min(2.0, tGb / targetGb);
+    const minRatio = Math.min(2.0, tMin / targetMin);
+    const unlimBonus = (t.isUnlimitedGb ? 1.0 : 0) + (t.isUnlimitedMinutes ? 0.5 : 0);
+    const appsBonus = (Array.isArray(t.unlimitedApps) && t.unlimitedApps.length > 0) ? (t.unlimitedApps.length * 0.1) : 0;
+    const priceScore = Math.max(0.1, 1 - (tco.tco12 / 15000));
+
+    const proximityScore = (gbRatio * 0.45) + (minRatio * 0.35) + unlimBonus + appsBonus + (priceScore * 0.2);
+
+    return {
+      tariff: t,
+      ...tco,
+      proximityScore,
+      savingsYear: currentAnnualTCO - tco.tco12,
+      savingsMonth: Math.round((currentAnnualTCO - tco.tco12) / 12)
+    };
+  });
+
+  scoredRegional.sort((a, b) => b.proximityScore - a.proximityScore || a.tco12 - b.tco12);
+
+  // Выбираем до 3 близких альтернатив от разных операторов
+  const closestTariffs = [];
+  const seenOps = new Set();
+  for (const item of scoredRegional) {
+    if (!seenOps.has(item.tariff.operator) || seenOps.size >= 3) {
+      closestTariffs.push(item);
+      seenOps.add(item.tariff.operator);
+      if (closestTariffs.length >= 3) break;
+    }
+  }
+
+  // Если нет точного совпадения по критериям
   if (matchingTariffs.length === 0) {
     return {
       hasMatch: false,
+      isClosestMatch: true,
       currentMonthly,
       currentAnnualTCO,
-      bestTariff: null,
+      bestTariff: closestTariffs.length > 0 ? closestTariffs[0].tariff : null,
       savingsYear: 0,
       savingsMonth: 0,
       isCurrentOptimal: true,
-      reason: 'В базе нет альтернативных тарифов с таким большим объёмом минут или гигабайт.'
+      closestTariffs,
+      allAlternatives: scoredRegional,
+      reason: 'В базе нет тарифов, которые одновременно полностью покрывают все заданные максимальные критерии. Ниже представлены наиболее близкие тарифы с максимальными пакетами.'
     };
   }
 
@@ -100,10 +159,31 @@ export function findBestMobileTariff(user, tariffs = []) {
   scored.sort((a, b) => a.tco12 - b.tco12);
   const best = scored[0];
 
+  // Другие варианты от разных операторов для выбора
+  const otherOptions = [];
+  const usedOtherOps = new Set([best.tariff.operator]);
+  for (let i = 1; i < scored.length; i++) {
+    const opt = scored[i];
+    if (!usedOtherOps.has(opt.tariff.operator)) {
+      otherOptions.push(opt);
+      usedOtherOps.add(opt.tariff.operator);
+    }
+    if (otherOptions.length >= 2) break;
+  }
+  if (otherOptions.length < 2) {
+    for (let i = 1; i < scored.length; i++) {
+      if (!otherOptions.includes(scored[i])) {
+        otherOptions.push(scored[i]);
+        if (otherOptions.length >= 2) break;
+      }
+    }
+  }
+
   // Проверка: выгоден ли новый тариф
   if (best.savingsYear > 0) {
     return {
       hasMatch: true,
+      isClosestMatch: false,
       currentMonthly,
       currentAnnualTCO,
       bestTariff: best.tariff,
@@ -112,13 +192,16 @@ export function findBestMobileTariff(user, tariffs = []) {
       savingsYear: best.savingsYear,
       savingsMonth: best.savingsMonth,
       isCurrentOptimal: false,
-      allAlternatives: scored
+      allAlternatives: scored,
+      otherOptions,
+      closestTariffs
     };
   }
 
   // Если текущий тариф дешевле или равен лучшей альтернативе
   return {
     hasMatch: true,
+    isClosestMatch: false,
     currentMonthly,
     currentAnnualTCO,
     bestTariff: best.tariff,
@@ -127,6 +210,9 @@ export function findBestMobileTariff(user, tariffs = []) {
     savingsYear: 0,
     savingsMonth: 0,
     isCurrentOptimal: true,
+    allAlternatives: scored,
+    otherOptions,
+    closestTariffs,
     reason: 'Ваш текущий тариф уже выгоднее или равен лучшим предложениям на рынке!'
   };
 }

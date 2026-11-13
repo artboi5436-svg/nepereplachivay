@@ -1107,15 +1107,19 @@
 
         <!-- Формула -->
         <div class="formula-box">
-          <div>
-            <div style="font-size: 12.5px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--pres-dim); margin-bottom: 6px;">Формула годовой стоимости владения:</div>
+          <div style="flex: 1;">
+            <div style="font-size: 12.5px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--pres-dim); margin-bottom: 6px;">Формула расчета годового бюджета (TCO):</div>
             <div class="formula-math">
-              TCO<span class="hl">₁₂</span> = (P<span class="hl">promo</span> × M<span class="hl">promo</span>) + (P<span class="hl">base</span> × M<span class="hl">base</span>) + C<span class="hl">setup</span> + C<span class="hl">equip</span> + C<span class="hl">hidden</span>
+              TCO<sub style="font-size: 16px; color: var(--pres-red-light);">12</sub> = (P<span class="hl">promo</span> × M<span class="hl">promo</span>) + (P<span class="hl">base</span> × M<span class="hl">base</span>) + C<span class="hl">setup</span> + C<span class="hl">equip</span> + C<span class="hl">hidden</span>
+            </div>
+            <div style="font-size: 12px; color: var(--pres-muted); margin-top: 6px;">
+              где P — ежемесячный тариф, M — число месяцев, C — разовые и сопутствующие расходы (подключение, роутер, доп. опции)
             </div>
           </div>
-          <div style="text-align: right; border-left: 1px solid rgba(255,255,255,0.1); padding-left: 24px;">
-            <div style="font-size: 13px; color: var(--pres-muted);">Средняя погрешность рекламы:</div>
-            <div style="font-size: 26px; font-weight: 800; color: var(--pres-red-light);">+42% к рекламе</div>
+          <div style="text-align: right; border-left: 1px solid rgba(255,255,255,0.1); padding-left: 24px; min-width: 200px;">
+            <div style="font-size: 12.5px; color: var(--pres-muted);">Занижение в рекламе:</div>
+            <div style="font-size: 26px; font-weight: 800; color: var(--pres-red-light);">+42% к чеку</div>
+            <div style="font-size: 11.5px; color: var(--pres-dim); margin-top: 2px;">Переплата: ~5 200 ₽/год</div>
           </div>
         </div>
 
@@ -1124,15 +1128,15 @@
             <span class="card-badge badge-gray">Фактор 1</span>
             <div class="card-title" style="font-size: 17px;">Промо-периоды</div>
             <p class="card-text" style="font-size: 13.5px;">
-              Учет скачка цены: если тариф стоит 199 ₽ первые 3 месяца и 750 ₽ остальные 9 месяцев, реальная средняя цена — <strong>612 ₽/мес</strong>, а не 199 ₽.
+              Учет скачка тарифа: 199 ₽ первые 3 месяца и 750 ₽ далее дают среднюю цену <strong>612 ₽/мес</strong>, а не 199 ₽ из рекламы.
             </p>
           </div>
 
           <div class="card">
             <span class="card-badge badge-gray">Фактор 2</span>
-            <div class="card-title" style="font-size: 17px;">Подключение (Setup)</div>
+            <div class="card-title" style="font-size: 17px;">Плата за подключение</div>
             <p class="card-text" style="font-size: 13.5px;">
-              Стоимость прокладки кабеля, оптического патч-корда и первичной настройки (от 0 до 2 500 ₽), распределенная на 12 месяцев эксплуатации.
+              Стоимость прокладки кабеля, оптического патч-корда и настройки (от 0 до 2 500 ₽), распределенная на 12 месяцев.
             </p>
           </div>
 
@@ -1140,21 +1144,21 @@
             <span class="card-badge badge-gray">Фактор 3</span>
             <div class="card-title" style="font-size: 17px;">Аренда роутера</div>
             <p class="card-text" style="font-size: 13.5px;">
-              Аренда за 150 ₽/мес обходится в 1 800 ₽ за год. Алгоритм показывает срок окупаемости покупки собственного Wi-Fi роутера (11–14 месяцев).
+              Аренда за 150 ₽/мес обходится в 1 800 ₽/год. Алгоритм показывает срок окупаемости покупки собственного Wi-Fi роутера (11–13 месяцев).
             </p>
           </div>
 
           <div class="card">
             <span class="card-badge badge-red">Фактор 4</span>
-            <div class="card-title" style="font-size: 17px;">Скрытые опции</div>
+            <div class="card-title" style="font-size: 17px;">Скрытые подписки</div>
             <p class="card-text" style="font-size: 13.5px;">
-              Платные ТВ-приставки, страхование абонентской линии и платные уведомления, которые не включены в базовый баннер провайдера.
+              Платные ТВ-приставки, страхование линии и платные СМС-пакеты, навязываемые по умолчанию (+150...300 ₽/мес).
             </p>
           </div>
         </div>
 
         <div class="slide-footer">
-          <div>Прозрачность: <strong>Пользователь видит точную сумму списаний за год без маркетинговых уловок</strong></div>
+          <div>Прозрачность: <strong>Сервис рассчитывает полную сумму списаний за 12 месяцев без маркетинговых уловок</strong></div>
           <div>Слайд 7 из 12</div>
         </div>
       </div>

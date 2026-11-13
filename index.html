@@ -5,9 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>ТарифДетокс — честный расчёт экономии на связи, интернете и подписках в ЛНР</title>
   <meta name="description" content="Бесплатный сервис оптимизации ежемесячных расходов: мобильная связь, домашний интернет, подписки в городах ЛНР. Считаем чистую экономию за 12 месяцев прямо в браузере.">
-  <link rel="stylesheet" href="css/variables.css?v=20261108_8">
-  <link rel="stylesheet" href="css/style.css?v=20261108_8">
-  <link rel="stylesheet" href="css/print.css?v=20261108_8" media="print">
+  <link rel="stylesheet" href="css/variables.css?v=20261113_1">
+  <link rel="stylesheet" href="css/style.css?v=20261113_1">
+  <link rel="stylesheet" href="css/print.css?v=20261113_1" media="print">
 </head>
 <body>
 
@@ -21,7 +21,6 @@
         <a href="#calculator" class="nav-link active" data-tab="calculator">Калькулятор</a>
         <a href="#how-we-calculate" class="nav-link" data-tab="how-we-calculate">Как мы считаем</a>
         <a href="#data-security" class="nav-link" data-tab="data-security">Безопасность ваших данных</a>
-        <a href="presentation.html" class="nav-link" target="_blank">Презентация</a>
       </nav>
       <button type="button" class="theme-toggle-btn" id="theme-toggle" title="Переключить тему" aria-label="Сменить тему">
         <span id="theme-icon" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></span>
@@ -85,12 +84,14 @@
           <div class="form-group">
             <label for="mob-operator">Текущий оператор связи</label>
             <select id="mob-operator" class="form-select">
-              <option value="МКС" selected>МКС (Лугаком)</option>
-              <option value="+7Телеком">+7Телеком</option>
+              <option value="МКС" selected>МКС (бывший Лугаком)</option>
+              <option value="Миранда">Миранда (Миранда-медиа)</option>
+              <option value="+7Телеком">+7Телеком (К-Телеком)</option>
+              <option value="СберМобайл">СберМобайл</option>
               <option value="билайн">билайн</option>
               <option value="МТС">МТС</option>
-              <option value="Т-Мобайл">Т-Мобайл</option>
               <option value="МегаФон">МегаФон</option>
+              <option value="Т-Мобайл">Т-Мобайл</option>
               <option value="Другой">Другой оператор</option>
             </select>
           </div>
@@ -101,21 +102,39 @@
           </div>
 
           <div class="form-group">
-            <label for="mob-gb">Сколько гигабайт интернета реально расходуете: <span id="mob-gb-val" class="range-badge">25</span> ГБ</label>
+            <div class="form-label-row">
+              <label for="mob-gb">Сколько гигабайт интернета нужно: <span id="mob-gb-val" class="range-badge">25 ГБ</span></label>
+              <label class="unlimited-toggle" for="mob-gb-unlim" title="Выбрать безлимитный мобильный интернет">
+                <input type="checkbox" id="mob-gb-unlim">
+                <span>Безлимит</span>
+              </label>
+            </div>
             <div class="range-slider-wrap">
               <input type="range" id="mob-gb" min="2" max="100" step="1" value="25">
             </div>
           </div>
 
           <div class="form-group">
-            <label for="mob-min">Сколько минут звонков реально тратите: <span id="mob-min-val" class="range-badge">400</span> мин</label>
+            <div class="form-label-row">
+              <label for="mob-min">Сколько минут звонков нужно: <span id="mob-min-val" class="range-badge">400 мин</span></label>
+              <label class="unlimited-toggle" for="mob-min-unlim" title="Выбрать безлимитные звонки">
+                <input type="checkbox" id="mob-min-unlim">
+                <span>Безлимит</span>
+              </label>
+            </div>
             <div class="range-slider-wrap">
               <input type="range" id="mob-min" min="0" max="1200" step="50" value="400">
             </div>
           </div>
 
           <div class="form-group">
-            <label for="mob-sms">Нужны ли СМС в пакете: <span id="mob-sms-val" class="range-badge">0</span> шт</label>
+            <div class="form-label-row">
+              <label for="mob-sms">Нужны ли СМС в пакете: <span id="mob-sms-val" class="range-badge">0 шт</span></label>
+              <label class="unlimited-toggle" for="mob-sms-unlim" title="Выбрать безлимитные СМС">
+                <input type="checkbox" id="mob-sms-unlim">
+                <span>Безлимит</span>
+              </label>
+            </div>
             <div class="range-slider-wrap">
               <input type="range" id="mob-sms" min="0" max="100" step="10" value="0">
             </div>
@@ -471,12 +490,10 @@
         <a href="#how-we-calculate" class="footer-nav-link" data-tab="how-we-calculate">Как мы считаем</a>
         <a href="#data-security" class="footer-nav-link" data-tab="data-security">Безопасность ваших данных</a>
         <a href="#privacy" class="footer-nav-link" data-tab="privacy">Конфиденциальность</a>
-        <a href="presentation.html" class="footer-nav-link" target="_blank">Презентация (HTML)</a>
-        <a href="presentation.pptx" download class="footer-nav-link" title="Скачать редактируемую презентацию в формате PowerPoint">Скачать .PPTX</a>
       </div>
     </div>
   </footer>
 
-  <script defer src="js/app.js?v=20261108_8"></script>
+  <script defer src="js/app.js?v=20261113_1"></script>
 </body>
 </html>

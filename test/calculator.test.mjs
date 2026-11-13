@@ -120,7 +120,7 @@ describe('Модуль расчётов calculator.js', () => {
       assert.match(res.reason, /выгоднее/i);
     });
 
-    it('Сценарий: Ни один тариф не подходит по запрошенному трафику', () => {
+    it('Сценарий: Ни один тариф не подходит по запрошенному трафику (предлагает близкие альтернативы)', () => {
       const user = {
         currentPrice: 1500,
         gb: 200, // В базе макс 50 ГБ
@@ -131,6 +131,42 @@ describe('Модуль расчётов calculator.js', () => {
       const res = findBestMobileTariff(user, mockTariffs);
       assert.equal(res.hasMatch, false);
       assert.equal(res.isCurrentOptimal, true);
+      assert.equal(res.isClosestMatch, true);
+      assert.ok(res.closestTariffs && res.closestTariffs.length > 0);
+    });
+
+    it('Сценарий: Выбор безлимита на интернет и подбор безлимитного тарифа', () => {
+      const tariffsWithUnlim = [
+        ...mockTariffs,
+        {
+          id: 't-unlim',
+          operator: 'МКС',
+          tariffName: 'МКС Безлимит',
+          region: 'Все регионы',
+          monthlyPrice: 800,
+          promoMonthlyPrice: null,
+          promoDurationMonths: 0,
+          setupFee: 100,
+          includedGb: 9999,
+          isUnlimitedGb: true,
+          includedMinutes: 1500,
+          isUnlimitedMinutes: true,
+          includedSms: 100
+        }
+      ];
+
+      const user = {
+        currentPrice: 1200,
+        isUnlimitedGb: true,
+        minutes: 500,
+        sms: 0,
+        region: 'Все регионы'
+      };
+
+      const res = findBestMobileTariff(user, tariffsWithUnlim);
+      assert.equal(res.hasMatch, true);
+      assert.equal(res.bestTariff.id, 't-unlim');
+      assert.equal(res.isCurrentOptimal, false);
     });
 
     it('Сценарий: Учёт региональной принадлежности тарифов (ЛНР)', () => {

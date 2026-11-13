@@ -14,24 +14,48 @@
   const DEFAULT_DATA = {
     mobile: [
   {
+    "id": "mks-osnovnoy-lnr",
+    "operator": "МКС",
+    "tariffName": "Основной",
+    "region": "Все города ЛНР",
+    "isDemo": true,
+    "updatedAt": "2026-11-01",
+    "monthlyPrice": 125,
+    "promoMonthlyPrice": null,
+    "promoDurationMonths": 0,
+    "setupFee": 100,
+    "includedGb": 5,
+    "isUnlimitedGb": false,
+    "includedMinutes": 500,
+    "isUnlimitedMinutes": false,
+    "includedSms": 0,
+    "unlimitedApps": ["Telegram"],
+    "officialUrl": "https://mcs.ooo",
+    "isPartner": false,
+    "adErid": null,
+    "notes": "Базовый доступный тариф МКС (+7 959). Включает 500 минут внутри сети, 5 ГБ интернета и безлимитный Telegram."
+  },
+  {
     "id": "mks-optimal-lnr",
     "operator": "МКС",
     "tariffName": "Оптимальный",
     "region": "Все города ЛНР",
     "isDemo": true,
     "updatedAt": "2026-11-01",
-    "monthlyPrice": 350,
+    "monthlyPrice": 200,
     "promoMonthlyPrice": null,
     "promoDurationMonths": 0,
     "setupFee": 100,
-    "includedGb": 25,
-    "includedMinutes": 500,
-    "includedSms": 50,
-    "unlimitedApps": ["Telegram", "VK", "WhatsApp"],
-    "officialUrl": "https://mks-gsm.ru/tariffs",
+    "includedGb": 15,
+    "isUnlimitedGb": false,
+    "includedMinutes": 600,
+    "isUnlimitedMinutes": false,
+    "includedSms": 30,
+    "unlimitedApps": ["Telegram", "VK"],
+    "officialUrl": "https://mcs.ooo",
     "isPartner": false,
     "adErid": null,
-    "notes": "Основной региональный оператор ЛНР (+7 959). Включает пакет минут на все номера РФ, безлимитные мессенджеры и стабильное покрытие по всей республике."
+    "notes": "Сбалансированный тариф МКС: 15 ГБ мобильного интернета, 600 минут на номера республики и безлимитные соцсети."
   },
   {
     "id": "mks-narodny-lnr",
@@ -44,14 +68,38 @@
     "promoMonthlyPrice": null,
     "promoDurationMonths": 0,
     "setupFee": 100,
-    "includedGb": 8,
-    "includedMinutes": 300,
-    "includedSms": 0,
+    "includedGb": 10,
+    "isUnlimitedGb": false,
+    "includedMinutes": 350,
+    "isUnlimitedMinutes": false,
+    "includedSms": 20,
     "unlimitedApps": ["Telegram"],
-    "officialUrl": "https://mks-gsm.ru/tariffs",
+    "officialUrl": "https://mcs.ooo",
     "isPartner": false,
     "adErid": null,
-    "notes": "Самый доступный тариф в ЛНР для повседневных звонков и чтения новостей в Telegram."
+    "notes": "Популярный доступный тариф в ЛНР для звонков по региону и мессенджера Telegram."
+  },
+  {
+    "id": "mks-domashniy-lnr",
+    "operator": "МКС",
+    "tariffName": "Домашний",
+    "region": "Все города ЛНР",
+    "isDemo": true,
+    "updatedAt": "2026-11-01",
+    "monthlyPrice": 260,
+    "promoMonthlyPrice": null,
+    "promoDurationMonths": 0,
+    "setupFee": 100,
+    "includedGb": 20,
+    "isUnlimitedGb": false,
+    "includedMinutes": 700,
+    "isUnlimitedMinutes": false,
+    "includedSms": 50,
+    "unlimitedApps": ["Telegram", "VK", "WhatsApp"],
+    "officialUrl": "https://mcs.ooo",
+    "isPartner": false,
+    "adErid": null,
+    "notes": "Увеличенный пакет трафика 20 ГБ и 700 минут для комфортного общения внутри ЛНР и по РФ."
   },
   {
     "id": "mks-maximum-lnr",
@@ -65,18 +113,196 @@
     "promoDurationMonths": 2,
     "setupFee": 100,
     "includedGb": 50,
+    "isUnlimitedGb": false,
     "includedMinutes": 800,
+    "isUnlimitedMinutes": false,
     "includedSms": 100,
     "unlimitedApps": ["Telegram", "WhatsApp", "VK", "YouTube"],
-    "officialUrl": "https://mks-gsm.ru/tariffs",
+    "officialUrl": "https://mcs.ooo",
     "isPartner": false,
     "adErid": null,
-    "notes": "Тариф для активных пользователей: 50 ГБ трафика, большой пакет минут по всей России и скидка в первые 2 месяца."
+    "notes": "Тариф для активных пользователей: 50 ГБ трафика, 800 минут по всей России и скидка в первые 2 месяца."
+  },
+  {
+    "id": "mks-all-inclusive-lnr",
+    "operator": "МКС",
+    "tariffName": "Всё включено",
+    "region": "Все города ЛНР",
+    "isDemo": true,
+    "updatedAt": "2026-11-01",
+    "monthlyPrice": 650,
+    "promoMonthlyPrice": null,
+    "promoDurationMonths": 0,
+    "setupFee": 100,
+    "includedGb": 80,
+    "isUnlimitedGb": false,
+    "includedMinutes": 1200,
+    "isUnlimitedMinutes": false,
+    "includedSms": 150,
+    "unlimitedApps": ["Telegram", "WhatsApp", "VK", "MAX"],
+    "officialUrl": "https://mcs.ooo",
+    "isPartner": false,
+    "adErid": null,
+    "notes": "Максимальный пакет от МКС: 80 ГБ скоростного интернета, 1200 минут на все сети РФ и полный безлимит внутри сети МКС."
+  },
+  {
+    "id": "mks-bezlimit-lnr",
+    "operator": "МКС",
+    "tariffName": "МКС Безлимит",
+    "region": "Все города ЛНР",
+    "isDemo": true,
+    "updatedAt": "2026-11-01",
+    "monthlyPrice": 800,
+    "promoMonthlyPrice": null,
+    "promoDurationMonths": 0,
+    "setupFee": 100,
+    "includedGb": 9999,
+    "isUnlimitedGb": true,
+    "includedMinutes": 1500,
+    "isUnlimitedMinutes": true,
+    "includedSms": 100,
+    "unlimitedApps": ["Все приложения", "Telegram", "WhatsApp", "VK", "YouTube"],
+    "officialUrl": "https://mcs.ooo",
+    "isPartner": false,
+    "adErid": null,
+    "notes": "Полный безлимитный интернет в сети МКС, безлимитные звонки внутри сети и 1500 минут на любые номера России."
+  },
+  {
+    "id": "miranda-start-lugansk",
+    "operator": "Миранда",
+    "tariffName": "Старт Луганск",
+    "region": "Все города ЛНР",
+    "isDemo": true,
+    "updatedAt": "2026-11-01",
+    "monthlyPrice": 200,
+    "promoMonthlyPrice": null,
+    "promoDurationMonths": 0,
+    "setupFee": 100,
+    "includedGb": 30,
+    "isUnlimitedGb": false,
+    "includedMinutes": 800,
+    "isUnlimitedMinutes": false,
+    "includedSms": 300,
+    "unlimitedApps": ["Миранда", "МирТелеком"],
+    "officialUrl": "https://lnr.miranda-media.ru",
+    "isPartner": false,
+    "adErid": null,
+    "notes": "Флагманский стартовый тариф от Миранда: 30 ГБ интернета, 800 минут, безлимит звонков внутри сети «Миранда» и «МирТелеком»."
+  },
+  {
+    "id": "miranda-regionalny-lnr",
+    "operator": "Миранда",
+    "tariffName": "Региональный",
+    "region": "Все города ЛНР",
+    "isDemo": true,
+    "updatedAt": "2026-11-01",
+    "monthlyPrice": 250,
+    "promoMonthlyPrice": null,
+    "promoDurationMonths": 0,
+    "setupFee": 100,
+    "includedGb": 15,
+    "isUnlimitedGb": false,
+    "includedMinutes": 250,
+    "isUnlimitedMinutes": false,
+    "includedSms": 200,
+    "unlimitedApps": ["Telegram", "VK"],
+    "officialUrl": "https://lnr.miranda-media.ru",
+    "isPartner": false,
+    "adErid": null,
+    "notes": "Тариф с переносом неиспользованных остатков: 15 ГБ трафика, безлимит внутри сети и 250 минут на все номера юга и новых регионов РФ."
+  },
+  {
+    "id": "miranda-lgotny-lnr",
+    "operator": "Миранда",
+    "tariffName": "Льготный",
+    "region": "Все города ЛНР",
+    "isDemo": true,
+    "updatedAt": "2026-11-01",
+    "monthlyPrice": 250,
+    "promoMonthlyPrice": null,
+    "promoDurationMonths": 0,
+    "setupFee": 100,
+    "includedGb": 25,
+    "isUnlimitedGb": false,
+    "includedMinutes": 250,
+    "isUnlimitedMinutes": false,
+    "includedSms": 100,
+    "unlimitedApps": ["Telegram", "WhatsApp"],
+    "officialUrl": "https://lnr.miranda-media.ru",
+    "isPartner": false,
+    "adErid": null,
+    "notes": "Доступный тариф для жителей ЛНР: 25 ГБ трафика, безлимитные звонки и SMS на Миранду и МирТелеком."
+  },
+  {
+    "id": "miranda-vsya-rossiya-lnr",
+    "operator": "Миранда",
+    "tariffName": "Вся Россия",
+    "region": "Все города ЛНР",
+    "isDemo": true,
+    "updatedAt": "2026-11-01",
+    "monthlyPrice": 450,
+    "promoMonthlyPrice": 350,
+    "promoDurationMonths": 3,
+    "setupFee": 100,
+    "includedGb": 45,
+    "isUnlimitedGb": false,
+    "includedMinutes": 600,
+    "isUnlimitedMinutes": false,
+    "includedSms": 100,
+    "unlimitedApps": ["Telegram", "VK", "WhatsApp"],
+    "officialUrl": "https://lnr.miranda-media.ru",
+    "isPartner": false,
+    "adErid": null,
+    "notes": "Единые условия дома и в поездках по РФ: 45 ГБ, 600 минут на любые номера России и скидка в первые 3 месяца."
+  },
+  {
+    "id": "miranda-ultra-m-lnr",
+    "operator": "Миранда",
+    "tariffName": "Ультра М",
+    "region": "Все города ЛНР",
+    "isDemo": true,
+    "updatedAt": "2026-11-01",
+    "monthlyPrice": 700,
+    "promoMonthlyPrice": null,
+    "promoDurationMonths": 0,
+    "setupFee": 100,
+    "includedGb": 100,
+    "isUnlimitedGb": false,
+    "includedMinutes": 800,
+    "isUnlimitedMinutes": false,
+    "includedSms": 200,
+    "unlimitedApps": ["Telegram", "VK", "Rutube", "Ozon", "Wildberries"],
+    "officialUrl": "https://lnr.miranda-media.ru",
+    "isPartner": false,
+    "adErid": null,
+    "notes": "Огромный пакет 100 ГБ + безлимит на Telegram, VK, Rutube и маркетплейсы, 800 минут по РФ и безлимит внутри сети."
+  },
+  {
+    "id": "miranda-bezlimit-lnr",
+    "operator": "Миранда",
+    "tariffName": "Миранда Безлимит",
+    "region": "Все города ЛНР",
+    "isDemo": true,
+    "updatedAt": "2026-11-01",
+    "monthlyPrice": 850,
+    "promoMonthlyPrice": null,
+    "promoDurationMonths": 0,
+    "setupFee": 100,
+    "includedGb": 9999,
+    "isUnlimitedGb": true,
+    "includedMinutes": 1500,
+    "isUnlimitedMinutes": true,
+    "includedSms": 200,
+    "unlimitedApps": ["Все приложения", "Telegram", "VK", "Rutube", "YouTube"],
+    "officialUrl": "https://lnr.miranda-media.ru",
+    "isPartner": false,
+    "adErid": null,
+    "notes": "Настоящий безлимитный интернет в сети 4G Миранда в ЛНР, безлимит внутри сети и 1500 минут по всей России."
   },
   {
     "id": "7telecom-na-svyazi-lnr",
     "operator": "+7Телеком",
-    "tariffName": "На связи",
+    "tariffName": "На связи 2.0",
     "region": "Все города ЛНР",
     "isDemo": true,
     "updatedAt": "2026-11-01",
@@ -84,19 +310,21 @@
     "promoMonthlyPrice": 200,
     "promoDurationMonths": 2,
     "setupFee": 100,
-    "includedGb": 15,
+    "includedGb": 20,
+    "isUnlimitedGb": false,
     "includedMinutes": 400,
-    "includedSms": 20,
-    "unlimitedApps": ["Мессенджеры"],
-    "officialUrl": "https://7telecom.ru/tariffs",
+    "isUnlimitedMinutes": false,
+    "includedSms": 50,
+    "unlimitedApps": ["Мессенджеры", "Яндекс Музыка", "VK Музыка"],
+    "officialUrl": "https://lnr.7telecom.ru",
     "isPartner": false,
     "adErid": null,
-    "notes": "Оператор связи в новых регионах РФ. Бесплатные вызовы внутри сетей +7Телеком и МирТелеком."
+    "notes": "Обновлённый тариф +7Телеком с безлимитной музыкой, мессенджерами и бесплатными вызовами внутри +7Телеком и МирТелеком."
   },
   {
     "id": "7telecom-vyshe-kryshi-lnr",
     "operator": "+7Телеком",
-    "tariffName": "Выше крыши",
+    "tariffName": "Выше крыши 2.0",
     "region": "Все города ЛНР",
     "isDemo": true,
     "updatedAt": "2026-11-01",
@@ -104,14 +332,104 @@
     "promoMonthlyPrice": 320,
     "promoDurationMonths": 3,
     "setupFee": 100,
-    "includedGb": 35,
+    "includedGb": 50,
+    "isUnlimitedGb": false,
     "includedMinutes": 600,
+    "isUnlimitedMinutes": false,
     "includedSms": 50,
-    "unlimitedApps": ["Мессенджеры", "Социальные сети"],
-    "officialUrl": "https://7telecom.ru/tariffs",
+    "unlimitedApps": ["Мессенджеры", "Социальные сети", "VK Видео", "Rutube"],
+    "officialUrl": "https://lnr.7telecom.ru",
     "isPartner": false,
     "adErid": null,
-    "notes": "Выгодная цена по акции на первые 3 месяца: 35 ГБ и 600 минут на номера РФ."
+    "notes": "50 ГБ трафика, 600 минут по РФ, безлимитные видеосервисы и соцсети. Скидка на первые 3 месяца."
+  },
+  {
+    "id": "7telecom-vip-lnr",
+    "operator": "+7Телеком",
+    "tariffName": "VIP",
+    "region": "Все города ЛНР",
+    "isDemo": true,
+    "updatedAt": "2026-11-01",
+    "monthlyPrice": 850,
+    "promoMonthlyPrice": null,
+    "promoDurationMonths": 0,
+    "setupFee": 100,
+    "includedGb": 100,
+    "isUnlimitedGb": false,
+    "includedMinutes": 1000,
+    "isUnlimitedMinutes": false,
+    "includedSms": 100,
+    "unlimitedApps": ["Мессенджеры", "Социальные сети", "Видеосервисы"],
+    "officialUrl": "https://lnr.7telecom.ru",
+    "isPartner": false,
+    "adErid": null,
+    "notes": "Премиальный тариф: 100 ГБ скоростного интернета, 1000 минут на все номера РФ и полный безлимит внутри сети."
+  },
+  {
+    "id": "7telecom-bezlimit-lnr",
+    "operator": "+7Телеком",
+    "tariffName": "+7 Безлимит",
+    "region": "Все города ЛНР",
+    "isDemo": true,
+    "updatedAt": "2026-11-01",
+    "monthlyPrice": 950,
+    "promoMonthlyPrice": null,
+    "promoDurationMonths": 0,
+    "setupFee": 100,
+    "includedGb": 9999,
+    "isUnlimitedGb": true,
+    "includedMinutes": 1500,
+    "isUnlimitedMinutes": true,
+    "includedSms": 100,
+    "unlimitedApps": ["Все приложения", "Мессенджеры", "Видео", "Музыка"],
+    "officialUrl": "https://lnr.7telecom.ru",
+    "isPartner": false,
+    "adErid": null,
+    "notes": "Максимальный безлимит интернета и звонков: 1500 минут по России и безлимитный трафик без ограничения скорости."
+  },
+  {
+    "id": "sbermobile-optimal-lnr",
+    "operator": "СберМобайл",
+    "tariffName": "Оптимальный (ЛНР)",
+    "region": "Все города ЛНР",
+    "isDemo": true,
+    "updatedAt": "2026-11-01",
+    "monthlyPrice": 390,
+    "promoMonthlyPrice": 290,
+    "promoDurationMonths": 3,
+    "setupFee": 0,
+    "includedGb": 25,
+    "isUnlimitedGb": false,
+    "includedMinutes": 500,
+    "isUnlimitedMinutes": false,
+    "includedSms": 50,
+    "unlimitedApps": ["Сбербанк Онлайн", "Мессенджеры", "Звук"],
+    "officialUrl": "https://sbermobile.ru",
+    "isPartner": false,
+    "adErid": null,
+    "notes": "Работает в ЛНР на инфраструктуре сети Миранда. Оформление в отделениях Сбербанка в ЛНР. Оплата бонусами СберСпасибо до 99%."
+  },
+  {
+    "id": "sbermobile-maximum-lnr",
+    "operator": "СберМобайл",
+    "tariffName": "Максимум (ЛНР)",
+    "region": "Все города ЛНР",
+    "isDemo": true,
+    "updatedAt": "2026-11-01",
+    "monthlyPrice": 590,
+    "promoMonthlyPrice": null,
+    "promoDurationMonths": 0,
+    "setupFee": 0,
+    "includedGb": 50,
+    "isUnlimitedGb": false,
+    "includedMinutes": 800,
+    "isUnlimitedMinutes": false,
+    "includedSms": 100,
+    "unlimitedApps": ["Мессенджеры", "Социальные сети", "Сервисы Сбера"],
+    "officialUrl": "https://sbermobile.ru",
+    "isPartner": false,
+    "adErid": null,
+    "notes": "50 ГБ трафика, 800 минут по всей России, безлимит на экосистему Сбера и мессенджеры."
   },
   {
     "id": "beeline-lnr-up",
@@ -125,13 +443,37 @@
     "promoDurationMonths": 3,
     "setupFee": 100,
     "includedGb": 30,
+    "isUnlimitedGb": false,
     "includedMinutes": 500,
+    "isUnlimitedMinutes": false,
     "includedSms": 50,
     "unlimitedApps": ["Telegram", "WhatsApp"],
     "officialUrl": "https://beeline.ru",
     "isPartner": false,
     "adErid": null,
-    "notes": "Федеральный оператор с собственной зоной покрытия и прямым роумингом по РФ без доплат."
+    "notes": "Федеральный оператор с прямым обслуживанием в ЛНР без роуминговых наценок."
+  },
+  {
+    "id": "beeline-lnr-max",
+    "operator": "билайн",
+    "tariffName": "UP (ЛНР)",
+    "region": "Все города ЛНР",
+    "isDemo": true,
+    "updatedAt": "2026-11-01",
+    "monthlyPrice": 650,
+    "promoMonthlyPrice": null,
+    "promoDurationMonths": 0,
+    "setupFee": 100,
+    "includedGb": 50,
+    "isUnlimitedGb": false,
+    "includedMinutes": 800,
+    "isUnlimitedMinutes": false,
+    "includedSms": 100,
+    "unlimitedApps": ["Telegram", "WhatsApp", "VK", "YouTube"],
+    "officialUrl": "https://beeline.ru",
+    "isPartner": false,
+    "adErid": null,
+    "notes": "50 ГБ и 800 минут по всей России, безлимитные мессенджеры и апперы с бонусами."
   },
   {
     "id": "tbank-mobile-lnr",
@@ -145,13 +487,15 @@
     "promoDurationMonths": 2,
     "setupFee": 0,
     "includedGb": 25,
+    "isUnlimitedGb": false,
     "includedMinutes": 500,
+    "isUnlimitedMinutes": false,
     "includedSms": 0,
     "unlimitedApps": ["Мессенджеры"],
     "officialUrl": "https://www.tbank.ru/mobile-operator",
     "isPartner": true,
     "adErid": "2VtzquDEMOerid9871",
-    "notes": "Быстрое подключение через eSIM без необходимости посещать салон связи, запись звонков и секретарь."
+    "notes": "Быстрое дистанционное подключение через eSIM, запись звонков и телефонный секретарь Олег."
   },
   {
     "id": "mts-lnr-fit",
@@ -165,15 +509,40 @@
     "promoDurationMonths": 2,
     "setupFee": 100,
     "includedGb": 35,
+    "isUnlimitedGb": false,
     "includedMinutes": 600,
+    "isUnlimitedMinutes": false,
     "includedSms": 100,
     "unlimitedApps": ["VK", "Telegram"],
     "officialUrl": "https://mts.ru",
     "isPartner": false,
     "adErid": null,
     "notes": "Федеральный тариф с работой в ЛНР, остатки минут и гигабайтов переносятся на следующий месяц."
+  },
+  {
+    "id": "megafon-lnr-megatarif",
+    "operator": "МегаФон",
+    "tariffName": "МегаТариф (Регион+)",
+    "region": "Все города ЛНР",
+    "isDemo": true,
+    "updatedAt": "2026-11-01",
+    "monthlyPrice": 550,
+    "promoMonthlyPrice": 390,
+    "promoDurationMonths": 2,
+    "setupFee": 100,
+    "includedGb": 35,
+    "isUnlimitedGb": false,
+    "includedMinutes": 600,
+    "isUnlimitedMinutes": false,
+    "includedSms": 50,
+    "unlimitedApps": ["Telegram", "WhatsApp", "VK"],
+    "officialUrl": "https://megafon.ru",
+    "isPartner": false,
+    "adErid": null,
+    "notes": "Федеральный тариф МегаФон с работой в сетях новых регионов, мегасилы и безлимитный трафик на мессенджеры."
   }
-],
+]
+,
     internet: [
   {
     "id": "lds-bezlim-90-lugansk",
@@ -896,36 +1265,99 @@
   function findBestMobileTariff(user, tariffs = []) {
     const currentMonthly = Number(user.currentPrice) || 0;
     const currentAnnualTCO = currentMonthly * 12;
-    const userGb = Number(user.gb) || 0;
-    const userMin = Number(user.minutes) || 0;
-    const userSms = Number(user.sms) || 0;
+
+    const isUnlimitedGb = Boolean(user.isUnlimitedGb || user.unlimitedGb || Number(user.gb) >= 999);
+    const isUnlimitedMin = Boolean(user.isUnlimitedMinutes || user.unlimitedMinutes || Number(user.minutes) >= 5000);
+    const isUnlimitedSms = Boolean(user.isUnlimitedSms || user.unlimitedSms);
+
+    const userGb = isUnlimitedGb ? 9999 : (Number(user.gb) || 0);
+    const userMin = isUnlimitedMin ? 9999 : (Number(user.minutes) || 0);
+    const userSms = isUnlimitedSms ? 100 : (Number(user.sms) || 0);
     const userCity = user.region || 'Все города ЛНР';
 
-    const matchingTariffs = tariffs.filter(t => {
-      const regionMatch = t.region === userCity || 
-                          t.region === 'Все города ЛНР' || 
-                          userCity === 'Все города ЛНР' ||
-                          t.region === 'Луганская Народная Республика (ЛНР)' ||
-                          userCity === 'Луганская Народная Республика (ЛНР)';
-      const gbMatch = Number(t.includedGb) >= userGb;
-      const minMatch = Number(t.includedMinutes) >= userMin;
-      const smsMatch = userSms === 0 || Number(t.includedSms) >= userSms;
-      return regionMatch && gbMatch && minMatch && smsMatch;
+    // Фильтруем тарифы по региону
+    const regionalTariffs = tariffs.filter(t => {
+      return t.region === userCity || 
+             t.region === 'Все города ЛНР' || 
+             userCity === 'Все города ЛНР' ||
+             t.region === 'Все регионы' || 
+             userCity === 'Все регионы' ||
+             t.region === 'Луганская Народная Республика (ЛНР)' ||
+             userCity === 'Луганская Народная Республика (ЛНР)';
     });
 
+    // Строгое соответствие критериям
+    const matchingTariffs = regionalTariffs.filter(t => {
+      const gbMatch = isUnlimitedGb
+        ? (Boolean(t.isUnlimitedGb) || Number(t.includedGb) >= 999)
+        : (Number(t.includedGb) >= userGb);
+
+      const minMatch = isUnlimitedMin
+        ? (Boolean(t.isUnlimitedMinutes) || Number(t.includedMinutes) >= 1500)
+        : (Number(t.includedMinutes) >= userMin);
+
+      const smsMatch = userSms === 0 || Number(t.includedSms) >= userSms;
+
+      return gbMatch && minMatch && smsMatch;
+    });
+
+    // Подбор близких тарифов (по максимальному объёму пакетов и выгодности)
+    const scoredRegional = regionalTariffs.map(t => {
+      const tco = calculateTariffTCO12(t);
+      const tGb = Boolean(t.isUnlimitedGb) ? 9999 : (Number(t.includedGb) || 0);
+      const tMin = Boolean(t.isUnlimitedMinutes) ? 9999 : (Number(t.includedMinutes) || 0);
+
+      const targetGb = isUnlimitedGb ? 100 : Math.max(1, userGb);
+      const targetMin = isUnlimitedMin ? 1000 : Math.max(1, userMin);
+
+      const gbRatio = Math.min(2.0, tGb / targetGb);
+      const minRatio = Math.min(2.0, tMin / targetMin);
+      const unlimBonus = (t.isUnlimitedGb ? 1.0 : 0) + (t.isUnlimitedMinutes ? 0.5 : 0);
+      const appsBonus = (Array.isArray(t.unlimitedApps) && t.unlimitedApps.length > 0) ? (t.unlimitedApps.length * 0.1) : 0;
+      const priceScore = Math.max(0.1, 1 - (tco.tco12 / 15000));
+
+      const proximityScore = (gbRatio * 0.45) + (minRatio * 0.35) + unlimBonus + appsBonus + (priceScore * 0.2);
+
+      return {
+        tariff: t,
+        ...tco,
+        proximityScore,
+        savingsYear: currentAnnualTCO - tco.tco12,
+        savingsMonth: Math.round((currentAnnualTCO - tco.tco12) / 12)
+      };
+    });
+
+    scoredRegional.sort((a, b) => b.proximityScore - a.proximityScore || a.tco12 - b.tco12);
+
+    // Выбираем до 3 близких альтернатив от разных операторов
+    const closestTariffs = [];
+    const seenOps = new Set();
+    for (const item of scoredRegional) {
+      if (!seenOps.has(item.tariff.operator) || seenOps.size >= 3) {
+        closestTariffs.push(item);
+        seenOps.add(item.tariff.operator);
+        if (closestTariffs.length >= 3) break;
+      }
+    }
+
+    // Если нет точного совпадения по критериям
     if (matchingTariffs.length === 0) {
       return {
         hasMatch: false,
+        isClosestMatch: true,
         currentMonthly,
         currentAnnualTCO,
-        bestTariff: null,
+        bestTariff: closestTariffs.length > 0 ? closestTariffs[0].tariff : null,
         savingsYear: 0,
         savingsMonth: 0,
         isCurrentOptimal: true,
-        reason: 'В базе нет альтернативных тарифов с таким большим объёмом минут или гигабайт.'
+        closestTariffs,
+        allAlternatives: scoredRegional,
+        reason: 'В базе нет тарифов, которые одновременно полностью покрывают все заданные максимальные критерии. Ниже представлены наиболее близкие тарифы с максимальными пакетами.'
       };
     }
 
+    // Считаем TCO для каждого подходящего тарифа
     const scored = matchingTariffs.map(t => {
       const tco = calculateTariffTCO12(t);
       return {
@@ -936,12 +1368,35 @@
       };
     });
 
+    // Сортируем: сначала максимальная экономия (минимальный TCO)
     scored.sort((a, b) => a.tco12 - b.tco12);
     const best = scored[0];
 
+    // Другие варианты от разных операторов для выбора
+    const otherOptions = [];
+    const usedOtherOps = new Set([best.tariff.operator]);
+    for (let i = 1; i < scored.length; i++) {
+      const opt = scored[i];
+      if (!usedOtherOps.has(opt.tariff.operator)) {
+        otherOptions.push(opt);
+        usedOtherOps.add(opt.tariff.operator);
+      }
+      if (otherOptions.length >= 2) break;
+    }
+    if (otherOptions.length < 2) {
+      for (let i = 1; i < scored.length; i++) {
+        if (!otherOptions.includes(scored[i])) {
+          otherOptions.push(scored[i]);
+          if (otherOptions.length >= 2) break;
+        }
+      }
+    }
+
+    // Проверка: выгоден ли новый тариф
     if (best.savingsYear > 0) {
       return {
         hasMatch: true,
+        isClosestMatch: false,
         currentMonthly,
         currentAnnualTCO,
         bestTariff: best.tariff,
@@ -950,12 +1405,16 @@
         savingsYear: best.savingsYear,
         savingsMonth: best.savingsMonth,
         isCurrentOptimal: false,
-        allAlternatives: scored
+        allAlternatives: scored,
+        otherOptions,
+        closestTariffs
       };
     }
 
+    // Если текущий тариф дешевле или равен лучшей альтернативе
     return {
       hasMatch: true,
+      isClosestMatch: false,
       currentMonthly,
       currentAnnualTCO,
       bestTariff: best.tariff,
@@ -964,6 +1423,9 @@
       savingsYear: 0,
       savingsMonth: 0,
       isCurrentOptimal: true,
+      allAlternatives: scored,
+      otherOptions,
+      closestTariffs,
       reason: 'Ваш текущий тариф уже выгоднее или равен лучшим предложениям на рынке!'
     };
   }
@@ -1382,8 +1844,11 @@
           region: 'Луганск',
           currentPrice: 500,
           gb: 25,
+          isUnlimitedGb: false,
           minutes: 400,
-          sms: 0
+          isUnlimitedMinutes: false,
+          sms: 0,
+          isUnlimitedSms: false
         },
         internet: {
           skipped: false,
@@ -1579,13 +2044,19 @@
 
   function readCurrentStepInputs(step) {
     if (step === 1) {
+      const isUnlimGb = Boolean(document.getElementById('mob-gb-unlim')?.checked);
+      const isUnlimMin = Boolean(document.getElementById('mob-min-unlim')?.checked);
+      const isUnlimSms = Boolean(document.getElementById('mob-sms-unlim')?.checked);
       return {
         operator: document.getElementById('mob-operator')?.value || 'МКС',
         region: document.getElementById('mob-region')?.value || 'Луганск',
         currentPrice: Number(document.getElementById('mob-price')?.value) || 0,
-        gb: Number(document.getElementById('mob-gb')?.value) || 0,
-        minutes: Number(document.getElementById('mob-min')?.value) || 0,
-        sms: Number(document.getElementById('mob-sms')?.value) || 0
+        gb: isUnlimGb ? 9999 : (Number(document.getElementById('mob-gb')?.value) || 0),
+        isUnlimitedGb: isUnlimGb,
+        minutes: isUnlimMin ? 9999 : (Number(document.getElementById('mob-min')?.value) || 0),
+        isUnlimitedMinutes: isUnlimMin,
+        sms: isUnlimSms ? 100 : (Number(document.getElementById('mob-sms')?.value) || 0),
+        isUnlimitedSms: isUnlimSms
       };
     } else if (step === 2) {
       return {
@@ -1616,17 +2087,59 @@
     if (document.getElementById('mob-operator')) document.getElementById('mob-operator').value = state.mobile.operator;
     if (document.getElementById('mob-region')) document.getElementById('mob-region').value = state.mobile.region;
     if (document.getElementById('mob-price')) document.getElementById('mob-price').value = state.mobile.currentPrice;
-    if (document.getElementById('mob-gb')) {
-      document.getElementById('mob-gb').value = state.mobile.gb;
-      document.getElementById('mob-gb-val').textContent = state.mobile.gb;
+
+    const gbSlider = document.getElementById('mob-gb');
+    const gbVal = document.getElementById('mob-gb-val');
+    const gbUnlim = document.getElementById('mob-gb-unlim');
+    if (gbSlider && gbVal && gbUnlim) {
+      gbUnlim.checked = Boolean(state.mobile.isUnlimitedGb);
+      if (gbUnlim.checked) {
+        gbSlider.value = 100;
+        gbSlider.disabled = true;
+        gbVal.textContent = 'Безлимит (∞)';
+        gbVal.classList.add('unlimited');
+      } else {
+        gbSlider.disabled = false;
+        gbSlider.value = state.mobile.gb || 25;
+        gbVal.textContent = gbSlider.value + ' ГБ';
+        gbVal.classList.remove('unlimited');
+      }
     }
-    if (document.getElementById('mob-min')) {
-      document.getElementById('mob-min').value = state.mobile.minutes;
-      document.getElementById('mob-min-val').textContent = state.mobile.minutes;
+
+    const minSlider = document.getElementById('mob-min');
+    const minVal = document.getElementById('mob-min-val');
+    const minUnlim = document.getElementById('mob-min-unlim');
+    if (minSlider && minVal && minUnlim) {
+      minUnlim.checked = Boolean(state.mobile.isUnlimitedMinutes);
+      if (minUnlim.checked) {
+        minSlider.value = 1200;
+        minSlider.disabled = true;
+        minVal.textContent = 'Безлимит (∞)';
+        minVal.classList.add('unlimited');
+      } else {
+        minSlider.disabled = false;
+        minSlider.value = state.mobile.minutes || 400;
+        minVal.textContent = minSlider.value + ' мин';
+        minVal.classList.remove('unlimited');
+      }
     }
-    if (document.getElementById('mob-sms')) {
-      document.getElementById('mob-sms').value = state.mobile.sms;
-      document.getElementById('mob-sms-val').textContent = state.mobile.sms;
+
+    const smsSlider = document.getElementById('mob-sms');
+    const smsVal = document.getElementById('mob-sms-val');
+    const smsUnlim = document.getElementById('mob-sms-unlim');
+    if (smsSlider && smsVal && smsUnlim) {
+      smsUnlim.checked = Boolean(state.mobile.isUnlimitedSms);
+      if (smsUnlim.checked) {
+        smsSlider.value = 100;
+        smsSlider.disabled = true;
+        smsVal.textContent = 'Безлимит (∞)';
+        smsVal.classList.add('unlimited');
+      } else {
+        smsSlider.disabled = false;
+        smsSlider.value = state.mobile.sms || 0;
+        smsVal.textContent = smsSlider.value + ' шт';
+        smsVal.classList.remove('unlimited');
+      }
     }
 
     if (document.getElementById('net-operator')) document.getElementById('net-operator').value = state.internet.operator;
@@ -1746,14 +2259,74 @@
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
+  function buildTariffCardHtml(item, isFeatured = false) {
+    const t = item.tariff || item;
+    const effPrice = item.effectiveMonthly || t.monthlyPrice;
+    const isUnlimGb = Boolean(t.isUnlimitedGb) || Number(t.includedGb) >= 999;
+    const isUnlimMin = Boolean(t.isUnlimitedMinutes) || Number(t.includedMinutes) >= 1500;
+    
+    const gbLabel = isUnlimGb ? '<strong>Безлимитный интернет (4G)</strong>' : (t.includedGb + ' ГБ интернета');
+    const minLabel = isUnlimMin ? ('Безлимит внутри сети + ' + t.includedMinutes + ' мин по РФ') : (t.includedMinutes + ' мин звонков');
+    const appsItem = (Array.isArray(t.unlimitedApps) && t.unlimitedApps.length > 0)
+      ? ('<li>Безлимит: ' + t.unlimitedApps.slice(0, 3).join(', ') + '</li>')
+      : '';
+    const promoPill = (t.promoDurationMonths > 0 && t.promoMonthlyPrice)
+      ? ('<div class="promo-pill">Акция: ' + t.promoMonthlyPrice + ' ₽ первые ' + t.promoDurationMonths + ' мес.</div>')
+      : '';
+    const eridHtml = (t.isPartner && t.adErid)
+      ? ('<span class="ad-label" title="Реклама. Токен erid: ' + t.adErid + '">erid: ' + t.adErid + '</span>')
+      : '';
+
+    return [
+      '<div class="closest-card ' + (isFeatured ? 'featured' : '') + '">',
+      '  <div class="closest-card-op">' + t.operator + ' ' + eridHtml + '</div>',
+      '  <div class="closest-card-name">' + t.tariffName + '</div>',
+      '  <div class="closest-card-price">' + effPrice + ' ₽/мес <small class="effective-hint">(в среднем)</small></div>',
+      '  ' + promoPill,
+      '  <ul class="closest-card-list">',
+      '    <li>' + gbLabel + '</li>',
+      '    <li>' + minLabel + '</li>',
+      '    ' + appsItem,
+      '    <li>Плата за подключение (MNP): ' + (t.setupFee || 0) + ' ₽</li>',
+      '  </ul>',
+      '  <a href="' + t.officialUrl + '" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-sm">Перейти на сайт ' + t.operator + ' ↗</a>',
+      '</div>'
+    ].join('\n');
+  }
+
   function renderMobileReportCard(container, result, userMob) {
-    const { isCurrentOptimal, bestTariff, savingsYear, savingsMonth, effectiveMonthly, currentMonthly } = result;
+    const { isCurrentOptimal, isClosestMatch, bestTariff, savingsYear, savingsMonth, effectiveMonthly, currentMonthly, closestTariffs, otherOptions } = result;
 
     let bodyHtml = '';
-    if (isCurrentOptimal) {
+
+    if (isClosestMatch) {
+      const cardsHtml = (closestTariffs || []).map((item, idx) => buildTariffCardHtml(item, idx === 0)).join('');
+      bodyHtml = [
+        '<div class="closest-badge">Подобраны наиболее близкие тарифы</div>',
+        '<p class="closest-intro-text">Точного тарифа, одновременно покрывающего все максимальные критерии, в базе нет. Мы подобрали для вас <strong>3 наиболее близких тарифа с максимальными пакетами интернета и минут</strong>:</p>',
+        '<div class="closest-cards-grid">' + cardsHtml + '</div>',
+        '<div class="action-buttons-row">',
+        '  <button type="button" class="btn btn-primary btn-guide" data-guide="mobileMNP">Пошаговая инструкция MNP (смена оператора)</button>',
+        '  <button type="button" class="btn btn-secondary btn-retention" data-type="mobile">Скрипт торга: «Хочу уйти, дайте скидку»</button>',
+        '</div>'
+      ].join('');
+    } else if (isCurrentOptimal) {
+      let alternativesHtml = '';
+      const alternatives = closestTariffs || otherOptions || [];
+      if (alternatives.length > 0) {
+        const cardsHtml = alternatives.slice(0, 3).map((item) => buildTariffCardHtml(item, false)).join('');
+        alternativesHtml = [
+          '<div class="other-options-section">',
+          '  <div class="other-options-title">📌 Доступные альтернативные тарифы на рынке ЛНР (если хотите сменить оператора):</div>',
+          '  <div class="closest-cards-grid">' + cardsHtml + '</div>',
+          '</div>'
+        ].join('');
+      }
+
       bodyHtml = [
         '<div class="optimal-badge">Ваш тариф оптимален</div>',
         '<p class="card-desc">Вы платите <strong>' + currentMonthly + ' ₽/мес</strong>. Достойных альтернатив с таким пакетом минут и гигабайт дешевле мы не нашли.</p>',
+        alternativesHtml,
         '<div class="action-buttons-row">',
         '  <button type="button" class="btn btn-secondary btn-retention" data-type="mobile">Скрипт звонка оператору для скидки 30%</button>',
         '</div>'
@@ -1765,6 +2338,22 @@
         ? '<span class="promo-pill">Акция: ' + bestTariff.promoMonthlyPrice + ' ₽ первые ' + bestTariff.promoDurationMonths + ' мес., затем ' + bestTariff.monthlyPrice + ' ₽</span>'
         : '';
 
+      const gbText = (bestTariff.isUnlimitedGb || bestTariff.includedGb >= 999) ? 'Безлимитный интернет' : bestTariff.includedGb + ' ГБ';
+      const minText = (bestTariff.isUnlimitedMinutes || bestTariff.includedMinutes >= 1500) ? 'Безлимит внутри сети + ' + bestTariff.includedMinutes + ' мин' : bestTariff.includedMinutes + ' мин';
+      const userGbText = userMob.isUnlimitedGb ? 'Безлимитный интернет' : userMob.gb + ' ГБ';
+      const userMinText = userMob.isUnlimitedMinutes ? 'Безлимитные звонки' : userMob.minutes + ' минут';
+
+      let otherOptionsHtml = '';
+      if (otherOptions && otherOptions.length > 0) {
+        const otherCards = otherOptions.map(item => buildTariffCardHtml(item, false)).join('');
+        otherOptionsHtml = [
+          '<div class="other-options-section">',
+          '  <div class="other-options-title">💡 Другие подходящие варианты от других операторов:</div>',
+          '  <div class="closest-cards-grid">' + otherCards + '</div>',
+          '</div>'
+        ].join('');
+      }
+
       bodyHtml = [
         '<div class="savings-highlight">Экономия: <strong>' + savingsYear.toLocaleString('ru-RU') + ' ₽ в год</strong> (~' + savingsMonth + ' ₽/мес)</div>',
         '<div class="comparison-grid">',
@@ -1772,8 +2361,8 @@
         '    <div class="comp-label">Сейчас у вас (' + userMob.operator + ')</div>',
         '    <div class="comp-price">' + currentMonthly + ' ₽/мес</div>',
         '    <ul class="comp-list">',
-        '      <li>' + userMob.gb + ' ГБ интернета</li>',
-        '      <li>' + userMob.minutes + ' минут звонков</li>',
+        '      <li>' + userGbText + '</li>',
+        '      <li>' + userMinText + '</li>',
         '    </ul>',
         '  </div>',
         '  <div class="comp-col target">',
@@ -1782,13 +2371,14 @@
         '    <div class="comp-price">' + effectiveMonthly + ' ₽/мес <small class="effective-hint">(средняя за 12 мес. с учётом подключения)</small></div>',
         '    ' + promoNote,
         '    <ul class="comp-list">',
-        '      <li>' + bestTariff.includedGb + ' ГБ</li>',
-        '      <li>' + bestTariff.includedMinutes + ' мин</li>',
-        '      <li>Плата за переход (MNP): ' + bestTariff.setupFee + ' ₽</li>',
+        '      <li>' + gbText + '</li>',
+        '      <li>' + minText + '</li>',
+        '      <li>Плата за переход (MNP): ' + (bestTariff.setupFee || 0) + ' ₽</li>',
         '    </ul>',
         '    <a href="' + bestTariff.officialUrl + '" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-sm">Перейти на сайт ' + bestTariff.operator + ' ↗</a>',
         '  </div>',
         '</div>',
+        otherOptionsHtml,
         '<div class="action-buttons-row">',
         '  <button type="button" class="btn btn-primary btn-guide" data-guide="mobileMNP">Пошаговая инструкция MNP (смена оператора)</button>',
         '  <button type="button" class="btn btn-secondary btn-retention" data-type="mobile">Скрипт торга: «Хочу уйти, дайте скидку»</button>',
@@ -2047,19 +2637,48 @@
       btn.addEventListener('click', () => wizard.skipCurrentCategory());
     });
 
-    // Слайдеры
-    const setupSlider = (sliderId, valueSpanId) => {
+    // Слайдеры с поддержкой выбора безлимита
+    const bindRangeWithUnlimited = (sliderId, spanId, toggleId, unit, maxVal) => {
       const slider = document.getElementById(sliderId);
-      const valueSpan = document.getElementById(valueSpanId);
-      if (slider && valueSpan) {
-        slider.addEventListener('input', (e) => {
-          valueSpan.textContent = e.target.value;
+      const span = document.getElementById(spanId);
+      const toggle = document.getElementById(toggleId);
+      if (!slider || !span) return;
+
+      const updateState = (isUnlim) => {
+        if (toggle) toggle.checked = isUnlim;
+        slider.disabled = isUnlim;
+        if (isUnlim) {
+          slider.value = maxVal;
+          span.textContent = 'Безлимит (∞)';
+          span.classList.add('unlimited');
+        } else {
+          span.textContent = slider.value + ' ' + unit;
+          span.classList.remove('unlimited');
+        }
+      };
+
+      slider.addEventListener('input', (e) => {
+        const val = Number(e.target.value);
+        if (val >= maxVal) {
+          updateState(true);
+        } else {
+          if (toggle && toggle.checked) toggle.checked = false;
+          slider.disabled = false;
+          span.textContent = val + ' ' + unit;
+          span.classList.remove('unlimited');
+        }
+      });
+
+      if (toggle) {
+        toggle.addEventListener('change', (e) => {
+          updateState(e.target.checked);
         });
       }
     };
-    setupSlider('mob-gb', 'mob-gb-val');
-    setupSlider('mob-min', 'mob-min-val');
-    setupSlider('mob-sms', 'mob-sms-val');
+
+    bindRangeWithUnlimited('mob-gb', 'mob-gb-val', 'mob-gb-unlim', 'ГБ', 100);
+    bindRangeWithUnlimited('mob-min', 'mob-min-val', 'mob-min-unlim', 'мин', 1200);
+    bindRangeWithUnlimited('mob-sms', 'mob-sms-val', 'mob-sms-unlim', 'шт', 100);
 
     // Пользовательские подписки
     const addCustomBtn = document.getElementById('btn-add-custom-sub');
