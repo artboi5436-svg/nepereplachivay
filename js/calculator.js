@@ -230,28 +230,64 @@ export function findBestInternetTariff(user, tariffs = []) {
   const userRegion = user.region || 'Все города ЛНР';
   const needsRouter = Boolean(user.needsRouter);
 
-  const matchingTariffs = tariffs.filter(t => {
-    const regionMatch = t.region === userRegion || 
-                        t.region === 'Все города ЛНР' || 
-                        userRegion === 'Все города ЛНР' ||
-                        t.region === 'Все регионы' || 
-                        userRegion === 'Все регионы' ||
-                        t.region === 'Луганская Народная Республика (ЛНР)' ||
-                        userRegion === 'Луганская Народная Республика (ЛНР)';
-    const speedMatch = Number(t.speedMbps) >= userSpeed;
-    return regionMatch && speedMatch;
+  // Фильтруем тарифы по региону
+  const regionalTariffs = tariffs.filter(t => {
+    return t.region === userRegion || 
+           t.region === 'Все города ЛНР' || 
+           userRegion === 'Все города ЛНР' ||
+           t.region === 'Все регионы' || 
+           userRegion === 'Все регионы' ||
+           t.region === 'Луганская Народная Республика (ЛНР)' ||
+           userRegion === 'Луганская Народная Республика (ЛНР)';
   });
+
+  const matchingTariffs = regionalTariffs.filter(t => {
+    return Number(t.speedMbps) >= userSpeed;
+  });
+
+  // Оценка близости альтернативных интернет-тарифов
+  const scoredRegional = regionalTariffs.map(t => {
+    const tco = calculateTariffTCO12(t, { needsRouter });
+    const speedRatio = Math.min(2.0, (Number(t.speedMbps) || 100) / userSpeed);
+    const tvBonus = t.hasTv ? 0.2 : 0;
+    const priceScore = Math.max(0.1, 1 - (tco.tco12 / 12000));
+    const proximityScore = (speedRatio * 0.5) + tvBonus + (priceScore * 0.3);
+
+    return {
+      tariff: t,
+      ...tco,
+      proximityScore,
+      savingsYear: currentAnnualTCO - tco.tco12,
+      savingsMonth: Math.round((currentAnnualTCO - tco.tco12) / 12)
+    };
+  });
+
+  scoredRegional.sort((a, b) => b.proximityScore - a.proximityScore || a.tco12 - b.tco12);
+
+  // Выбираем до 3 близких альтернатив от разных провайдеров
+  const closestTariffs = [];
+  const seenOps = new Set();
+  for (const item of scoredRegional) {
+    if (!seenOps.has(item.tariff.operator) || seenOps.size >= 3) {
+      closestTariffs.push(item);
+      seenOps.add(item.tariff.operator);
+      if (closestTariffs.length >= 3) break;
+    }
+  }
 
   if (matchingTariffs.length === 0) {
     return {
       hasMatch: false,
+      isClosestMatch: true,
       currentMonthly,
       currentAnnualTCO,
-      bestTariff: null,
+      bestTariff: closestTariffs.length > 0 ? closestTariffs[0].tariff : null,
       savingsYear: 0,
       savingsMonth: 0,
       isCurrentOptimal: true,
-      reason: 'В базе нет тарифов с такой высокой скоростью в вашем регионе.'
+      closestTariffs,
+      allAlternatives: scoredRegional,
+      reason: 'В базе нет тарифов с такой высокой скоростью в вашем городе. Ниже представлены наиболее скоростные альтернативы.'
     };
   }
 
@@ -268,9 +304,30 @@ export function findBestInternetTariff(user, tariffs = []) {
   scored.sort((a, b) => a.tco12 - b.tco12);
   const best = scored[0];
 
+  // Другие варианты от разных провайдеров
+  const otherOptions = [];
+  const usedOps = new Set([best.tariff.operator]);
+  for (let i = 1; i < scored.length; i++) {
+    const opt = scored[i];
+    if (!usedOps.has(opt.tariff.operator)) {
+      otherOptions.push(opt);
+      usedOps.add(opt.tariff.operator);
+    }
+    if (otherOptions.length >= 2) break;
+  }
+  if (otherOptions.length < 2) {
+    for (let i = 1; i < scored.length; i++) {
+      if (!otherOptions.includes(scored[i])) {
+        otherOptions.push(scored[i]);
+        if (otherOptions.length >= 2) break;
+      }
+    }
+  }
+
   if (best.savingsYear > 0) {
     return {
       hasMatch: true,
+      isClosestMatch: false,
       currentMonthly,
       currentAnnualTCO,
       bestTariff: best.tariff,
@@ -279,12 +336,15 @@ export function findBestInternetTariff(user, tariffs = []) {
       savingsYear: best.savingsYear,
       savingsMonth: best.savingsMonth,
       isCurrentOptimal: false,
-      allAlternatives: scored
+      allAlternatives: scored,
+      otherOptions,
+      closestTariffs
     };
   }
 
   return {
     hasMatch: true,
+    isClosestMatch: false,
     currentMonthly,
     currentAnnualTCO,
     bestTariff: best.tariff,
@@ -293,6 +353,9 @@ export function findBestInternetTariff(user, tariffs = []) {
     savingsYear: 0,
     savingsMonth: 0,
     isCurrentOptimal: true,
+    allAlternatives: scored,
+    otherOptions,
+    closestTariffs,
     reason: 'Ваш текущий тариф домашнего интернета уже оптимален.'
   };
 }

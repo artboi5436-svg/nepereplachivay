@@ -179,6 +179,7 @@
               <option value="Луганет" selected>Луганет (LugaNet)</option>
               <option value="ЛДС (Луганские Домашние Сети)">ЛДС (Луганские Домашние Сети)</option>
               <option value="Мегалайн (Мегалинк)">Мегалайн (Мегалинк)</option>
+              <option value="Миранда-медиа">Миранда-медиа (домашний интернет)</option>
               <option value="Луганские коммуникации (ЛТК)">Луганские коммуникации (ЛТК)</option>
               <option value="Магеал">Магеал (Mageal)</option>
               <option value="Холинет">Холинет (Holinet)</option>
@@ -197,9 +198,10 @@
           <div class="form-group">
             <label for="net-speed">Желаемая скорость интернета</label>
             <select id="net-speed" class="form-select">
-              <option value="100">100 Мбит/с (достаточно для серфинга и Full HD видео)</option>
-              <option value="200" selected>200–300 Мбит/с (для семьи, 4K видео и удалённой работы)</option>
-              <option value="300">300+ Мбит/с (для тяжелых скачиваний и онлайн-игр)</option>
+              <option value="100">100 Мбит/с (базовый: сёрфинг, Full HD видео, соцсети)</option>
+              <option value="200" selected>200 Мбит/с (оптимальный: семья, 4K видео и удалённая работа)</option>
+              <option value="300">300 Мбит/с (скоростной GPON: онлайн-игры и тяжелые загрузки)</option>
+              <option value="500">500 Мбит/с (максимальный гигабитный GPON для требовательных задач)</option>
             </select>
           </div>
 
@@ -221,6 +223,19 @@
         <div class="step-card hidden" id="step-3">
           <h2>Шаг 3: Подписки и сервисы</h2>
           <p class="step-subtitle">Отметьте сервисы, за которые у вас списываются деньги. Мы найдём скрытые дубликаты и неиспользуемые услуги.</p>
+
+          <!-- Фильтр по категориям -->
+          <div class="subs-filter-bar" id="subs-filter-bar">
+            <button type="button" class="sub-filter-btn active" data-cat="all">Все (27)</button>
+            <button type="button" class="sub-filter-btn" data-cat="ecosystem">Экосистемы</button>
+            <button type="button" class="sub-filter-btn" data-cat="cinema">Кино</button>
+            <button type="button" class="sub-filter-btn" data-cat="music">Музыка</button>
+            <button type="button" class="sub-filter-btn" data-cat="social">Мессенджеры</button>
+            <button type="button" class="sub-filter-btn" data-cat="books">Книги</button>
+            <button type="button" class="sub-filter-btn" data-cat="cloud">Облако</button>
+            <button type="button" class="sub-filter-btn" data-cat="delivery">Доставка</button>
+            <button type="button" class="sub-filter-btn" data-cat="gaming">Игры</button>
+          </div>
 
           <div class="subscriptions-grid" id="subscriptions-list">
             <!-- Генерируется динамически -->

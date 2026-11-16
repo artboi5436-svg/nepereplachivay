@@ -494,6 +494,62 @@ a:hover {
 }
 
 /* Сетка подписок */
+.subs-filter-bar {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 18px;
+}
+
+.sub-filter-btn {
+  background-color: var(--bg-surface-elevated);
+  border: 1px solid var(--border-color);
+  padding: 6px 13px;
+  border-radius: var(--radius-full);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  color: var(--text-muted);
+  transition: all 0.15s ease;
+  user-select: none;
+}
+
+.sub-filter-btn:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.sub-filter-btn.active {
+  background-color: var(--primary);
+  color: #ffffff;
+  border-color: var(--primary);
+}
+
+.sub-item-card.filter-hidden {
+  display: none !important;
+}
+
+.sub-category-tag {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 4px;
+  background-color: var(--bg-surface-elevated);
+  border: 1px solid var(--border-color);
+  color: var(--text-subtle);
+  margin-left: 6px;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.sub-desc-note {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 4px;
+  padding-left: 34px;
+  line-height: 1.35;
+}
+
 .subscriptions-grid {
   display: grid;
   grid-template-columns: 1fr;

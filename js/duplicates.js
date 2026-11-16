@@ -81,13 +81,53 @@ export function analyzeSubscriptionDuplicates(selectedIds = [], dbSubscriptions 
 
   if (musics.length >= 2) {
     const names = musics.map(m => `«${m.name}»`).join(' и ');
+    const cheaperMusics = [...musics].sort((a, b) => b.monthlyPrice - a.monthlyPrice).slice(1);
+    const musicSavings = cheaperMusics.reduce((acc, m) => acc + (Number(m.monthlyPrice) || 0), 0);
     issues.push({
       type: 'category_music_overlap',
       severity: 'medium',
       duplicateId: null,
       duplicateName: 'Несколько музыкальных сервисов',
-      monthlySavings: 169,
-      message: `У вас одновременно оплачивается музыка в ${names}. Музыкальные каталоги практически идентичны — достаточно оставить один сервис.`
+      monthlySavings: musicSavings,
+      message: `У вас одновременно оплачивается музыка в ${names}. Музыкальные каталоги практически идентичны — достаточно оставить один сервис, экономя ${musicSavings} ₽/мес.`
+    });
+  }
+
+  // 4. Поиск дублей облачных хранилищ
+  const clouds = selectedIds
+    .map(id => dbMap.get(id))
+    .filter(s => s && s.category === 'cloud');
+
+  if (clouds.length >= 2) {
+    const names = clouds.map(c => `«${c.name}»`).join(', ');
+    const cheaperClouds = [...clouds].sort((a, b) => b.monthlyPrice - a.monthlyPrice).slice(1);
+    const cloudSavings = cheaperClouds.reduce((acc, c) => acc + (Number(c.monthlyPrice) || 0), 0);
+    issues.push({
+      type: 'category_cloud_overlap',
+      severity: 'medium',
+      duplicateId: null,
+      duplicateName: 'Несколько облачных хранилищ',
+      monthlySavings: cloudSavings,
+      message: `У вас подключено ${clouds.length} облачных хранилища: ${names}. Консолидируйте файлы в одном сервисе и экономьте ${cloudSavings} ₽/мес.`
+    });
+  }
+
+  // 5. Поиск дублей книжных сервисов
+  const books = selectedIds
+    .map(id => dbMap.get(id))
+    .filter(s => s && s.category === 'books');
+
+  if (books.length >= 2) {
+    const names = books.map(b => `«${b.name}»`).join(' и ');
+    const cheaperBooks = [...books].sort((a, b) => b.monthlyPrice - a.monthlyPrice).slice(1);
+    const bookSavings = cheaperBooks.reduce((acc, b) => acc + (Number(b.monthlyPrice) || 0), 0);
+    issues.push({
+      type: 'category_books_overlap',
+      severity: 'medium',
+      duplicateId: null,
+      duplicateName: 'Несколько книжных сервисов',
+      monthlySavings: bookSavings,
+      message: `У вас оплачиваются книжные сервисы ${names}. Читать две библиотеки параллельно редко имеет смысл — можно сэкономить ${bookSavings} ₽/мес.`
     });
   }
 

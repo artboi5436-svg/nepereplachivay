@@ -608,6 +608,27 @@
     "notes": "Высокоскоростной оптический порт GPON до 300 Мбит/с с интерактивным телевидением."
   },
   {
+    "id": "lds-bezlim-500-lugansk",
+    "operator": "ЛДС (Луганские Домашние Сети)",
+    "tariffName": "Безлим 500 (GPON Ultra)",
+    "region": "Луганск",
+    "isDemo": true,
+    "updatedAt": "2026-11-01",
+    "speedMbps": 500,
+    "monthlyPrice": 799,
+    "promoMonthlyPrice": 599,
+    "promoDurationMonths": 2,
+    "setupFee": 0,
+    "routerRentMonthly": 120,
+    "hasTv": true,
+    "tvChannelsCount": 180,
+    "officialUrl": "https://lds.online",
+    "isPartner": false,
+    "adErid": null,
+    "earlyTerminationFeeTerms": "Без штрафов при возврате терминала.",
+    "notes": "Максимальная скорость 500 Мбит/с для стриминга, облачных игр и тяжелых загрузок."
+  },
+  {
     "id": "megaline-100-lugansk",
     "operator": "Мегалайн (Мегалинк)",
     "tariffName": "Мега 100",
@@ -648,6 +669,27 @@
     "adErid": null,
     "earlyTerminationFeeTerms": "Без штрафов при возврате терминала.",
     "notes": "Высокая скорость до 300 Мбит/с, расширенный пакет телевидения 220 каналов в HD качестве."
+  },
+  {
+    "id": "megaline-500-lugansk",
+    "operator": "Мегалайн (Мегалинк)",
+    "tariffName": "Мега 500 (GPON)",
+    "region": "Луганск",
+    "isDemo": true,
+    "updatedAt": "2026-11-01",
+    "speedMbps": 500,
+    "monthlyPrice": 899,
+    "promoMonthlyPrice": 699,
+    "promoDurationMonths": 2,
+    "setupFee": 1,
+    "routerRentMonthly": 120,
+    "hasTv": true,
+    "tvChannelsCount": 240,
+    "officialUrl": "https://megalink.net.ru",
+    "isPartner": false,
+    "adErid": null,
+    "earlyTerminationFeeTerms": "Без штрафов при возврате терминала.",
+    "notes": "Гигабитная оптика 500 Мбит/с с полным ТВ-пакетом для всей семьи."
   },
   {
     "id": "luganet-start-100-lnr",
@@ -713,6 +755,90 @@
     "notes": "Оптический интернет GPON для квартир и частного сектора с расширенным пакетом ТВ."
   },
   {
+    "id": "luganet-premium-500-lnr",
+    "operator": "Луганет",
+    "tariffName": "Премиум 500 (GPON)",
+    "region": "Все города ЛНР",
+    "isDemo": true,
+    "updatedAt": "2026-11-01",
+    "speedMbps": 500,
+    "monthlyPrice": 990,
+    "promoMonthlyPrice": 790,
+    "promoDurationMonths": 2,
+    "setupFee": 100,
+    "routerRentMonthly": 150,
+    "hasTv": true,
+    "tvChannelsCount": 150,
+    "officialUrl": "https://luganet.ru",
+    "isPartner": false,
+    "adErid": null,
+    "earlyTerminationFeeTerms": "Без штрафов при возврате оптического терминала ONT.",
+    "notes": "Максимальная скорость 500 Мбит/с, 150 ТВ-каналов и приоритетная линия круглосуточной техподдержки."
+  },
+  {
+    "id": "miranda-home-100-lnr",
+    "operator": "Миранда-медиа",
+    "tariffName": "Старт Домашний 100",
+    "region": "Все города ЛНР",
+    "isDemo": true,
+    "updatedAt": "2026-11-01",
+    "speedMbps": 100,
+    "monthlyPrice": 500,
+    "promoMonthlyPrice": 350,
+    "promoDurationMonths": 3,
+    "setupFee": 0,
+    "routerRentMonthly": 100,
+    "hasTv": false,
+    "tvChannelsCount": 0,
+    "officialUrl": "https://lnr.miranda-media.ru",
+    "isPartner": false,
+    "adErid": null,
+    "earlyTerminationFeeTerms": "Без штрафов за досрочное расторжение договора.",
+    "notes": "Высокоскоростная оптика от Миранда-медиа в ЛНР со скидкой в первые 3 месяца."
+  },
+  {
+    "id": "miranda-home-200-lnr",
+    "operator": "Миранда-медиа",
+    "tariffName": "Оптимум 200",
+    "region": "Все города ЛНР",
+    "isDemo": true,
+    "updatedAt": "2026-11-01",
+    "speedMbps": 200,
+    "monthlyPrice": 600,
+    "promoMonthlyPrice": 450,
+    "promoDurationMonths": 3,
+    "setupFee": 0,
+    "routerRentMonthly": 100,
+    "hasTv": true,
+    "tvChannelsCount": 90,
+    "officialUrl": "https://lnr.miranda-media.ru",
+    "isPartner": false,
+    "adErid": null,
+    "earlyTerminationFeeTerms": "Без скрытых комиссий.",
+    "notes": "Оптический интернет 200 Мбит/с с интерактивным телевидением от Миранда."
+  },
+  {
+    "id": "miranda-home-500-lnr",
+    "operator": "Миранда-медиа",
+    "tariffName": "Ультра 500",
+    "region": "Все города ЛНР",
+    "isDemo": true,
+    "updatedAt": "2026-11-01",
+    "speedMbps": 500,
+    "monthlyPrice": 800,
+    "promoMonthlyPrice": 590,
+    "promoDurationMonths": 3,
+    "setupFee": 0,
+    "routerRentMonthly": 120,
+    "hasTv": true,
+    "tvChannelsCount": 160,
+    "officialUrl": "https://lnr.miranda-media.ru",
+    "isPartner": false,
+    "adErid": null,
+    "earlyTerminationFeeTerms": "Без скрытых платежей при сдаче терминала.",
+    "notes": "Сверхскоростной GPON 500 Мбит/с и 160 телеканалов по выгодной промо-цене."
+  },
+  {
     "id": "mageal-student-100-lugansk",
     "operator": "Магеал",
     "tariffName": "Студент / ВАУШ 100",
@@ -732,6 +858,27 @@
     "adErid": null,
     "earlyTerminationFeeTerms": "Без штрафных санкций.",
     "notes": "Доступный городской тариф в Луганске для учёбы, работы и веб-серфинга."
+  },
+  {
+    "id": "mageal-comfort-200-lugansk",
+    "operator": "Магеал",
+    "tariffName": "Магеал Комфорт 200",
+    "region": "Луганск",
+    "isDemo": true,
+    "updatedAt": "2026-11-01",
+    "speedMbps": 200,
+    "monthlyPrice": 550,
+    "promoMonthlyPrice": null,
+    "promoDurationMonths": 0,
+    "setupFee": 0,
+    "routerRentMonthly": 90,
+    "hasTv": false,
+    "tvChannelsCount": 0,
+    "officialUrl": "https://mageal.net",
+    "isPartner": false,
+    "adErid": null,
+    "earlyTerminationFeeTerms": "Без штрафов.",
+    "notes": "Стабильная городская сеть для онлайн-игр и потокового видео."
   },
   {
     "id": "holinet-speed-100-lugansk",
@@ -870,11 +1017,11 @@
     "annualPrice": 2990,
     "isDemo": true,
     "updatedAt": "2026-11-01",
-    "includesServices": ["kinopoisk", "yandex-music", "yandex-disk"],
+    "includesServices": ["kinopoisk", "yandex-music", "yandex-disk", "bookmate"],
     "cancelUrl": "https://plus.yandex.ru/my",
-    "refundPolicyTip": "Если произошло неожиданное списание, обратитесь в чат службы поддержки Яндекс Плюс в течение 24–48 часов. Если контентом не пользовались, они оформляют возврат на карту [ПРОВЕРИТЬ: практика лояльности Яндекса по ст. 32 ЗоЗПП].",
+    "refundPolicyTip": "Если произошло неожиданное списание, обратитесь в чат службы поддержки Яндекс Плюс в течение 24–48 часов. Если контентом не пользовались, они оформляют возврат на карту по ст. 32 ЗоЗПП.",
     "officialUrl": "https://plus.yandex.ru",
-    "notes": "Часто дублируется с отдельными подписками на Кинопоиск и Яндекс Музыку."
+    "notes": "Часто дублируется с отдельными подписками на Кинопоиск, Яндекс Музыку и Букмейт."
   },
   {
     "id": "kinopoisk",
@@ -905,6 +1052,20 @@
     "notes": "Дубликат подписки Яндекс Плюс."
   },
   {
+    "id": "bookmate",
+    "name": "Яндекс Книги (Букмейт)",
+    "category": "books",
+    "monthlyPrice": 199,
+    "annualPrice": null,
+    "isDemo": true,
+    "updatedAt": "2026-11-01",
+    "bundledInside": "yandex-plus",
+    "cancelUrl": "https://books.yandex.ru",
+    "refundPolicyTip": "Букмейт/Яндекс Книги доступны внутри экосистемы Яндекс Плюс как базовая опция.",
+    "officialUrl": "https://books.yandex.ru",
+    "notes": "Книжный сервис Яндекса с электронными и аудиокнигами."
+  },
+  {
     "id": "sber-prime",
     "name": "СберПрайм",
     "category": "ecosystem",
@@ -912,11 +1073,11 @@
     "annualPrice": 1990,
     "isDemo": true,
     "updatedAt": "2026-11-01",
-    "includesServices": ["okko", "sber-zvuk", "sber-apteka"],
+    "includesServices": ["okko", "sber-zvuk", "kuper-prime"],
     "cancelUrl": "https://sberprime.sber.ru",
     "refundPolicyTip": "Отключение автопродления в приложении СберБанк Онлайн (раздел Профиль -> Подписки) или на сайте sberprime.sber.ru.",
     "officialUrl": "https://sberprime.sber.ru",
-    "notes": "Включает базовую подписку Okko и сервис Звук."
+    "notes": "Включает базовую подписку Okko, сервис Звук и повышенный кэшбэк бонусами Спасибо."
   },
   {
     "id": "okko",
@@ -931,6 +1092,132 @@
     "refundPolicyTip": "Проверьте, нет ли у вас активного СберПрайма — в него просмотр фильмов в Okko уже включен.",
     "officialUrl": "https://okko.tv",
     "notes": "Онлайн-кинотеатр экосистемы Сбера."
+  },
+  {
+    "id": "sber-zvuk",
+    "name": "Звук (Hi-Fi Музыка)",
+    "category": "music",
+    "monthlyPrice": 199,
+    "annualPrice": 1690,
+    "isDemo": true,
+    "updatedAt": "2026-11-01",
+    "bundledInside": "sber-prime",
+    "cancelUrl": "https://zvuk.com",
+    "refundPolicyTip": "Музыкальный стриминг Звук входит в базовый пакет СберПрайм без дополнительных плат.",
+    "officialUrl": "https://zvuk.com",
+    "notes": "Hi-Fi стриминг музыки без потери качества."
+  },
+  {
+    "id": "kuper-prime",
+    "name": "Купер (СберМаркет)",
+    "category": "delivery",
+    "monthlyPrice": 149,
+    "annualPrice": null,
+    "isDemo": true,
+    "updatedAt": "2026-11-01",
+    "bundledInside": "sber-prime",
+    "cancelUrl": "https://kuper.ru",
+    "refundPolicyTip": "Бесплатная доставка продуктов из Купера уже входит в подписку СберПрайм.",
+    "officialUrl": "https://kuper.ru",
+    "notes": "Сервис доставки продуктов и товаров из магазинов."
+  },
+  {
+    "id": "mts-premium",
+    "name": "МТС Premium",
+    "category": "ecosystem",
+    "monthlyPrice": 249,
+    "annualPrice": 1890,
+    "isDemo": true,
+    "updatedAt": "2026-11-01",
+    "includesServices": ["kion", "mts-music", "stroki"],
+    "cancelUrl": "https://premium.mts.ru",
+    "refundPolicyTip": "Отключение в приложении 'Мой МТС' или на сайте premium.mts.ru.",
+    "officialUrl": "https://premium.mts.ru",
+    "notes": "Включает KION, МТС Музыку, сервис Строки и 50 ГБ интернета для абонентов МТС."
+  },
+  {
+    "id": "kion",
+    "name": "KION (Онлайн-кинотеатр)",
+    "category": "cinema",
+    "monthlyPrice": 249,
+    "annualPrice": 1990,
+    "isDemo": true,
+    "updatedAt": "2026-11-01",
+    "bundledInside": "mts-premium",
+    "cancelUrl": "https://kion.ru/settings",
+    "refundPolicyTip": "KION полностью входит в подписку МТС Premium. Не оплачивайте отдельно при активном Premium!",
+    "officialUrl": "https://kion.ru",
+    "notes": "Онлайн-кинотеатр от МТС с оригинальными сериалами и ТВ-каналами."
+  },
+  {
+    "id": "mts-music",
+    "name": "МТС Музыка",
+    "category": "music",
+    "monthlyPrice": 169,
+    "annualPrice": null,
+    "isDemo": true,
+    "updatedAt": "2026-11-01",
+    "bundledInside": "mts-premium",
+    "cancelUrl": "https://music.mts.ru",
+    "refundPolicyTip": "Входит в подписку МТС Premium.",
+    "officialUrl": "https://music.mts.ru",
+    "notes": "Музыкальный стриминг МТС."
+  },
+  {
+    "id": "stroki",
+    "name": "Строки (Книги МТС)",
+    "category": "books",
+    "monthlyPrice": 299,
+    "annualPrice": null,
+    "isDemo": true,
+    "updatedAt": "2026-11-01",
+    "bundledInside": "mts-premium",
+    "cancelUrl": "https://stroki.mts.ru",
+    "refundPolicyTip": "Часть библиотеки сервиса Строки доступна подписчикам МТС Premium бесплатно.",
+    "officialUrl": "https://stroki.mts.ru",
+    "notes": "Книги, аудиокниги и комиксы."
+  },
+  {
+    "id": "t-pro",
+    "name": "Т-Банк Pro (Tinkoff Pro)",
+    "category": "ecosystem",
+    "monthlyPrice": 299,
+    "annualPrice": 1990,
+    "isDemo": true,
+    "updatedAt": "2026-11-01",
+    "includesServices": [],
+    "cancelUrl": "https://www.tbank.ru/pro",
+    "refundPolicyTip": "Отключение в мобильном приложении Т-Банка: раздел Профиль -> Управление Pro.",
+    "officialUrl": "https://www.tbank.ru/pro",
+    "notes": "Повышенный кэшбэк, процент на остаток, 600 минут в Т-Мобайл и партнерские скидки на Иви и START."
+  },
+  {
+    "id": "vk-music",
+    "name": "VK Музыка / VK Combo",
+    "category": "music",
+    "monthlyPrice": 169,
+    "annualPrice": 1590,
+    "isDemo": true,
+    "updatedAt": "2026-11-01",
+    "bundledInside": null,
+    "cancelUrl": "https://vk.com/settings?act=payments",
+    "refundPolicyTip": "Отключается в разделе 'Платежи и подписки' ВКонтакте или через профиль VK ID.",
+    "officialUrl": "https://music.vk.com",
+    "notes": "Фоновое прослушивание музыки без рекламы и загрузка треков в телефон."
+  },
+  {
+    "id": "telegram-premium",
+    "name": "Telegram Premium",
+    "category": "social",
+    "monthlyPrice": 299,
+    "annualPrice": 1990,
+    "isDemo": true,
+    "updatedAt": "2026-11-01",
+    "bundledInside": null,
+    "cancelUrl": "https://telegram.org",
+    "refundPolicyTip": "Управление через Telegram Bot @PremiumBot (в меню /stop) или через настройки учетной записи Google Play / App Store.",
+    "officialUrl": "https://telegram.org",
+    "notes": "Удвоенные лимиты, расшифровка аудиосообщений, ускоренная загрузка и отключение рекламы в каналах."
   },
   {
     "id": "ivi",
@@ -958,21 +1245,63 @@
     "cancelUrl": "https://premier.one/me/subscriptions",
     "refundPolicyTip": "Управление подпиской в разделе профиля. Возврат при случайном списании рассматривается поддержкой при отсутствии активности.",
     "officialUrl": "https://premier.one",
-    "notes": "Онлайн-кинотеатр с российскими сериалами."
+    "notes": "Онлайн-кинотеатр с российскими сериалами и телешоу."
   },
   {
-    "id": "vk-music",
-    "name": "VK Музыка",
-    "category": "music",
-    "monthlyPrice": 169,
+    "id": "wink",
+    "name": "Wink (Ростелеком)",
+    "category": "cinema",
+    "monthlyPrice": 399,
+    "annualPrice": 2990,
+    "isDemo": true,
+    "updatedAt": "2026-11-01",
+    "bundledInside": null,
+    "cancelUrl": "https://wink.ru/settings",
+    "refundPolicyTip": "Отключение в профиле на сайте wink.ru или в приложении Wink.",
+    "officialUrl": "https://wink.ru",
+    "notes": "Онлайн-кинотеатр с эксклюзивными российскими хитами и сотнями ТВ-каналов."
+  },
+  {
+    "id": "start",
+    "name": "START",
+    "category": "cinema",
+    "monthlyPrice": 499,
+    "annualPrice": 3990,
+    "isDemo": true,
+    "updatedAt": "2026-11-01",
+    "bundledInside": null,
+    "cancelUrl": "https://start.ru/settings",
+    "refundPolicyTip": "Отключение в настройках аккаунта START.",
+    "officialUrl": "https://start.ru",
+    "notes": "Стриминговый сервис с популярными оригинальными российскими сериалами."
+  },
+  {
+    "id": "amediateka",
+    "name": "Амедиатека",
+    "category": "cinema",
+    "monthlyPrice": 599,
+    "annualPrice": 4999,
+    "isDemo": true,
+    "updatedAt": "2026-11-01",
+    "bundledInside": null,
+    "cancelUrl": "https://www.amediateka.ru/profile",
+    "refundPolicyTip": "Отключение автопродления в настройках профиля.",
+    "officialUrl": "https://www.amediateka.ru",
+    "notes": "Зарубежные премьеры и главные мировые сериалы (HBO, Showtime и др.)."
+  },
+  {
+    "id": "litres",
+    "name": "Литрес Подписка",
+    "category": "books",
+    "monthlyPrice": 399,
     "annualPrice": null,
     "isDemo": true,
     "updatedAt": "2026-11-01",
     "bundledInside": null,
-    "cancelUrl": "https://vk.com/settings?act=payments",
-    "refundPolicyTip": "Отключается в разделе 'Платежи и подписки' ВКонтакте или через настройки Apple ID / Google Play, если оформлялась в приложении.",
-    "officialUrl": "https://music.vk.com",
-    "notes": "Музыкальный стриминг ВКонтакте."
+    "cancelUrl": "https://www.litres.ru/pages/my_subscriptions",
+    "refundPolicyTip": "Отключение в разделе 'Мои подписки' на сайте Литрес.",
+    "officialUrl": "https://www.litres.ru",
+    "notes": "Доступ к десяткам тысяч электронных и аудиокниг по фиксированной цене."
   },
   {
     "id": "yandex-disk",
@@ -986,7 +1315,35 @@
     "cancelUrl": "https://mail360.yandex.ru",
     "refundPolicyTip": "Управление тарифом в настройках Яндекс 360.",
     "officialUrl": "https://360.yandex.ru",
-    "notes": "Облачное хранилище для фото и файлов."
+    "notes": "Облачное хранилище для фото и файлов, безлимитная автозагрузка с телефона."
+  },
+  {
+    "id": "mail-cloud",
+    "name": "Облако Mail.ru",
+    "category": "cloud",
+    "monthlyPrice": 149,
+    "annualPrice": 1190,
+    "isDemo": true,
+    "updatedAt": "2026-11-01",
+    "bundledInside": null,
+    "cancelUrl": "https://cloud.mail.ru/home",
+    "refundPolicyTip": "Отключение автопродления в настройках тарифного плана Облака Mail.ru.",
+    "officialUrl": "https://cloud.mail.ru",
+    "notes": "Российское облачное хранилище для резервного копирования файлов."
+  },
+  {
+    "id": "apple-icloud",
+    "name": "Apple iCloud+",
+    "category": "cloud",
+    "monthlyPrice": 149,
+    "annualPrice": null,
+    "isDemo": true,
+    "updatedAt": "2026-11-01",
+    "bundledInside": null,
+    "cancelUrl": "https://support.apple.com/HT207594",
+    "refundPolicyTip": "Отключение в настройках iPhone -> Apple ID -> iCloud -> Управление хранилищем.",
+    "officialUrl": "https://www.apple.com/icloud",
+    "notes": "Облачное хранилище для резервных копий iPhone и фото (оплата со счета мобильного МТС/билайн)."
   },
   {
     "id": "ozon-premium",
@@ -1000,7 +1357,35 @@
     "cancelUrl": "https://www.ozon.ru/my/premium",
     "refundPolicyTip": "Отключение в личном кабинете Ozon во вкладке Premium.",
     "officialUrl": "https://www.ozon.ru",
-    "notes": "Кэшбэк и бесплатная курьерская доставка."
+    "notes": "Кэшбэк баллами Ozon, скидки на товары и бесплатная курьерская доставка."
+  },
+  {
+    "id": "wb-club",
+    "name": "WB Клуб (Wildberries)",
+    "category": "delivery",
+    "monthlyPrice": 199,
+    "annualPrice": null,
+    "isDemo": true,
+    "updatedAt": "2026-11-01",
+    "bundledInside": null,
+    "cancelUrl": "https://www.wildberries.ru",
+    "refundPolicyTip": "Отключение в профиле личного кабинета Wildberries в разделе подписки.",
+    "officialUrl": "https://www.wildberries.ru",
+    "notes": "Дополнительные скидки до 20% на товары маркетплейса Wildberries."
+  },
+  {
+    "id": "vk-play-cloud",
+    "name": "VK Play Cloud",
+    "category": "gaming",
+    "monthlyPrice": 999,
+    "annualPrice": null,
+    "isDemo": true,
+    "updatedAt": "2026-11-01",
+    "bundledInside": null,
+    "cancelUrl": "https://cloud.vkplay.ru",
+    "refundPolicyTip": "Управление подпиской в личном кабинете VK Play Cloud.",
+    "officialUrl": "https://cloud.vkplay.ru",
+    "notes": "Облачный гейминг: запуск современных ПК-игр на слабых ноутбуках и смартфонах."
   }
 ]
 ,
@@ -1214,13 +1599,51 @@
 
     if (musics.length >= 2) {
       const names = musics.map(m => '«' + m.name + '»').join(' и ');
+      const cheaperMusics = [...musics].sort((a, b) => b.monthlyPrice - a.monthlyPrice).slice(1);
+      const musicSavings = cheaperMusics.reduce((acc, m) => acc + (Number(m.monthlyPrice) || 0), 0);
       issues.push({
         type: 'category_music_overlap',
         severity: 'medium',
         duplicateId: null,
         duplicateName: 'Несколько музыкальных сервисов',
-        monthlySavings: 169,
-        message: 'У вас одновременно оплачивается музыка в ' + names + '. Музыкальные каталоги практически идентичны — достаточно оставить один сервис.'
+        monthlySavings: musicSavings,
+        message: 'У вас одновременно оплачивается музыка в ' + names + '. Музыкальные каталоги практически идентичны — достаточно оставить один сервис, экономя ' + musicSavings + ' ₽/мес.'
+      });
+    }
+
+    const clouds = selectedIds
+      .map(id => dbMap.get(id))
+      .filter(s => s && s.category === 'cloud');
+
+    if (clouds.length >= 2) {
+      const names = clouds.map(c => '«' + c.name + '»').join(', ');
+      const cheaperClouds = [...clouds].sort((a, b) => b.monthlyPrice - a.monthlyPrice).slice(1);
+      const cloudSavings = cheaperClouds.reduce((acc, c) => acc + (Number(c.monthlyPrice) || 0), 0);
+      issues.push({
+        type: 'category_cloud_overlap',
+        severity: 'medium',
+        duplicateId: null,
+        duplicateName: 'Несколько облачных хранилищ',
+        monthlySavings: cloudSavings,
+        message: 'У вас подключено ' + clouds.length + ' облачных хранилища: ' + names + '. Консолидируйте файлы в одном сервисе и экономьте ' + cloudSavings + ' ₽/мес.'
+      });
+    }
+
+    const books = selectedIds
+      .map(id => dbMap.get(id))
+      .filter(s => s && s.category === 'books');
+
+    if (books.length >= 2) {
+      const names = books.map(b => '«' + b.name + '»').join(' и ');
+      const cheaperBooks = [...books].sort((a, b) => b.monthlyPrice - a.monthlyPrice).slice(1);
+      const bookSavings = cheaperBooks.reduce((acc, b) => acc + (Number(b.monthlyPrice) || 0), 0);
+      issues.push({
+        type: 'category_books_overlap',
+        severity: 'medium',
+        duplicateId: null,
+        duplicateName: 'Несколько книжных сервисов',
+        monthlySavings: bookSavings,
+        message: 'У вас оплачиваются книжные сервисы ' + names + '. Читать две библиотеки параллельно редко имеет смысл — можно сэкономить ' + bookSavings + ' ₽/мес.'
       });
     }
 
@@ -1437,26 +1860,64 @@
     const userCity = user.region || 'Все города ЛНР';
     const needsRouter = Boolean(user.needsRouter);
 
-    const matchingTariffs = tariffs.filter(t => {
-      const regionMatch = t.region === userCity || 
-                          t.region === 'Все города ЛНР' || 
-                          userCity === 'Все города ЛНР' ||
-                          t.region === 'Луганская Народная Республика (ЛНР)' ||
-                          userCity === 'Луганская Народная Республика (ЛНР)';
-      const speedMatch = Number(t.speedMbps) >= userSpeed;
-      return regionMatch && speedMatch;
+    // Фильтруем тарифы по региону
+    const regionalTariffs = tariffs.filter(t => {
+      return t.region === userCity || 
+             t.region === 'Все города ЛНР' || 
+             userCity === 'Все города ЛНР' ||
+             t.region === 'Все регионы' || 
+             userCity === 'Все регионы' ||
+             t.region === 'Луганская Народная Республика (ЛНР)' ||
+             userCity === 'Луганская Народная Республика (ЛНР)';
     });
+
+    const matchingTariffs = regionalTariffs.filter(t => {
+      return Number(t.speedMbps) >= userSpeed;
+    });
+
+    // Оценка близости альтернативных интернет-тарифов
+    const scoredRegional = regionalTariffs.map(t => {
+      const tco = calculateTariffTCO12(t, { needsRouter });
+      const speedRatio = Math.min(2.0, (Number(t.speedMbps) || 100) / userSpeed);
+      const tvBonus = t.hasTv ? 0.2 : 0;
+      const priceScore = Math.max(0.1, 1 - (tco.tco12 / 12000));
+      const proximityScore = (speedRatio * 0.5) + tvBonus + (priceScore * 0.3);
+
+      return {
+        tariff: t,
+        ...tco,
+        proximityScore,
+        savingsYear: currentAnnualTCO - tco.tco12,
+        savingsMonth: Math.round((currentAnnualTCO - tco.tco12) / 12)
+      };
+    });
+
+    scoredRegional.sort((a, b) => b.proximityScore - a.proximityScore || a.tco12 - b.tco12);
+
+    // Выбираем до 3 близких альтернатив от разных провайдеров
+    const closestTariffs = [];
+    const seenOps = new Set();
+    for (const item of scoredRegional) {
+      if (!seenOps.has(item.tariff.operator) || seenOps.size >= 3) {
+        closestTariffs.push(item);
+        seenOps.add(item.tariff.operator);
+        if (closestTariffs.length >= 3) break;
+      }
+    }
 
     if (matchingTariffs.length === 0) {
       return {
         hasMatch: false,
+        isClosestMatch: true,
         currentMonthly,
         currentAnnualTCO,
-        bestTariff: null,
+        bestTariff: closestTariffs.length > 0 ? closestTariffs[0].tariff : null,
         savingsYear: 0,
         savingsMonth: 0,
         isCurrentOptimal: true,
-        reason: 'В базе нет тарифов с такой высокой скоростью в вашем регионе.'
+        closestTariffs,
+        allAlternatives: scoredRegional,
+        reason: 'В базе нет тарифов с такой высокой скоростью в вашем городе. Ниже представлены наиболее скоростные альтернативы.'
       };
     }
 
@@ -1473,9 +1934,30 @@
     scored.sort((a, b) => a.tco12 - b.tco12);
     const best = scored[0];
 
+    // Другие варианты от разных провайдеров
+    const otherOptions = [];
+    const usedOps = new Set([best.tariff.operator]);
+    for (let i = 1; i < scored.length; i++) {
+      const opt = scored[i];
+      if (!usedOps.has(opt.tariff.operator)) {
+        otherOptions.push(opt);
+        usedOps.add(opt.tariff.operator);
+      }
+      if (otherOptions.length >= 2) break;
+    }
+    if (otherOptions.length < 2) {
+      for (let i = 1; i < scored.length; i++) {
+        if (!otherOptions.includes(scored[i])) {
+          otherOptions.push(scored[i]);
+          if (otherOptions.length >= 2) break;
+        }
+      }
+    }
+
     if (best.savingsYear > 0) {
       return {
         hasMatch: true,
+        isClosestMatch: false,
         currentMonthly,
         currentAnnualTCO,
         bestTariff: best.tariff,
@@ -1484,12 +1966,15 @@
         savingsYear: best.savingsYear,
         savingsMonth: best.savingsMonth,
         isCurrentOptimal: false,
-        allAlternatives: scored
+        allAlternatives: scored,
+        otherOptions,
+        closestTariffs
       };
     }
 
     return {
       hasMatch: true,
+      isClosestMatch: false,
       currentMonthly,
       currentAnnualTCO,
       bestTariff: best.tariff,
@@ -1498,6 +1983,9 @@
       savingsYear: 0,
       savingsMonth: 0,
       isCurrentOptimal: true,
+      allAlternatives: scored,
+      otherOptions,
+      closestTariffs,
       reason: 'Ваш текущий тариф домашнего интернета уже оптимален.'
     };
   }
@@ -1964,6 +2452,17 @@
     }
   }
 
+  const SUBSCRIPTION_CATEGORY_LABELS = {
+    ecosystem: 'Экосистема',
+    cinema: 'Кино',
+    music: 'Музыка',
+    messenger: 'Мессенджер',
+    books: 'Книги',
+    cloud: 'Облако',
+    delivery: 'Доставка',
+    gaming: 'Игры'
+  };
+
   function renderSubscriptionsGrid(selectedIds = [], unusedIds = [], customItems = []) {
     const container = document.getElementById('subscriptions-list');
     if (!container) return;
@@ -1972,22 +2471,33 @@
     const selSet = new Set(selectedIds);
     const unSet = new Set(unusedIds);
 
+    const activeFilterBtn = document.querySelector('.sub-filter-btn.active');
+    const currentFilter = activeFilterBtn ? (activeFilterBtn.getAttribute('data-filter') || 'all') : 'all';
+
     dbSubscriptions.forEach(sub => {
       const isChecked = selSet.has(sub.id);
       const isUnused = unSet.has(sub.id);
+      const cat = sub.category || 'other';
+      const catLabel = SUBSCRIPTION_CATEGORY_LABELS[cat] || 'Сервис';
+      const isFilteredOut = (currentFilter !== 'all' && cat !== currentFilter);
 
       const card = document.createElement('div');
-      card.className = 'sub-item-card ' + (isChecked ? 'active' : '');
+      card.className = 'sub-item-card ' + (isChecked ? 'active ' : '') + (isFilteredOut ? 'filter-hidden' : '');
       card.id = 'sub-card-' + sub.id;
+      card.setAttribute('data-category', cat);
+
+      const descHtml = sub.description ? ('<div class="sub-desc-note">' + sub.description + '</div>') : '';
 
       card.innerHTML = [
         '<div class="sub-header-row">',
         '  <label class="custom-checkbox-label">',
         '    <input type="checkbox" class="sub-check" data-id="' + sub.id + '" ' + (isChecked ? 'checked' : '') + '>',
         '    <span class="sub-name">' + sub.name + '</span>',
+        '    <span class="sub-category-tag sub-cat-' + cat + '">' + catLabel + '</span>',
         '  </label>',
         '  <span class="sub-price-badge">' + sub.monthlyPrice + ' ₽/мес</span>',
         '</div>',
+        descHtml,
         '<div class="sub-footer-row ' + (isChecked ? '' : 'hidden') + '" id="sub-unused-row-' + sub.id + '">',
         '  <label class="unused-label">',
         '    <input type="checkbox" class="sub-unused-check" data-id="' + sub.id + '" ' + (isUnused ? 'checked' : '') + '>',
@@ -2389,22 +2899,85 @@
     container.querySelector('.card-content').innerHTML = bodyHtml;
   }
 
+  function buildInternetCardHtml(item, isFeatured = false, userNet = {}) {
+    const t = item.tariff || item;
+    const effPrice = item.effectiveMonthly || t.monthlyPrice;
+    const routerText = (userNet && userNet.needsRouter) ? ('Аренда роутера: ' + (t.routerRentMonthly || 0) + ' ₽/мес') : 'Без роутера';
+    const promoPill = (t.promoDurationMonths > 0 && t.promoMonthlyPrice)
+      ? ('<div class="promo-pill">Акция: ' + t.promoMonthlyPrice + ' ₽ первые ' + t.promoDurationMonths + ' мес.</div>')
+      : '';
+    const eridHtml = (t.isPartner && t.adErid)
+      ? ('<span class="ad-label" title="Реклама. Токен erid: ' + t.adErid + '">erid: ' + t.adErid + '</span>')
+      : '';
+
+    return [
+      '<div class="closest-card ' + (isFeatured ? 'featured' : '') + '">',
+      '  <div class="closest-card-op">' + t.operator + ' ' + eridHtml + '</div>',
+      '  <div class="closest-card-name">' + t.tariffName + '</div>',
+      '  <div class="closest-card-price">' + effPrice + ' ₽/мес <small class="effective-hint">(в среднем)</small></div>',
+      '  ' + promoPill,
+      '  <ul class="closest-card-list">',
+      '    <li>Скорость: <strong>' + t.speedMbps + ' Мбит/с</strong> (' + (t.technology || 'GPON/Ethernet') + ')</li>',
+      '    <li>' + routerText + '</li>',
+      '    <li>Подключение: ' + (t.setupFee || 0) + ' ₽</li>',
+      '  </ul>',
+      '  <a href="' + t.officialUrl + '" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-sm">Перейти на сайт ' + t.operator + ' ↗</a>',
+      '</div>'
+    ].join('\n');
+  }
+
   function renderInternetReportCard(container, result, userNet) {
-    const { isCurrentOptimal, bestTariff, savingsYear, savingsMonth, effectiveMonthly, currentMonthly } = result;
+    const { isCurrentOptimal, isClosestMatch, bestTariff, savingsYear, savingsMonth, effectiveMonthly, currentMonthly, closestTariffs, otherOptions } = result;
 
     let bodyHtml = '';
-    if (isCurrentOptimal) {
+
+    if (isClosestMatch) {
+      const cardsHtml = (closestTariffs || []).map((item, idx) => buildInternetCardHtml(item, idx === 0, userNet)).join('');
+      bodyHtml = [
+        '<div class="closest-badge">Подобраны наиболее близкие тарифы интернета</div>',
+        '<p class="closest-intro-text">Тарифа, строго превосходящего ваш текущий по скорости и одновременно более дешевого, не найдено без компромиссов. Мы подобрали <strong>наиболее близкие тарифы от надежных провайдеров ЛНР</strong> с максимальной скоростью и оптимальной стоимостью:</p>',
+        '<div class="closest-cards-grid">' + cardsHtml + '</div>',
+        '<div class="action-buttons-row">',
+        '  <button type="button" class="btn btn-primary btn-guide" data-guide="internetCancel">Инструкция: как закрыть старый договор без штрафов</button>',
+        '  <button type="button" class="btn btn-secondary btn-retention" data-type="internet">Скрипт звонка: «Предложите спецтариф»</button>',
+        '</div>'
+      ].join('');
+    } else if (isCurrentOptimal) {
+      let alternativesHtml = '';
+      const alternatives = closestTariffs || otherOptions || [];
+      if (alternatives.length > 0) {
+        const cardsHtml = alternatives.slice(0, 3).map((item) => buildInternetCardHtml(item, false, userNet)).join('');
+        alternativesHtml = [
+          '<div class="other-options-section">',
+          '  <div class="other-options-title">📌 Доступные альтернативные тарифы других провайдеров в ЛНР:</div>',
+          '  <div class="closest-cards-grid">' + cardsHtml + '</div>',
+          '</div>'
+        ].join('');
+      }
+
       bodyHtml = [
         '<div class="optimal-badge">Ваш тариф интернета оптимален</div>',
-        '<p class="card-desc">Вы платите <strong>' + currentMonthly + ' ₽/мес</strong>. В вашем регионе это отличная рыночная ставка.</p>',
+        '<p class="card-desc">Вы платите <strong>' + currentMonthly + ' ₽/мес</strong>. Для выбранной скорости это отличная рыночная ставка среди провайдеров вашего региона.</p>',
+        alternativesHtml,
         '<div class="action-buttons-row">',
         '  <button type="button" class="btn btn-secondary btn-retention" data-type="internet">Скрипт диалога с провайдером для скидки</button>',
         '</div>'
       ].join('');
     } else {
       const isPartner = bestTariff.isPartner;
-      const eridHtml = isPartner ? '<span class="ad-label">Реклама erid: ' + bestTariff.adErid + '</span>' : '';
+      const eridHtml = isPartner ? '<span class="ad-label" title="Реклама. Токен erid: ' + bestTariff.adErid + '">Реклама erid: ' + bestTariff.adErid + '</span>' : '';
       const routerText = userNet.needsRouter ? 'Включает аренду роутера (' + bestTariff.routerRentMonthly + ' ₽/мес)' : 'Со своим роутером';
+
+      let otherOptionsHtml = '';
+      if (otherOptions && otherOptions.length > 0) {
+        const otherCards = otherOptions.map(item => buildInternetCardHtml(item, false, userNet)).join('');
+        otherOptionsHtml = [
+          '<div class="other-options-section">',
+          '  <div class="other-options-title">💡 Другие подходящие варианты от других провайдеров:</div>',
+          '  <div class="closest-cards-grid">' + otherCards + '</div>',
+          '</div>'
+        ].join('');
+      }
 
       bodyHtml = [
         '<div class="savings-highlight">Экономия: <strong>' + savingsYear.toLocaleString('ru-RU') + ' ₽ в год</strong> (~' + savingsMonth + ' ₽/мес)</div>',
@@ -2421,13 +2994,14 @@
         '    <div class="comp-tariff-name">' + bestTariff.tariffName + ' ' + eridHtml + '</div>',
         '    <div class="comp-price">' + effectiveMonthly + ' ₽/мес <small class="effective-hint">(с учётом акций за 12 мес)</small></div>',
         '    <ul class="comp-list">',
-        '      <li>Скорость: ' + bestTariff.speedMbps + ' Мбит/с</li>',
+        '      <li>Скорость: ' + bestTariff.speedMbps + ' Мбит/с (' + (bestTariff.technology || 'GPON/Ethernet') + ')</li>',
         '      <li>' + routerText + '</li>',
-        '      <li>Плата за подключение: ' + bestTariff.setupFee + ' ₽</li>',
+        '      <li>Плата за подключение: ' + (bestTariff.setupFee || 0) + ' ₽</li>',
         '    </ul>',
         '    <a href="' + bestTariff.officialUrl + '" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-sm">Сайт провайдера ↗</a>',
         '  </div>',
         '</div>',
+        otherOptionsHtml,
         '<div class="action-buttons-row">',
         '  <button type="button" class="btn btn-primary btn-guide" data-guide="internetCancel">Инструкция: как закрыть старый договор без штрафов</button>',
         '  <button type="button" class="btn btn-secondary btn-retention" data-type="internet">Скрипт звонка: «Предложите спецтариф»</button>',
@@ -2720,6 +3294,25 @@
         const unusedRow = document.getElementById('sub-unused-row-' + e.target.dataset.id);
         if (card) card.classList.toggle('active', e.target.checked);
         if (unusedRow) unusedRow.classList.toggle('hidden', !e.target.checked);
+      }
+    });
+
+    // Фильтрация подписок по категориям
+    document.addEventListener('click', (e) => {
+      const filterBtn = e.target.closest('.sub-filter-btn');
+      if (filterBtn) {
+        document.querySelectorAll('.sub-filter-btn').forEach(btn => btn.classList.remove('active'));
+        filterBtn.classList.add('active');
+        const filter = filterBtn.getAttribute('data-filter') || 'all';
+        const cards = document.querySelectorAll('#subscriptions-list .sub-item-card');
+        cards.forEach(card => {
+          const cat = card.getAttribute('data-category');
+          if (filter === 'all' || cat === filter) {
+            card.classList.remove('filter-hidden');
+          } else {
+            card.classList.add('filter-hidden');
+          }
+        });
       }
     });
 

@@ -158,13 +158,51 @@
 
     if (musics.length >= 2) {
       const names = musics.map(m => '«' + m.name + '»').join(' и ');
+      const cheaperMusics = [...musics].sort((a, b) => b.monthlyPrice - a.monthlyPrice).slice(1);
+      const musicSavings = cheaperMusics.reduce((acc, m) => acc + (Number(m.monthlyPrice) || 0), 0);
       issues.push({
         type: 'category_music_overlap',
         severity: 'medium',
         duplicateId: null,
         duplicateName: 'Несколько музыкальных сервисов',
-        monthlySavings: 169,
-        message: 'У вас одновременно оплачивается музыка в ' + names + '. Музыкальные каталоги практически идентичны — достаточно оставить один сервис.'
+        monthlySavings: musicSavings,
+        message: 'У вас одновременно оплачивается музыка в ' + names + '. Музыкальные каталоги практически идентичны — достаточно оставить один сервис, экономя ' + musicSavings + ' ₽/мес.'
+      });
+    }
+
+    const clouds = selectedIds
+      .map(id => dbMap.get(id))
+      .filter(s => s && s.category === 'cloud');
+
+    if (clouds.length >= 2) {
+      const names = clouds.map(c => '«' + c.name + '»').join(', ');
+      const cheaperClouds = [...clouds].sort((a, b) => b.monthlyPrice - a.monthlyPrice).slice(1);
+      const cloudSavings = cheaperClouds.reduce((acc, c) => acc + (Number(c.monthlyPrice) || 0), 0);
+      issues.push({
+        type: 'category_cloud_overlap',
+        severity: 'medium',
+        duplicateId: null,
+        duplicateName: 'Несколько облачных хранилищ',
+        monthlySavings: cloudSavings,
+        message: 'У вас подключено ' + clouds.length + ' облачных хранилища: ' + names + '. Консолидируйте файлы в одном сервисе и экономьте ' + cloudSavings + ' ₽/мес.'
+      });
+    }
+
+    const books = selectedIds
+      .map(id => dbMap.get(id))
+      .filter(s => s && s.category === 'books');
+
+    if (books.length >= 2) {
+      const names = books.map(b => '«' + b.name + '»').join(' и ');
+      const cheaperBooks = [...books].sort((a, b) => b.monthlyPrice - a.monthlyPrice).slice(1);
+      const bookSavings = cheaperBooks.reduce((acc, b) => acc + (Number(b.monthlyPrice) || 0), 0);
+      issues.push({
+        type: 'category_books_overlap',
+        severity: 'medium',
+        duplicateId: null,
+        duplicateName: 'Несколько книжных сервисов',
+        monthlySavings: bookSavings,
+        message: 'У вас оплачиваются книжные сервисы ' + names + '. Читать две библиотеки параллельно редко имеет смысл — можно сэкономить ' + bookSavings + ' ₽/мес.'
       });
     }
 
@@ -381,26 +419,64 @@
     const userCity = user.region || 'Все города ЛНР';
     const needsRouter = Boolean(user.needsRouter);
 
-    const matchingTariffs = tariffs.filter(t => {
-      const regionMatch = t.region === userCity || 
-                          t.region === 'Все города ЛНР' || 
-                          userCity === 'Все города ЛНР' ||
-                          t.region === 'Луганская Народная Республика (ЛНР)' ||
-                          userCity === 'Луганская Народная Республика (ЛНР)';
-      const speedMatch = Number(t.speedMbps) >= userSpeed;
-      return regionMatch && speedMatch;
+    // Фильтруем тарифы по региону
+    const regionalTariffs = tariffs.filter(t => {
+      return t.region === userCity || 
+             t.region === 'Все города ЛНР' || 
+             userCity === 'Все города ЛНР' ||
+             t.region === 'Все регионы' || 
+             userCity === 'Все регионы' ||
+             t.region === 'Луганская Народная Республика (ЛНР)' ||
+             userCity === 'Луганская Народная Республика (ЛНР)';
     });
+
+    const matchingTariffs = regionalTariffs.filter(t => {
+      return Number(t.speedMbps) >= userSpeed;
+    });
+
+    // Оценка близости альтернативных интернет-тарифов
+    const scoredRegional = regionalTariffs.map(t => {
+      const tco = calculateTariffTCO12(t, { needsRouter });
+      const speedRatio = Math.min(2.0, (Number(t.speedMbps) || 100) / userSpeed);
+      const tvBonus = t.hasTv ? 0.2 : 0;
+      const priceScore = Math.max(0.1, 1 - (tco.tco12 / 12000));
+      const proximityScore = (speedRatio * 0.5) + tvBonus + (priceScore * 0.3);
+
+      return {
+        tariff: t,
+        ...tco,
+        proximityScore,
+        savingsYear: currentAnnualTCO - tco.tco12,
+        savingsMonth: Math.round((currentAnnualTCO - tco.tco12) / 12)
+      };
+    });
+
+    scoredRegional.sort((a, b) => b.proximityScore - a.proximityScore || a.tco12 - b.tco12);
+
+    // Выбираем до 3 близких альтернатив от разных провайдеров
+    const closestTariffs = [];
+    const seenOps = new Set();
+    for (const item of scoredRegional) {
+      if (!seenOps.has(item.tariff.operator) || seenOps.size >= 3) {
+        closestTariffs.push(item);
+        seenOps.add(item.tariff.operator);
+        if (closestTariffs.length >= 3) break;
+      }
+    }
 
     if (matchingTariffs.length === 0) {
       return {
         hasMatch: false,
+        isClosestMatch: true,
         currentMonthly,
         currentAnnualTCO,
-        bestTariff: null,
+        bestTariff: closestTariffs.length > 0 ? closestTariffs[0].tariff : null,
         savingsYear: 0,
         savingsMonth: 0,
         isCurrentOptimal: true,
-        reason: 'В базе нет тарифов с такой высокой скоростью в вашем регионе.'
+        closestTariffs,
+        allAlternatives: scoredRegional,
+        reason: 'В базе нет тарифов с такой высокой скоростью в вашем городе. Ниже представлены наиболее скоростные альтернативы.'
       };
     }
 
@@ -417,9 +493,30 @@
     scored.sort((a, b) => a.tco12 - b.tco12);
     const best = scored[0];
 
+    // Другие варианты от разных провайдеров
+    const otherOptions = [];
+    const usedOps = new Set([best.tariff.operator]);
+    for (let i = 1; i < scored.length; i++) {
+      const opt = scored[i];
+      if (!usedOps.has(opt.tariff.operator)) {
+        otherOptions.push(opt);
+        usedOps.add(opt.tariff.operator);
+      }
+      if (otherOptions.length >= 2) break;
+    }
+    if (otherOptions.length < 2) {
+      for (let i = 1; i < scored.length; i++) {
+        if (!otherOptions.includes(scored[i])) {
+          otherOptions.push(scored[i]);
+          if (otherOptions.length >= 2) break;
+        }
+      }
+    }
+
     if (best.savingsYear > 0) {
       return {
         hasMatch: true,
+        isClosestMatch: false,
         currentMonthly,
         currentAnnualTCO,
         bestTariff: best.tariff,
@@ -428,12 +525,15 @@
         savingsYear: best.savingsYear,
         savingsMonth: best.savingsMonth,
         isCurrentOptimal: false,
-        allAlternatives: scored
+        allAlternatives: scored,
+        otherOptions,
+        closestTariffs
       };
     }
 
     return {
       hasMatch: true,
+      isClosestMatch: false,
       currentMonthly,
       currentAnnualTCO,
       bestTariff: best.tariff,
@@ -442,6 +542,9 @@
       savingsYear: 0,
       savingsMonth: 0,
       isCurrentOptimal: true,
+      allAlternatives: scored,
+      otherOptions,
+      closestTariffs,
       reason: 'Ваш текущий тариф домашнего интернета уже оптимален.'
     };
   }
@@ -908,6 +1011,17 @@
     }
   }
 
+  const SUBSCRIPTION_CATEGORY_LABELS = {
+    ecosystem: 'Экосистема',
+    cinema: 'Кино',
+    music: 'Музыка',
+    messenger: 'Мессенджер',
+    books: 'Книги',
+    cloud: 'Облако',
+    delivery: 'Доставка',
+    gaming: 'Игры'
+  };
+
   function renderSubscriptionsGrid(selectedIds = [], unusedIds = [], customItems = []) {
     const container = document.getElementById('subscriptions-list');
     if (!container) return;
@@ -916,22 +1030,33 @@
     const selSet = new Set(selectedIds);
     const unSet = new Set(unusedIds);
 
+    const activeFilterBtn = document.querySelector('.sub-filter-btn.active');
+    const currentFilter = activeFilterBtn ? (activeFilterBtn.getAttribute('data-filter') || 'all') : 'all';
+
     dbSubscriptions.forEach(sub => {
       const isChecked = selSet.has(sub.id);
       const isUnused = unSet.has(sub.id);
+      const cat = sub.category || 'other';
+      const catLabel = SUBSCRIPTION_CATEGORY_LABELS[cat] || 'Сервис';
+      const isFilteredOut = (currentFilter !== 'all' && cat !== currentFilter);
 
       const card = document.createElement('div');
-      card.className = 'sub-item-card ' + (isChecked ? 'active' : '');
+      card.className = 'sub-item-card ' + (isChecked ? 'active ' : '') + (isFilteredOut ? 'filter-hidden' : '');
       card.id = 'sub-card-' + sub.id;
+      card.setAttribute('data-category', cat);
+
+      const descHtml = sub.description ? ('<div class="sub-desc-note">' + sub.description + '</div>') : '';
 
       card.innerHTML = [
         '<div class="sub-header-row">',
         '  <label class="custom-checkbox-label">',
         '    <input type="checkbox" class="sub-check" data-id="' + sub.id + '" ' + (isChecked ? 'checked' : '') + '>',
         '    <span class="sub-name">' + sub.name + '</span>',
+        '    <span class="sub-category-tag sub-cat-' + cat + '">' + catLabel + '</span>',
         '  </label>',
         '  <span class="sub-price-badge">' + sub.monthlyPrice + ' ₽/мес</span>',
         '</div>',
+        descHtml,
         '<div class="sub-footer-row ' + (isChecked ? '' : 'hidden') + '" id="sub-unused-row-' + sub.id + '">',
         '  <label class="unused-label">',
         '    <input type="checkbox" class="sub-unused-check" data-id="' + sub.id + '" ' + (isUnused ? 'checked' : '') + '>',
@@ -1333,22 +1458,85 @@
     container.querySelector('.card-content').innerHTML = bodyHtml;
   }
 
+  function buildInternetCardHtml(item, isFeatured = false, userNet = {}) {
+    const t = item.tariff || item;
+    const effPrice = item.effectiveMonthly || t.monthlyPrice;
+    const routerText = (userNet && userNet.needsRouter) ? ('Аренда роутера: ' + (t.routerRentMonthly || 0) + ' ₽/мес') : 'Без роутера';
+    const promoPill = (t.promoDurationMonths > 0 && t.promoMonthlyPrice)
+      ? ('<div class="promo-pill">Акция: ' + t.promoMonthlyPrice + ' ₽ первые ' + t.promoDurationMonths + ' мес.</div>')
+      : '';
+    const eridHtml = (t.isPartner && t.adErid)
+      ? ('<span class="ad-label" title="Реклама. Токен erid: ' + t.adErid + '">erid: ' + t.adErid + '</span>')
+      : '';
+
+    return [
+      '<div class="closest-card ' + (isFeatured ? 'featured' : '') + '">',
+      '  <div class="closest-card-op">' + t.operator + ' ' + eridHtml + '</div>',
+      '  <div class="closest-card-name">' + t.tariffName + '</div>',
+      '  <div class="closest-card-price">' + effPrice + ' ₽/мес <small class="effective-hint">(в среднем)</small></div>',
+      '  ' + promoPill,
+      '  <ul class="closest-card-list">',
+      '    <li>Скорость: <strong>' + t.speedMbps + ' Мбит/с</strong> (' + (t.technology || 'GPON/Ethernet') + ')</li>',
+      '    <li>' + routerText + '</li>',
+      '    <li>Подключение: ' + (t.setupFee || 0) + ' ₽</li>',
+      '  </ul>',
+      '  <a href="' + t.officialUrl + '" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-sm">Перейти на сайт ' + t.operator + ' ↗</a>',
+      '</div>'
+    ].join('\n');
+  }
+
   function renderInternetReportCard(container, result, userNet) {
-    const { isCurrentOptimal, bestTariff, savingsYear, savingsMonth, effectiveMonthly, currentMonthly } = result;
+    const { isCurrentOptimal, isClosestMatch, bestTariff, savingsYear, savingsMonth, effectiveMonthly, currentMonthly, closestTariffs, otherOptions } = result;
 
     let bodyHtml = '';
-    if (isCurrentOptimal) {
+
+    if (isClosestMatch) {
+      const cardsHtml = (closestTariffs || []).map((item, idx) => buildInternetCardHtml(item, idx === 0, userNet)).join('');
+      bodyHtml = [
+        '<div class="closest-badge">Подобраны наиболее близкие тарифы интернета</div>',
+        '<p class="closest-intro-text">Тарифа, строго превосходящего ваш текущий по скорости и одновременно более дешевого, не найдено без компромиссов. Мы подобрали <strong>наиболее близкие тарифы от надежных провайдеров ЛНР</strong> с максимальной скоростью и оптимальной стоимостью:</p>',
+        '<div class="closest-cards-grid">' + cardsHtml + '</div>',
+        '<div class="action-buttons-row">',
+        '  <button type="button" class="btn btn-primary btn-guide" data-guide="internetCancel">Инструкция: как закрыть старый договор без штрафов</button>',
+        '  <button type="button" class="btn btn-secondary btn-retention" data-type="internet">Скрипт звонка: «Предложите спецтариф»</button>',
+        '</div>'
+      ].join('');
+    } else if (isCurrentOptimal) {
+      let alternativesHtml = '';
+      const alternatives = closestTariffs || otherOptions || [];
+      if (alternatives.length > 0) {
+        const cardsHtml = alternatives.slice(0, 3).map((item) => buildInternetCardHtml(item, false, userNet)).join('');
+        alternativesHtml = [
+          '<div class="other-options-section">',
+          '  <div class="other-options-title">📌 Доступные альтернативные тарифы других провайдеров в ЛНР:</div>',
+          '  <div class="closest-cards-grid">' + cardsHtml + '</div>',
+          '</div>'
+        ].join('');
+      }
+
       bodyHtml = [
         '<div class="optimal-badge">Ваш тариф интернета оптимален</div>',
-        '<p class="card-desc">Вы платите <strong>' + currentMonthly + ' ₽/мес</strong>. В вашем регионе это отличная рыночная ставка.</p>',
+        '<p class="card-desc">Вы платите <strong>' + currentMonthly + ' ₽/мес</strong>. Для выбранной скорости это отличная рыночная ставка среди провайдеров вашего региона.</p>',
+        alternativesHtml,
         '<div class="action-buttons-row">',
         '  <button type="button" class="btn btn-secondary btn-retention" data-type="internet">Скрипт диалога с провайдером для скидки</button>',
         '</div>'
       ].join('');
     } else {
       const isPartner = bestTariff.isPartner;
-      const eridHtml = isPartner ? '<span class="ad-label">Реклама erid: ' + bestTariff.adErid + '</span>' : '';
+      const eridHtml = isPartner ? '<span class="ad-label" title="Реклама. Токен erid: ' + bestTariff.adErid + '">Реклама erid: ' + bestTariff.adErid + '</span>' : '';
       const routerText = userNet.needsRouter ? 'Включает аренду роутера (' + bestTariff.routerRentMonthly + ' ₽/мес)' : 'Со своим роутером';
+
+      let otherOptionsHtml = '';
+      if (otherOptions && otherOptions.length > 0) {
+        const otherCards = otherOptions.map(item => buildInternetCardHtml(item, false, userNet)).join('');
+        otherOptionsHtml = [
+          '<div class="other-options-section">',
+          '  <div class="other-options-title">💡 Другие подходящие варианты от других провайдеров:</div>',
+          '  <div class="closest-cards-grid">' + otherCards + '</div>',
+          '</div>'
+        ].join('');
+      }
 
       bodyHtml = [
         '<div class="savings-highlight">Экономия: <strong>' + savingsYear.toLocaleString('ru-RU') + ' ₽ в год</strong> (~' + savingsMonth + ' ₽/мес)</div>',
@@ -1365,13 +1553,14 @@
         '    <div class="comp-tariff-name">' + bestTariff.tariffName + ' ' + eridHtml + '</div>',
         '    <div class="comp-price">' + effectiveMonthly + ' ₽/мес <small class="effective-hint">(с учётом акций за 12 мес)</small></div>',
         '    <ul class="comp-list">',
-        '      <li>Скорость: ' + bestTariff.speedMbps + ' Мбит/с</li>',
+        '      <li>Скорость: ' + bestTariff.speedMbps + ' Мбит/с (' + (bestTariff.technology || 'GPON/Ethernet') + ')</li>',
         '      <li>' + routerText + '</li>',
-        '      <li>Плата за подключение: ' + bestTariff.setupFee + ' ₽</li>',
+        '      <li>Плата за подключение: ' + (bestTariff.setupFee || 0) + ' ₽</li>',
         '    </ul>',
         '    <a href="' + bestTariff.officialUrl + '" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-sm">Сайт провайдера ↗</a>',
         '  </div>',
         '</div>',
+        otherOptionsHtml,
         '<div class="action-buttons-row">',
         '  <button type="button" class="btn btn-primary btn-guide" data-guide="internetCancel">Инструкция: как закрыть старый договор без штрафов</button>',
         '  <button type="button" class="btn btn-secondary btn-retention" data-type="internet">Скрипт звонка: «Предложите спецтариф»</button>',
@@ -1664,6 +1853,25 @@
         const unusedRow = document.getElementById('sub-unused-row-' + e.target.dataset.id);
         if (card) card.classList.toggle('active', e.target.checked);
         if (unusedRow) unusedRow.classList.toggle('hidden', !e.target.checked);
+      }
+    });
+
+    // Фильтрация подписок по категориям
+    document.addEventListener('click', (e) => {
+      const filterBtn = e.target.closest('.sub-filter-btn');
+      if (filterBtn) {
+        document.querySelectorAll('.sub-filter-btn').forEach(btn => btn.classList.remove('active'));
+        filterBtn.classList.add('active');
+        const filter = filterBtn.getAttribute('data-filter') || 'all';
+        const cards = document.querySelectorAll('#subscriptions-list .sub-item-card');
+        cards.forEach(card => {
+          const cat = card.getAttribute('data-category');
+          if (filter === 'all' || cat === filter) {
+            card.classList.remove('filter-hidden');
+          } else {
+            card.classList.add('filter-hidden');
+          }
+        });
       }
     });
 
