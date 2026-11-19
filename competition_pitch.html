@@ -138,10 +138,10 @@
     .slide {
       position: absolute;
       inset: 0;
-      padding: 70px 100px 90px 100px;
+      padding: 65px 100px;
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
+      justify-content: flex-start;
       opacity: 0;
       visibility: hidden;
       transform: translateX(60px) scale(0.98);
@@ -267,16 +267,9 @@
       margin: 20px 0;
     }
 
-    /* Нижний колонтитул */
+    /* Нижний колонтитул скрыт для идеальной чистоты экрана */
     .slide-footer {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding-top: 20px;
-      border-top: 1px solid var(--border-subtle);
-      font-size: 15px;
-      color: var(--text-dim);
-      font-family: var(--font-mono);
+      display: none !important;
     }
 
     .footer-brand {
@@ -1015,23 +1008,9 @@
     /* UI УПРАВЛЕНИЯ СПИКЕРА: ТАЙМЕР, ШПАРГАЛКА, КЛИКЕР    */
     /* ---------------------------------------------------- */
     
-    /* Плавающий таймер спикера (Presenter Timer) */
+    /* Плавающий таймер спикера скрыт для лаконичности сцены */
     #presenter-timer {
-      position: absolute;
-      top: 30px;
-      right: 36px;
-      z-index: 100;
-      background: rgba(10, 13, 20, 0.85);
-      backdrop-filter: blur(12px);
-      border: 1px solid var(--border-highlight);
-      border-radius: 999px;
-      padding: 8px 18px 8px 14px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      cursor: pointer;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-      transition: all 0.2s ease;
+      display: none !important;
     }
 
     #presenter-timer:hover {
@@ -1165,16 +1144,9 @@
       transition: width 0.3s ease;
     }
 
-    /* Плавающие подсказки горячих клавиш в левом нижнем углу */
+    /* Плавающие подсказки горячих клавиш скрыты */
     .controls-legend {
-      position: absolute;
-      bottom: 24px;
-      left: 36px;
-      z-index: 80;
-      display: flex;
-      gap: 14px;
-      opacity: 0.55;
-      transition: opacity 0.2s;
+      display: none !important;
     }
 
     .controls-legend:hover {
@@ -1247,13 +1219,6 @@
       <!-- Кнопки навигации мышью -->
       <button class="nav-arrow-btn" id="btn-prev" title="Предыдущий слайд (←)">‹</button>
       <button class="nav-arrow-btn" id="btn-next" title="Следующий слайд (Space / →)">›</button>
-
-      <!-- Плавающий таймер докладчика (Presenter Timer) -->
-      <div id="presenter-timer" title="Таймер выступления (клик — пауза/сброс, T — скрыть/показать)">
-        <div class="timer-ring-indicator" id="timer-dot"></div>
-        <div class="timer-digits" id="timer-display">03:30</div>
-        <div class="timer-ctrl-hint">3.5 мин</div>
-      </div>
 
       <!-- Контейнер слайдов -->
       <main class="slides-deck">
@@ -1922,15 +1887,6 @@
         </div>
       </aside>
 
-      <!-- Подсказки по горячим клавишам внизу экрана -->
-      <div class="controls-legend">
-        <span class="legend-key"><kbd>Space</kbd> / <kbd>→</kbd> Далее</span>
-        <span class="legend-key"><kbd>←</kbd> Назад</span>
-        <span class="legend-key"><kbd>T</kbd> Таймер</span>
-        <span class="legend-key"><kbd>N</kbd> Шпаргалка</span>
-        <span class="legend-key"><kbd>F</kbd> На весь экран</span>
-      </div>
-
     </div>
   </div>
 
@@ -2038,11 +1994,6 @@
           e.preventDefault();
           toggleNotes();
         }
-        // Таймер спикера (T)
-        else if (e.key === 't' || e.key === 'T' || e.key === 'е' || e.key === 'Е') {
-          e.preventDefault();
-          toggleTimerVisibility();
-        }
         // Home / End
         else if (e.key === 'Home') {
           e.preventDefault();
@@ -2112,64 +2063,6 @@
       document.getElementById('notes-close').addEventListener('click', () => {
         notesPanel.classList.remove('open');
       });
-
-      // ----------------------------------------------------
-      // ТАЙМЕР ВЫСТУПЛЕНИЯ СПИКЕРА (3:30 MIN)
-      // ----------------------------------------------------
-      const timerDisplay = document.getElementById('timer-display');
-      const timerDot = document.getElementById('timer-dot');
-      const timerWidget = document.getElementById('presenter-timer');
-
-      const TOTAL_SECONDS = 210; // 3 минуты 30 секунд
-      let secondsLeft = TOTAL_SECONDS;
-      let isTimerRunning = true;
-      let timerInterval = null;
-
-      function renderTimer() {
-        const isNegative = secondsLeft < 0;
-        const absSec = Math.abs(secondsLeft);
-        const mins = Math.floor(absSec / 60);
-        const secs = absSec % 60;
-        const formatted = `${isNegative ? '+' : ''}${mins < 10 ? '0' + mins : mins}:${secs < 10 ? '0' + secs : secs}`;
-        
-        timerDisplay.textContent = formatted;
-
-        timerDisplay.classList.remove('warning', 'danger');
-        if (secondsLeft > 60) {
-          timerDot.style.background = 'var(--success)';
-          timerDot.style.boxShadow = '0 0 10px var(--success)';
-        } else if (secondsLeft > 0) {
-          timerDot.style.background = 'var(--warning)';
-          timerDot.style.boxShadow = '0 0 10px var(--warning)';
-          timerDisplay.classList.add('warning');
-        } else {
-          timerDot.style.background = 'var(--danger)';
-          timerDot.style.boxShadow = '0 0 10px var(--danger)';
-          timerDisplay.classList.add('danger');
-        }
-      }
-
-      function startTimer() {
-        if (timerInterval) clearInterval(timerInterval);
-        timerInterval = setInterval(() => {
-          if (isTimerRunning) {
-            secondsLeft--;
-            renderTimer();
-          }
-        }, 1000);
-      }
-
-      timerWidget.addEventListener('click', () => {
-        isTimerRunning = !isTimerRunning;
-        timerWidget.style.opacity = isTimerRunning ? '1' : '0.5';
-      });
-
-      function toggleTimerVisibility() {
-        timerWidget.style.display = (timerWidget.style.display === 'none') ? 'flex' : 'none';
-      }
-
-      startTimer();
-      renderTimer();
 
       // ----------------------------------------------------
       // ЖИВОЙ СЧЕТЧИК ПЕРЕПЛАТ В СТРАНЕ (ODOMETER COUNTER)

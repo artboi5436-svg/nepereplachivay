@@ -1,6 +1,7 @@
 ﻿# Скрипт профессиональной генерации конкурсной презентации PowerPoint (.pptx)
 # Для проекта «ТарифДетокс» (Demo Day / Стартап-батл)
 $ErrorActionPreference = "Stop"
+Stop-Process -Name POWERPNT -Force -ErrorAction SilentlyContinue
 Add-Type -AssemblyName System.Runtime.InteropServices
 
 function Color-Rgb($r, $g, $b) {
@@ -87,27 +88,6 @@ try {
             $tr.Font.Size = 13
             $tr.Font.Color.RGB = $C_MUTED
         }
-
-        # 5. Footer Line & Brand
-        $line = $slide.Shapes.AddShape(1, 50, 495, 860, 1)
-        $line.Fill.Solid()
-        $line.Fill.ForeColor.RGB = $C_BORDER
-        $line.Line.Visible = [Microsoft.Office.Core.MsoTriState]::msoFalse
-
-        $ftr = $slide.Shapes.AddTextbox(1, 50, 503, 500, 24)
-        $tr = $ftr.TextFrame.TextRange
-        $tr.Text = "● ТарифДетокс  |  Независимый потребительский арбитр  |  Privacy by Design"
-        $tr.Font.Name = "Arial"
-        $tr.Font.Size = 9
-        $tr.Font.Color.RGB = $C_DIM
-
-        $ftrRight = $slide.Shapes.AddTextbox(1, 600, 503, 310, 24)
-        $tr = $ftrRight.TextFrame.TextRange
-        $tr.Text = "Статус: 100% Production Ready MVP"
-        $tr.Font.Name = "Arial"
-        $tr.Font.Size = 9
-        $tr.Font.Color.RGB = $C_DIM
-        $ftrRight.TextFrame.TextRange.ParagraphFormat.Alignment = 3
 
         # 6. Speaker Notes
         if ($speakerNotes) {
