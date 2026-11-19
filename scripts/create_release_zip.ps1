@@ -7,6 +7,7 @@ if (Test-Path $zipPath) { Remove-Item $zipPath -Force }
 
 $items = @(
     "index.html",
+    "competition_pitch.html",
     "presentation.html",
     "presentation.pptx",
     "asset-manifest.json",

@@ -1,0 +1,2217 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>ТарифДетокс — Конкурсный Pitch Deck (Demo Day / Стартап-батл)</title>
+  <meta name="description" content="Конкурсная презентация проекта «ТарифДетокс»: сервис освобождения от скрытых переплат за связь, интернет и подписки без регистрации.">
+
+  <!-- Шрифты для проекторов: высочайшая читаемость -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cabinet+Grotesk:wght@800;900&family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700;800&display=swap" rel="stylesheet">
+
+  <!-- GSAP 3 для кинематографичной анимации сцены -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+
+  <style>
+    :root {
+      --bg-dark: #0A0D14;
+      --bg-surface: #111622;
+      --bg-surface-elevated: #171E2E;
+      --border-subtle: rgba(255, 255, 255, 0.08);
+      --border-highlight: rgba(255, 255, 255, 0.16);
+      
+      /* Цветовая драматургия */
+      --danger: #F43F5E;       /* Неоновый коралл — Утечки, маркетинг, архив */
+      --danger-glow: rgba(244, 63, 94, 0.35);
+      --success: #2DD4BF;      /* Изумрудно-бирюзовый — Детокс, победа, экономия */
+      --success-dark: #0D9488;
+      --success-glow: rgba(45, 212, 191, 0.35);
+      --primary: #38BDF8;      /* Финтех-голубой */
+      --primary-glow: rgba(56, 189, 248, 0.3);
+      --warning: #F59E0B;      /* Янтарный */
+      
+      --text-main: #FFFFFF;
+      --text-muted: #94A3B8;
+      --text-dim: #64748B;
+      
+      --font-display: 'Cabinet Grotesk', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      --font-body: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      --font-mono: 'JetBrains Mono', Consolas, monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background-color: #000000;
+      color: var(--text-main);
+      font-family: var(--font-body);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Главный сценический контейнер 16:9 с автоматическим центрированием */
+    #stage-viewport {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #000000;
+    }
+
+    #stage-frame {
+      position: relative;
+      width: 1920px;
+      height: 1080px;
+      transform-origin: center center;
+      background-color: var(--bg-dark);
+      overflow: hidden;
+      box-shadow: 0 0 100px rgba(0, 0, 0, 0.9);
+    }
+
+    /* Декоративная подложка: кинематографичный космический финтех-фон */
+    .stage-ambient-glow {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(140px);
+      pointer-events: none;
+      z-index: 1;
+      opacity: 0.45;
+      transition: all 1s ease;
+    }
+
+    .glow-coral {
+      top: -150px;
+      right: -150px;
+      width: 750px;
+      height: 750px;
+      background: radial-gradient(circle, var(--danger) 0%, transparent 70%);
+    }
+
+    .glow-teal {
+      bottom: -150px;
+      left: -150px;
+      width: 750px;
+      height: 750px;
+      background: radial-gradient(circle, var(--success-dark) 0%, transparent 70%);
+    }
+
+    .glow-cyan {
+      top: 30%;
+      left: 40%;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, var(--primary) 0%, transparent 70%);
+      opacity: 0.15;
+    }
+
+    /* Архитектурная сетка проектора */
+    .stage-grid {
+      position: absolute;
+      inset: 0;
+      background-image: 
+        linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    /* Слайды */
+    .slides-deck {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      z-index: 5;
+    }
+
+    .slide {
+      position: absolute;
+      inset: 0;
+      padding: 70px 100px 90px 100px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateX(60px) scale(0.98);
+      transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1), transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.45s;
+      pointer-events: none;
+    }
+
+    .slide.active {
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(0) scale(1);
+      pointer-events: auto;
+    }
+
+    .slide.prev {
+      transform: translateX(-60px) scale(0.98);
+      opacity: 0;
+    }
+
+    /* Слайдовая разметка: Header, Body, Footer */
+    .slide-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 24px;
+    }
+
+    .slide-badge-row {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .slide-tag {
+      font-family: var(--font-mono);
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 8px 18px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-muted);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .slide-tag.tag-danger {
+      background: rgba(244, 63, 94, 0.12);
+      border-color: rgba(244, 63, 94, 0.3);
+      color: #FDA4AF;
+    }
+
+    .slide-tag.tag-success {
+      background: rgba(45, 212, 191, 0.12);
+      border-color: rgba(45, 212, 191, 0.3);
+      color: #5EEAD4;
+    }
+
+    .slide-tag.tag-primary {
+      background: rgba(56, 189, 248, 0.12);
+      border-color: rgba(56, 189, 248, 0.3);
+      color: #7DD3FC;
+    }
+
+    .slide-timing {
+      font-family: var(--font-mono);
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text-dim);
+      background: rgba(0, 0, 0, 0.4);
+      padding: 6px 14px;
+      border-radius: 6px;
+      border: 1px solid rgba(255, 255, 255, 0.04);
+    }
+
+    .slide-headline {
+      font-family: var(--font-display);
+      font-size: 58px;
+      line-height: 1.1;
+      font-weight: 900;
+      letter-spacing: -1.5px;
+      color: #FFFFFF;
+      max-width: 1400px;
+    }
+
+    .slide-headline .accent-danger {
+      color: var(--danger);
+      text-shadow: 0 0 35px var(--danger-glow);
+    }
+
+    .slide-headline .accent-success {
+      color: var(--success);
+      text-shadow: 0 0 35px var(--success-glow);
+    }
+
+    .slide-headline .accent-primary {
+      color: var(--primary);
+      text-shadow: 0 0 35px var(--primary-glow);
+    }
+
+    .slide-punchline {
+      font-size: 26px;
+      line-height: 1.45;
+      color: var(--text-muted);
+      font-weight: 500;
+      max-width: 1350px;
+      margin-top: 14px;
+    }
+
+    .slide-punchline strong {
+      color: #FFFFFF;
+      font-weight: 700;
+    }
+
+    .slide-body {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      margin: 20px 0;
+    }
+
+    /* Нижний колонтитул */
+    .slide-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 20px;
+      border-top: 1px solid var(--border-subtle);
+      font-size: 15px;
+      color: var(--text-dim);
+      font-family: var(--font-mono);
+    }
+
+    .footer-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      color: #FFFFFF;
+    }
+
+    .brand-shield-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--success);
+      box-shadow: 0 0 12px var(--success);
+    }
+
+    /* Карточки и сетки */
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+      width: 100%;
+    }
+
+    .grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+      width: 100%;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      width: 100%;
+    }
+
+    .stage-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 20px;
+      padding: 36px 32px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform 0.3s ease, border-color 0.3s ease;
+    }
+
+    .stage-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    }
+
+    .stage-card.card-danger {
+      border-color: rgba(244, 63, 94, 0.25);
+      background: linear-gradient(180deg, rgba(244, 63, 94, 0.08) 0%, var(--bg-surface) 100%);
+    }
+
+    .stage-card.card-danger::before {
+      background: linear-gradient(90deg, transparent, var(--danger), transparent);
+    }
+
+    .stage-card.card-success {
+      border-color: rgba(45, 212, 191, 0.3);
+      background: linear-gradient(180deg, rgba(45, 212, 191, 0.08) 0%, var(--bg-surface) 100%);
+    }
+
+    .stage-card.card-success::before {
+      background: linear-gradient(90deg, transparent, var(--success), transparent);
+    }
+
+    .stage-card.card-primary {
+      border-color: rgba(56, 189, 248, 0.3);
+      background: linear-gradient(180deg, rgba(56, 189, 248, 0.08) 0%, var(--bg-surface) 100%);
+    }
+
+    .stage-card.card-primary::before {
+      background: linear-gradient(90deg, transparent, var(--primary), transparent);
+    }
+
+    .stat-number {
+      font-family: var(--font-display);
+      font-size: 72px;
+      line-height: 1;
+      font-weight: 900;
+      letter-spacing: -2px;
+      margin-bottom: 14px;
+    }
+
+    .stat-number.coral {
+      color: var(--danger);
+      text-shadow: 0 0 40px var(--danger-glow);
+    }
+
+    .stat-number.teal {
+      color: var(--success);
+      text-shadow: 0 0 40px var(--success-glow);
+    }
+
+    .stat-number.cyan {
+      color: var(--primary);
+      text-shadow: 0 0 40px var(--primary-glow);
+    }
+
+    .card-title {
+      font-size: 24px;
+      font-weight: 800;
+      color: #FFFFFF;
+      margin-bottom: 12px;
+      line-height: 1.25;
+    }
+
+    .card-desc {
+      font-size: 18px;
+      line-height: 1.5;
+      color: var(--text-muted);
+    }
+
+    .card-desc strong {
+      color: #FFFFFF;
+    }
+
+    /* Слайд 1: Hook Hero */
+    .hero-layout {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      height: 100%;
+      position: relative;
+    }
+
+    .hero-shield-logo {
+      width: 110px;
+      height: 110px;
+      margin-bottom: 30px;
+      position: relative;
+    }
+
+    .hero-shield-svg {
+      width: 100%;
+      height: 100%;
+      filter: drop-shadow(0 0 35px var(--success-glow));
+      animation: shieldPulse 3s infinite ease-in-out;
+    }
+
+    @keyframes shieldPulse {
+      0%, 100% { transform: scale(1); filter: drop-shadow(0 0 25px rgba(45, 212, 191, 0.4)); }
+      50% { transform: scale(1.06); filter: drop-shadow(0 0 45px rgba(45, 212, 191, 0.7)); }
+    }
+
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: 96px;
+      font-weight: 900;
+      line-height: 0.95;
+      letter-spacing: -3px;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+
+    .hero-title span {
+      background: linear-gradient(135deg, #FFFFFF 20%, var(--success) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-subtitle {
+      font-size: 32px;
+      color: var(--text-muted);
+      max-width: 1200px;
+      line-height: 1.35;
+      margin-bottom: 48px;
+    }
+
+    .odometer-box {
+      background: rgba(17, 22, 34, 0.85);
+      border: 1px solid rgba(244, 63, 94, 0.4);
+      box-shadow: 0 0 60px rgba(244, 63, 94, 0.2);
+      border-radius: 24px;
+      padding: 24px 50px;
+      display: inline-flex;
+      align-items: center;
+      gap: 32px;
+    }
+
+    .odometer-label {
+      text-align: left;
+    }
+
+    .odometer-label-tag {
+      font-family: var(--font-mono);
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--danger);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .live-dot {
+      width: 10px;
+      height: 10px;
+      background: var(--danger);
+      border-radius: 50%;
+      animation: liveBlink 1s infinite;
+    }
+
+    @keyframes liveBlink {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.3; transform: scale(0.8); }
+    }
+
+    .odometer-label-text {
+      font-size: 20px;
+      color: #FFFFFF;
+      font-weight: 700;
+      margin-top: 4px;
+    }
+
+    .odometer-counter {
+      font-family: var(--font-mono);
+      font-size: 64px;
+      font-weight: 800;
+      color: var(--danger);
+      letter-spacing: -1px;
+      text-shadow: 0 0 35px var(--danger-glow);
+    }
+
+    /* Слайд 2: Сжатие проблем в одну красную цифру */
+    .collapse-banner {
+      margin-top: 32px;
+      background: linear-gradient(90deg, rgba(244, 63, 94, 0.15) 0%, rgba(244, 63, 94, 0.05) 100%);
+      border: 1px solid rgba(244, 63, 94, 0.4);
+      border-radius: 16px;
+      padding: 24px 36px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .collapse-text {
+      font-size: 24px;
+      font-weight: 700;
+      color: #FFFFFF;
+    }
+
+    .collapse-val {
+      font-family: var(--font-display);
+      font-size: 54px;
+      font-weight: 900;
+      color: var(--danger);
+      text-shadow: 0 0 30px var(--danger-glow);
+    }
+
+    /* Слайд 3: 3 Золотых правила */
+    .rule-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 20px;
+      padding: 44px 36px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+    }
+
+    .rule-number {
+      font-family: var(--font-mono);
+      font-size: 16px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      color: var(--success);
+      margin-bottom: 20px;
+      display: inline-block;
+    }
+
+    .rule-title {
+      font-size: 28px;
+      font-weight: 800;
+      color: #FFFFFF;
+      margin-bottom: 16px;
+      line-height: 1.25;
+    }
+
+    .rule-desc {
+      font-size: 19px;
+      line-height: 1.55;
+      color: var(--text-muted);
+    }
+
+    .rule-highlight {
+      margin-top: 24px;
+      padding: 14px 18px;
+      background: rgba(45, 212, 191, 0.08);
+      border-radius: 10px;
+      border-left: 4px solid var(--success);
+      font-size: 16px;
+      font-weight: 600;
+      color: #5EEAD4;
+    }
+
+    /* Слайд 4: Демо Сплит-скрин */
+    .demo-split-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 40px;
+      height: 100%;
+      align-items: center;
+    }
+
+    .wizard-steps-mock {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .wizard-step-pill {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 16px;
+      padding: 24px 28px;
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      position: relative;
+    }
+
+    .wizard-step-pill.active-pill {
+      border-color: rgba(45, 212, 191, 0.4);
+      background: linear-gradient(90deg, rgba(45, 212, 191, 0.1) 0%, var(--bg-surface) 100%);
+    }
+
+    .step-num-badge {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-mono);
+      font-weight: 800;
+      font-size: 18px;
+      color: var(--text-muted);
+      flex-shrink: 0;
+    }
+
+    .wizard-step-pill.active-pill .step-num-badge {
+      background: var(--success);
+      color: #000000;
+      border-color: var(--success);
+      box-shadow: 0 0 18px var(--success-glow);
+    }
+
+    .step-pill-content h4 {
+      font-size: 20px;
+      font-weight: 700;
+      color: #FFFFFF;
+      margin-bottom: 4px;
+    }
+
+    .step-pill-content p {
+      font-size: 15px;
+      color: var(--text-muted);
+    }
+
+    .demo-result-card {
+      background: linear-gradient(145deg, #121927 0%, #0A0F1A 100%);
+      border: 2px solid rgba(45, 212, 191, 0.5);
+      box-shadow: 0 25px 60px rgba(45, 212, 191, 0.2);
+      border-radius: 24px;
+      padding: 44px 36px;
+      text-align: center;
+    }
+
+    .demo-result-header {
+      font-family: var(--font-mono);
+      font-size: 15px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--success);
+      margin-bottom: 24px;
+    }
+
+    .comparison-prices-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 24px;
+      margin-bottom: 30px;
+    }
+
+    .price-was {
+      text-align: center;
+    }
+
+    .price-was .p-label {
+      font-size: 14px;
+      color: var(--text-dim);
+      margin-bottom: 4px;
+    }
+
+    .price-was .p-val {
+      font-family: var(--font-display);
+      font-size: 38px;
+      font-weight: 800;
+      color: var(--danger);
+      text-decoration: line-through;
+    }
+
+    .price-arrow {
+      font-size: 32px;
+      color: var(--text-dim);
+    }
+
+    .price-now {
+      text-align: center;
+    }
+
+    .price-now .p-label {
+      font-size: 14px;
+      color: #5EEAD4;
+      margin-bottom: 4px;
+      font-weight: 600;
+    }
+
+    .price-now .p-val {
+      font-family: var(--font-display);
+      font-size: 46px;
+      font-weight: 900;
+      color: var(--success);
+    }
+
+    .savings-hero-badge {
+      background: rgba(45, 212, 191, 0.12);
+      border: 1px solid rgba(45, 212, 191, 0.4);
+      border-radius: 16px;
+      padding: 20px;
+    }
+
+    .savings-hero-badge .sh-label {
+      font-size: 16px;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+
+    .savings-hero-badge .sh-val {
+      font-family: var(--font-display);
+      font-size: 58px;
+      font-weight: 900;
+      color: #FFFFFF;
+      letter-spacing: -1px;
+    }
+
+    .savings-hero-badge .sh-val span {
+      color: var(--success);
+    }
+
+    /* Слайд 5: Схема алгоритмов calculator.js */
+    .algo-box {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 20px;
+      padding: 36px 30px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .algo-code-pill {
+      font-family: var(--font-mono);
+      font-size: 14px;
+      font-weight: 700;
+      background: rgba(0, 0, 0, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 8px;
+      padding: 10px 14px;
+      color: var(--primary);
+      margin-bottom: 18px;
+      overflow-x: auto;
+      white-space: nowrap;
+    }
+
+    /* Слайд 6: Кейс ЛНР */
+    .lnr-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 36px;
+      align-items: center;
+    }
+
+    .lnr-feature-list {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .lnr-item {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 16px;
+      padding: 24px;
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+    }
+
+    .lnr-item-icon {
+      font-size: 32px;
+      line-height: 1;
+      padding: 12px;
+      background: rgba(255, 255, 255, 0.04);
+      border-radius: 12px;
+    }
+
+    .lnr-item h4 {
+      font-size: 22px;
+      font-weight: 700;
+      color: #FFFFFF;
+      margin-bottom: 6px;
+    }
+
+    .lnr-item p {
+      font-size: 16px;
+      color: var(--text-muted);
+      line-height: 1.45;
+    }
+
+    .lnr-stats-col {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .lnr-stat-box {
+      background: linear-gradient(135deg, rgba(56, 189, 248, 0.1) 0%, var(--bg-surface) 100%);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      border-radius: 20px;
+      padding: 28px;
+      text-align: center;
+    }
+
+    .lnr-stat-val {
+      font-family: var(--font-display);
+      font-size: 68px;
+      font-weight: 900;
+      color: var(--primary);
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .lnr-stat-label {
+      font-size: 17px;
+      font-weight: 600;
+      color: #FFFFFF;
+    }
+
+    /* Слайд 7: Юридический щит */
+    .shield-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+    }
+
+    .shield-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 20px;
+      padding: 32px 26px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .shield-badge {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--warning);
+      background: rgba(245, 158, 11, 0.1);
+      padding: 6px 12px;
+      border-radius: 6px;
+      align-self: flex-start;
+      margin-bottom: 16px;
+    }
+
+    /* Слайд 8: 100% Production Ready */
+    .tech-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+    }
+
+    .tech-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 20px;
+      padding: 32px 24px;
+      text-align: left;
+    }
+
+    .tech-metric {
+      font-family: var(--font-display);
+      font-size: 54px;
+      font-weight: 900;
+      color: var(--success);
+      margin-bottom: 10px;
+      line-height: 1;
+    }
+
+    /* Слайд 9: Эффект и Roadmap */
+    .roadmap-timeline {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+      position: relative;
+    }
+
+    .roadmap-col {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 20px;
+      padding: 36px 30px;
+      position: relative;
+    }
+
+    .roadmap-phase {
+      font-family: var(--font-mono);
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--primary);
+      margin-bottom: 14px;
+    }
+
+    /* Слайд 10: Финал и QR */
+    .final-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 50px;
+      align-items: center;
+      height: 100%;
+    }
+
+    .final-cta-box {
+      text-align: left;
+    }
+
+    .final-punchline {
+      font-family: var(--font-display);
+      font-size: 48px;
+      font-weight: 900;
+      line-height: 1.15;
+      color: #FFFFFF;
+      margin-bottom: 24px;
+      letter-spacing: -1px;
+    }
+
+    .final-quote {
+      font-size: 22px;
+      line-height: 1.5;
+      color: var(--text-muted);
+      border-left: 4px solid var(--success);
+      padding-left: 20px;
+      margin-bottom: 36px;
+    }
+
+    .qr-showcase-card {
+      background: linear-gradient(145deg, #171E2E 0%, #0F1420 100%);
+      border: 2px solid rgba(45, 212, 191, 0.4);
+      border-radius: 28px;
+      padding: 40px;
+      text-align: center;
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .qr-img-wrapper {
+      width: 250px;
+      height: 250px;
+      background: #FFFFFF;
+      padding: 16px;
+      border-radius: 20px;
+      box-shadow: 0 0 45px rgba(45, 212, 191, 0.3);
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .qr-img-wrapper svg,
+    .qr-img-wrapper img {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .qr-caption {
+      font-size: 20px;
+      font-weight: 800;
+      color: #FFFFFF;
+      margin-bottom: 8px;
+    }
+
+    .qr-subcaption {
+      font-size: 15px;
+      color: #5EEAD4;
+      font-family: var(--font-mono);
+      word-break: break-all;
+    }
+
+    /* ---------------------------------------------------- */
+    /* UI УПРАВЛЕНИЯ СПИКЕРА: ТАЙМЕР, ШПАРГАЛКА, КЛИКЕР    */
+    /* ---------------------------------------------------- */
+    
+    /* Плавающий таймер спикера (Presenter Timer) */
+    #presenter-timer {
+      position: absolute;
+      top: 30px;
+      right: 36px;
+      z-index: 100;
+      background: rgba(10, 13, 20, 0.85);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--border-highlight);
+      border-radius: 999px;
+      padding: 8px 18px 8px 14px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      transition: all 0.2s ease;
+    }
+
+    #presenter-timer:hover {
+      background: rgba(17, 22, 34, 0.95);
+      border-color: rgba(255, 255, 255, 0.3);
+    }
+
+    .timer-ring-indicator {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--success);
+      box-shadow: 0 0 10px var(--success);
+      transition: background-color 0.3s;
+    }
+
+    .timer-digits {
+      font-family: var(--font-mono);
+      font-size: 19px;
+      font-weight: 800;
+      color: #FFFFFF;
+      letter-spacing: 1px;
+    }
+
+    .timer-digits.warning {
+      color: var(--warning);
+    }
+
+    .timer-digits.danger {
+      color: var(--danger);
+      animation: timerAlert 0.8s infinite alternate;
+    }
+
+    @keyframes timerAlert {
+      from { opacity: 1; transform: scale(1); }
+      to { opacity: 0.6; transform: scale(1.04); }
+    }
+
+    .timer-ctrl-hint {
+      font-size: 11px;
+      color: var(--text-dim);
+      font-family: var(--font-mono);
+    }
+
+    /* Панель подсказок для спикера (Presenter Notes - клавиша N) */
+    #speaker-notes-panel {
+      position: absolute;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(120%);
+      width: 90%;
+      max-width: 1400px;
+      background: rgba(10, 13, 20, 0.96);
+      backdrop-filter: blur(20px);
+      border: 2px solid var(--primary);
+      box-shadow: 0 25px 80px rgba(0, 0, 0, 0.9);
+      border-radius: 20px;
+      padding: 28px 36px;
+      z-index: 110;
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    #speaker-notes-panel.open {
+      transform: translateX(-50%) translateY(0);
+    }
+
+    .notes-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border-subtle);
+      padding-bottom: 12px;
+    }
+
+    .notes-header-title {
+      font-family: var(--font-mono);
+      font-size: 14px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .notes-close-btn {
+      background: none;
+      border: none;
+      color: var(--text-dim);
+      font-size: 20px;
+      cursor: pointer;
+      padding: 4px 8px;
+    }
+
+    .notes-speech-text {
+      font-size: 20px;
+      line-height: 1.5;
+      color: #E2E8F0;
+    }
+
+    .notes-speech-text strong {
+      color: #5EEAD4;
+    }
+
+    .notes-speech-text em {
+      color: #FCD34D;
+      font-style: normal;
+      font-weight: 600;
+    }
+
+    /* Нижняя полоса прогресса и навигации */
+    #bottom-control-bar {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 6px;
+      background: rgba(255, 255, 255, 0.05);
+      z-index: 90;
+    }
+
+    #progress-fill {
+      height: 100%;
+      width: 10%;
+      background: linear-gradient(90deg, var(--primary), var(--success));
+      box-shadow: 0 0 12px var(--success-glow);
+      transition: width 0.3s ease;
+    }
+
+    /* Плавающие подсказки горячих клавиш в левом нижнем углу */
+    .controls-legend {
+      position: absolute;
+      bottom: 24px;
+      left: 36px;
+      z-index: 80;
+      display: flex;
+      gap: 14px;
+      opacity: 0.55;
+      transition: opacity 0.2s;
+    }
+
+    .controls-legend:hover {
+      opacity: 1;
+    }
+
+    .legend-key {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid var(--border-subtle);
+      border-radius: 6px;
+      padding: 4px 10px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .legend-key kbd {
+      color: #FFFFFF;
+      font-weight: 700;
+    }
+
+    /* Навигационные стрелки для клика мышью */
+    .nav-arrow-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: rgba(17, 22, 34, 0.6);
+      border: 1px solid var(--border-subtle);
+      color: #FFFFFF;
+      font-size: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 80;
+      opacity: 0;
+      transition: all 0.25s ease;
+      backdrop-filter: blur(8px);
+    }
+
+    #stage-frame:hover .nav-arrow-btn {
+      opacity: 0.65;
+    }
+
+    .nav-arrow-btn:hover {
+      opacity: 1 !important;
+      background: rgba(45, 212, 191, 0.2);
+      border-color: var(--success);
+      transform: translateY(-50%) scale(1.08);
+    }
+
+    #btn-prev { left: 24px; }
+    #btn-next { right: 24px; }
+  </style>
+</head>
+<body>
+
+  <div id="stage-viewport">
+    <div id="stage-frame">
+      
+      <!-- Декоративные атмосферные сферы -->
+      <div class="stage-ambient-glow glow-coral"></div>
+      <div class="stage-ambient-glow glow-teal"></div>
+      <div class="stage-ambient-glow glow-cyan"></div>
+      <div class="stage-grid"></div>
+
+      <!-- Кнопки навигации мышью -->
+      <button class="nav-arrow-btn" id="btn-prev" title="Предыдущий слайд (←)">‹</button>
+      <button class="nav-arrow-btn" id="btn-next" title="Следующий слайд (Space / →)">›</button>
+
+      <!-- Плавающий таймер докладчика (Presenter Timer) -->
+      <div id="presenter-timer" title="Таймер выступления (клик — пауза/сброс, T — скрыть/показать)">
+        <div class="timer-ring-indicator" id="timer-dot"></div>
+        <div class="timer-digits" id="timer-display">03:30</div>
+        <div class="timer-ctrl-hint">3.5 мин</div>
+      </div>
+
+      <!-- Контейнер слайдов -->
+      <main class="slides-deck">
+
+        <!-- ========================================== -->
+        <!-- СЛАЙД 1: HOOK & НАЗВАНИЕ (0:00 – 0:20)     -->
+        <!-- ========================================== -->
+        <section class="slide active" id="slide-1" data-index="1" data-timing="0:00 – 0:20" data-notes="«Здравствуйте, уважаемые члены жюри! Меня зовут [Имя], и прямо сейчас, пока вы слушаете это приветствие, жители России и новых регионов переплачивают более пятидесяти миллионов рублей за услуги связи и подписки, которыми они даже не пользуются. Мы создали ТарифДетокс — сервис честного освобождения граждан от скрытых переплат».">
+          <div class="slide-header">
+            <div class="slide-badge-row">
+              <span class="slide-tag tag-primary">Demo Day &amp; Startup Battle</span>
+              <span class="slide-timing">0:00 – 0:20</span>
+            </div>
+            <div class="slide-tag">Слайд 01 / 10</div>
+          </div>
+
+          <div class="slide-body">
+            <div class="hero-layout">
+              <div class="hero-shield-logo">
+                <svg class="hero-shield-svg" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M50 8L15 22V52C15 74 30 92 50 98C70 92 85 74 85 52V22L50 8Z" fill="#0D9488" fill-opacity="0.25" stroke="#2DD4BF" stroke-width="4" stroke-linejoin="round"/>
+                  <path d="M50 24L28 34V52C28 67 37 80 50 85C63 80 72 67 72 52V34L50 24Z" fill="#2DD4BF" fill-opacity="0.2"/>
+                  <path d="M38 52L46 60L64 42" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+
+              <h1 class="hero-title">ТАРИФ<span>ДЕТОКС</span></h1>
+              <p class="hero-subtitle">Сервис честного освобождения от скрытых переплат за мобильную связь, домашний интернет и онлайн-подписки без регистрации</p>
+
+              <div class="odometer-box">
+                <div class="odometer-label">
+                  <div class="odometer-label-tag">
+                    <span class="live-dot"></span> Живая утечка денег в РФ
+                  </div>
+                  <div class="odometer-label-text">Скрытые переплаты за время питча:</div>
+                </div>
+                <div class="odometer-counter" id="hero-odometer">52 384 120 ₽</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="slide-footer">
+            <div class="footer-brand">
+              <span class="brand-shield-dot"></span> ТарифДетокс • Независимый потребительский арбитр
+            </div>
+            <div>Статус проекта: Production Ready MVP (100%)</div>
+          </div>
+        </section>
+
+
+        <!-- ========================================== -->
+        <!-- СЛАЙД 2: ПРОБЛЕМА (0:20 – 0:45)            -->
+        <!-- ========================================== -->
+        <section class="slide" id="slide-2" data-index="2" data-timing="0:20 – 0:45" data-notes="«В чем корень проблемы? Ежемесячные счета превратились в непроходимый лабиринт маркетологов. 68% абонентов годами переплачивают на архивных тарифах, потому что операторы тихо повышают цены. Средняя российская семья теряет 18 000 рублей в год на забытых автопродлениях и навязанной аренде оборудования. Итог — минус 21 600 рублей в год из каждого семейного бюджета».">
+          <div class="slide-header">
+            <div class="slide-badge-row">
+              <span class="slide-tag tag-danger">Проблема рынка</span>
+              <span class="slide-timing">0:20 – 0:45</span>
+            </div>
+            <div class="slide-tag">Слайд 02 / 10</div>
+          </div>
+
+          <div class="slide-headline">
+            Маркетинговый лабиринт: <span class="accent-danger">«Налог на невнимательность»</span>
+          </div>
+          <p class="slide-punchline">
+            Операторы и экосистемы зарабатывают миллиарды на том, что обычному человеку некогда разбираться в мелком шрифте счетов.
+          </p>
+
+          <div class="slide-body">
+            <div class="grid-3">
+              <div class="stage-card card-danger">
+                <div>
+                  <div class="stat-number coral">68%</div>
+                  <div class="card-title">Архивное рабство</div>
+                  <div class="card-desc">Абонентов годами платят по старым тарифам, переплачивая <strong>до 40% каждый месяц</strong> за устаревшие невыгодные пакеты.</div>
+                </div>
+              </div>
+
+              <div class="stage-card card-danger">
+                <div>
+                  <div class="stat-number coral">18 000 ₽</div>
+                  <div class="card-title">Паразитные «хвосты»</div>
+                  <div class="card-desc">Среднегодовая потеря семьи на забытых онлайн-кинотеатрах, дублирующих стримингах и вечной аренде копеечных роутеров.</div>
+                </div>
+              </div>
+
+              <div class="stage-card card-danger">
+                <div>
+                  <div class="stat-number coral">1 ₽ / мес</div>
+                  <div class="card-title">Маркетинговые капканы</div>
+                  <div class="card-desc">Промо-периоды с резким автоповышением цены в 5 раз, навязанные страховки при автокредитах и скрытые комиссии переноса номера.</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="collapse-banner">
+              <div class="collapse-text">
+                ⚠️ Совокупная прямая потеря домохозяйства в год из-за навязанных переплат:
+              </div>
+              <div class="collapse-val">−21 600 ₽ / год</div>
+            </div>
+          </div>
+
+          <div class="slide-footer">
+            <div class="footer-brand">
+              <span class="brand-shield-dot"></span> ТарифДетокс • Защита прав потребителей
+            </div>
+            <div>Источник данных: Аналитика Роскомнадзора, ЦБ РФ и аудит 500+ домохозяйств</div>
+          </div>
+        </section>
+
+
+        <!-- ========================================== -->
+        <!-- СЛАЙД 3: РЕШЕНИЕ (0:45 – 1:10)             -->
+        <!-- ========================================== -->
+        <section class="slide" id="slide-3" data-index="3" data-timing="0:45 – 1:10" data-notes="«Как мы это решаем? ТарифДетокс — принципиально НЕ витрина продаж и НЕ партнерский агрегатор. Мы независимый арбитр. Наше первое правило — расчет честного TCO на 12 месяцев со всеми акциями и скрытыми платежами. Второе — если ваш тариф лучший, мы прямо скажем: Не меняйте! И третье — 100% приватность: ни регистраций, ни номеров телефонов, расчет прямо в браузере».">
+          <div class="slide-header">
+            <div class="slide-badge-row">
+              <span class="slide-tag tag-success">Наше решение</span>
+              <span class="slide-timing">0:45 – 1:10</span>
+            </div>
+            <div class="slide-tag">Слайд 03 / 10</div>
+          </div>
+
+          <div class="slide-headline">
+            Не агрегатор. Не витрина продаж. <span class="accent-success">Независимый арбитр.</span>
+          </div>
+          <p class="slide-punchline">
+            Мы не продаем людям новые SIM-карты ради партнерской комиссии. Мы защищаем их личный кошелек.
+          </p>
+
+          <div class="slide-body">
+            <div class="grid-3">
+              <div class="rule-card">
+                <div>
+                  <span class="rule-number">ЗОЛОТОЕ ПРАВИЛО 01</span>
+                  <div class="rule-title">Честный TCO на 12 месяцев</div>
+                  <div class="rule-desc">Считаем не «зазывающую цену первого месяца», а реальную годовую стоимость с учетом окончания акций, аренды оборудования и плат за подключение.</div>
+                </div>
+                <div class="rule-highlight">
+                  ✓ Никаких ложных иллюзий экономии
+                </div>
+              </div>
+
+              <div class="rule-card">
+                <div>
+                  <span class="rule-number">ЗОЛОТОЕ ПРАВИЛО 02</span>
+                  <div class="rule-title">Принцип абсолютной честности</div>
+                  <div class="rule-desc">Если текущий тариф пользователя выгоднее рыночных альтернатив — система прямо говорит: <strong>«Не меняйте оператора! Ваш тариф оптимален»</strong>.</div>
+                </div>
+                <div class="rule-highlight">
+                  ✓ Выдаем скрипт торга для скидки 30%
+                </div>
+              </div>
+
+              <div class="rule-card">
+                <div>
+                  <span class="rule-number">ЗОЛОТОЕ ПРАВИЛО 03</span>
+                  <div class="rule-title">100% Privacy by Design (152-ФЗ)</div>
+                  <div class="rule-desc">Ноль регистраций, ноль сбора телефонных номеров, ноль спам-баз. Все вычисления производятся исключительно в браузере клиента на JS.</div>
+                </div>
+                <div class="rule-highlight">
+                  ✓ Данные не покидают устройство
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="slide-footer">
+            <div class="footer-brand">
+              <span class="brand-shield-dot"></span> ТарифДетокс • Принцип чистых алгоритмов
+            </div>
+            <div>Стандарт безопасности: Нулевой сбор персональных данных (Zero PII)</div>
+          </div>
+        </section>
+
+
+        <!-- ========================================== -->
+        <!-- СЛАЙД 4: ИНТЕРАКТИВНОЕ ДЕМО (1:10 – 1:40)   -->
+        <!-- ========================================== -->
+        <section class="slide" id="slide-4" data-index="4" data-timing="1:10 – 1:40" data-notes="«Взгляните, как работает сервис на практике. Пользователь проходит 3 простых шага ровно за 2 минуты: выбирает мобильную связь с опцией Безлимита, скорость интернета и отмечает свои подписки из базы 27 сервисов. Алгоритм мгновенно подсвечивает, что человек платит 2100 рублей в месяц, а с нашими рекомендациями будет платить 1150. Чистая выгода — 11 400 рублей в год прямо на руки».">
+          <div class="slide-header">
+            <div class="slide-badge-row">
+              <span class="slide-tag tag-success">Живой пользовательский путь</span>
+              <span class="slide-timing">1:10 – 1:40</span>
+            </div>
+            <div class="slide-tag">Слайд 04 / 10</div>
+          </div>
+
+          <div class="slide-headline">
+            Интерактивный детокс: <span class="accent-success">2 минуты до реальной выгоды</span>
+          </div>
+          <p class="slide-punchline">
+            Никаких сложных форм — адаптивный пошаговый интерфейс мгновенно выявляет утечки бюджета.
+          </p>
+
+          <div class="slide-body">
+            <div class="demo-split-grid">
+              
+              <!-- Шаги мастера -->
+              <div class="wizard-steps-mock">
+                <div class="wizard-step-pill active-pill">
+                  <div class="step-num-badge">1</div>
+                  <div class="step-pill-content">
+                    <h4>Шаг 1: Мобильная связь (24 тарифа + Безлимит)</h4>
+                    <p>Ввод минут и ГБ или выбор безлимита. Умный поиск близких альтернатив при отсутствии прямого тарифа.</p>
+                  </div>
+                </div>
+
+                <div class="wizard-step-pill active-pill">
+                  <div class="step-num-badge">2</div>
+                  <div class="step-pill-content">
+                    <h4>Шаг 2: Домашний интернет и ТВ (GPON до 500 Мбит/с)</h4>
+                    <p>Аудит платы за аренду роутера (150 ₽/мес) и сравнение с актуальными тарифами провайдеров региона.</p>
+                  </div>
+                </div>
+
+                <div class="wizard-step-pill active-pill">
+                  <div class="step-num-badge">3</div>
+                  <div class="step-pill-content">
+                    <h4>Шаг 3: Мультиселектор 27 подписок РФ и ЛНР</h4>
+                    <p>Мгновенная детекция дублей (Кинопоиск + Яндекс Плюс, одновременная оплата музыки и книг).</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Результат расчета -->
+              <div class="demo-result-card">
+                <div class="demo-result-header">
+                  ✦ Итоговый отчет оптимизации ✦
+                </div>
+
+                <div class="comparison-prices-row">
+                  <div class="price-was">
+                    <div class="p-label">Было в месяц:</div>
+                    <div class="p-val">2 100 ₽</div>
+                  </div>
+                  <div class="price-arrow">→</div>
+                  <div class="price-now">
+                    <div class="p-label">Стало после детокса:</div>
+                    <div class="p-val">1 150 ₽</div>
+                  </div>
+                </div>
+
+                <div class="savings-hero-badge">
+                  <div class="sh-label">Чистая подтвержденная экономия:</div>
+                  <div class="sh-val"><span>+11 400</span> ₽ / год</div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="slide-footer">
+            <div class="footer-brand">
+              <span class="brand-shield-dot"></span> ТарифДетокс • Калькулятор calculator.js
+            </div>
+            <div>Время прохождения сценария: 120 секунд</div>
+          </div>
+        </section>
+
+
+        <!-- ========================================== -->
+        <!-- СЛАЙД 5: АЛГОРИТМЫ И НОУ-ХАУ (1:40 – 2:05)  -->
+        <!-- ========================================== -->
+        <section class="slide" id="slide-5" data-index="5" data-timing="1:40 – 2:05" data-notes="«В основе проекта — инженерное ядро из 3 строгих математических алгоритмов в файле calculator.js. Первый — математическая формула TCO 12. Второй — Proximity Score: если идеального дешевого тарифа под строгие критерии нет, векторный алгоритм ранжирует наиболее близкие решения. Третий — Subscription Overlap Graph, выявляющий скрытые паразитные подписки на лету».">
+          <div class="slide-header">
+            <div class="slide-badge-row">
+              <span class="slide-tag tag-primary">Технологическое ноу-хау</span>
+              <span class="slide-timing">1:40 – 2:05</span>
+            </div>
+            <div class="slide-tag">Слайд 05 / 10</div>
+          </div>
+
+          <div class="slide-headline">
+            Инженерное ядро: <span class="accent-primary">3 алгоритма calculator.js</span>
+          </div>
+          <p class="slide-punchline">
+            Математически строгий расчет против хаотичных маркетинговых предложений.
+          </p>
+
+          <div class="slide-body">
+            <div class="grid-3">
+              <div class="algo-box">
+                <div>
+                  <div class="algo-code-pill">Формула TCO 12</div>
+                  <div class="card-title">Честная годовая стоимость</div>
+                  <div class="card-desc">
+                    Учитывает разовый вход (SetupFee), срок промо-цены (N месяцев), базовую стоимость и вечную аренду роутера:
+                  </div>
+                </div>
+                <div class="algo-code-pill" style="margin-top: 18px; color: #5EEAD4;">
+                  TCO = Setup + (Promo×N) + (Base×(12-N)) + (Hw×12)
+                </div>
+              </div>
+
+              <div class="algo-box">
+                <div>
+                  <div class="algo-code-pill">Proximity Score</div>
+                  <div class="card-title">Алгоритм близких альтернатив</div>
+                  <div class="card-desc">
+                    Если точного тарифа дешевле нет, алгоритм высчитывает евклидово расстояние по интернету, минутам и цене, предлагая <strong>3 лучших близких тарифа</strong>.
+                  </div>
+                </div>
+                <div class="algo-code-pill" style="margin-top: 18px; color: #7DD3FC;">
+                  Score = W_gb·ΔGB + W_min·ΔMin − W_p·Price
+                </div>
+              </div>
+
+              <div class="algo-box">
+                <div>
+                  <div class="algo-code-pill">Overlap Graph</div>
+                  <div class="card-title">Граф паразитных подписок</div>
+                  <div class="card-desc">
+                    Детектирует поглощение сервисов: если у вас активен Яндекс Плюс, система помечает оплату Кинопоиска и Букмейта как <strong>100% паразитный дубль</strong>.
+                  </div>
+                </div>
+                <div class="algo-code-pill" style="margin-top: 18px; color: #FCD34D;">
+                  detectOverlap(ActiveEcosystems, PaidServices)
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="slide-footer">
+            <div class="footer-brand">
+              <span class="brand-shield-dot"></span> ТарифДетокс • Математическая модель
+            </div>
+            <div>Открытые алгоритмы • 100% воспроизводимость результатов</div>
+          </div>
+        </section>
+
+
+        <!-- ========================================== -->
+        <!-- СЛАЙД 6: КЕЙС ЛНР (2:05 – 2:30)             -->
+        <!-- ========================================== -->
+        <section class="slide" id="slide-6" data-index="6" data-timing="2:05 – 2:30" data-notes="«Отдельная гордость нашего проекта — решение острой социальной проблемы в новых регионах, в частности в ЛНР. Рынок связи там сейчас активно перестраивается. Мы оцифровали полную базу тарифов: 24 мобильных тарифа МКС, +7Телеком, билайн и Миранды, а также 22 тарифа провайдеров домашнего интернета Луганска, Алчевска, Свердловска и Северодонецка. Жители получают прозрачные ответы по роумингу, MNP и GPON».">
+          <div class="slide-header">
+            <div class="slide-badge-row">
+              <span class="slide-tag tag-success">Социальная миссия</span>
+              <span class="slide-timing">2:05 – 2:30</span>
+            </div>
+            <div class="slide-tag">Слайд 06 / 10</div>
+          </div>
+
+          <div class="slide-headline">
+            Острый социальный кейс: <span class="accent-success">Рынок связи ЛНР и новых регионов</span>
+          </div>
+          <p class="slide-punchline">
+            Помощь жителям новых субъектов РФ в прозрачной интеграции в единое цифровое и телеком-пространство страны.
+          </p>
+
+          <div class="slide-body">
+            <div class="lnr-grid">
+              <div class="lnr-feature-list">
+                <div class="lnr-item">
+                  <div class="lnr-item-icon">📱</div>
+                  <div>
+                    <h4>Полная база мобильных тарифов региона (+7 959)</h4>
+                    <p>Актуальные данные по операторам МКС, +7Телеком, билайн, Миранда-медиа и СберМобайл с учетом звонков по всей России и роуминга.</p>
+                  </div>
+                </div>
+
+                <div class="lnr-item">
+                  <div class="lnr-item-icon">🌐</div>
+                  <div>
+                    <h4>Провайдеры домашнего интернета и GPON</h4>
+                    <p>Оцифрованы тарифы Луганет, ЛДС, Мегалайн, Магеал, Холинет, ЛТК по городам: Луганск, Алчевск, Свердловск, Северодонецк.</p>
+                  </div>
+                </div>
+
+                <div class="lnr-item">
+                  <div class="lnr-item-icon">⚖️</div>
+                  <div>
+                    <h4>Юридическая ясность без иллюзий</h4>
+                    <p>Прозрачные разъяснения по статусу переноса номера (MNP), аренде оптических терминалов GPON и честной скорости в МКД и частном секторе.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="lnr-stats-col">
+                <div class="lnr-stat-box">
+                  <div class="lnr-stat-val">24</div>
+                  <div class="lnr-stat-label">Мобильных тарифа региона в базе</div>
+                </div>
+
+                <div class="lnr-stat-box" style="border-color: rgba(45, 212, 191, 0.4); background: linear-gradient(135deg, rgba(45, 212, 191, 0.1) 0%, var(--bg-surface) 100%);">
+                  <div class="lnr-stat-val" style="color: var(--success);">22</div>
+                  <div class="lnr-stat-label">Тарифа домашнего интернета ЛНР</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="slide-footer">
+            <div class="footer-brand">
+              <span class="brand-shield-dot"></span> ТарифДетокс • Региональная доступность
+            </div>
+            <div>Охват: Луганск, Алчевск, Стаханов, Свердловск, Северодонецк</div>
+          </div>
+        </section>
+
+
+        <!-- ========================================== -->
+        <!-- СЛАЙД 7: АРСЕНАЛ ЗАЩИТЫ (2:30 – 2:50)       -->
+        <!-- ========================================== -->
+        <section class="slide" id="slide-7" data-index="7" data-timing="2:30 – 2:50" data-notes="«Мы не просто считаем цифры — мы даем человеку юридическое оружие. В сервис встроен Скрипт торга «Хочу уйти», позволяющий выбить 30-50% скидки у своего же оператора. Встроены пошаговые инструкции по MNP по 46-й статье ФЗ «О связи», шаблоны претензий на возврат по 32-й статье ЗоЗПП и генератор напоминаний в календарь смартфона за 3 дня до конца акций».">
+          <div class="slide-header">
+            <div class="slide-badge-row">
+              <span class="slide-tag tag-primary">Юридический щит</span>
+              <span class="slide-timing">2:30 – 2:50</span>
+            </div>
+            <div class="slide-tag">Слайд 07 / 10</div>
+          </div>
+
+          <div class="slide-headline">
+            Арсенал защиты: <span class="accent-primary">От расчета — к реальным деньгам</span>
+          </div>
+          <p class="slide-punchline">
+            Готовые юридические и переговорные инструменты прямого действия в один клик.
+          </p>
+
+          <div class="slide-body">
+            <div class="shield-grid">
+              <div class="shield-card">
+                <div>
+                  <div class="shield-badge">Скрипт переговоров</div>
+                  <div class="card-title">Скрипт торга «Хочу уйти»</div>
+                  <div class="card-desc">Пошаговый сценарий звонка оператору, позволяющий получить <strong>скидку 30–50%</strong> без фактической смены номера и оператора.</div>
+                </div>
+              </div>
+
+              <div class="shield-card">
+                <div>
+                  <div class="shield-badge">ФЗ «О связи» ст. 46</div>
+                  <div class="card-title">Гайд по смене оператора (MNP)</div>
+                  <div class="card-desc">Защита от отказа в переносе номера: как правильно составить заявление и пресечь незаконные комиссии салонов связи.</div>
+                </div>
+              </div>
+
+              <div class="shield-card">
+                <div>
+                  <div class="shield-badge">ЗоЗПП РФ ст. 32</div>
+                  <div class="card-title">Претензия на возврат денег</div>
+                  <div class="card-desc">Готовый шаблон заявления на возврат списанных средств за навязанные скрытые услуги, автопродления и страховки.</div>
+                </div>
+              </div>
+
+              <div class="shield-card">
+                <div>
+                  <div class="shield-badge">Анти-забывчивость</div>
+                  <div class="card-title">Экспорт в календарь (.ics)</div>
+                  <div class="card-desc">Файл для календаря смартфона с автоматическим напоминанием <strong>за 3 дня до конца промо-периода</strong>, чтобы вовремя отменить услугу.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="slide-footer">
+            <div class="footer-brand">
+              <span class="brand-shield-dot"></span> ТарифДетокс • Правовая защита потребителя
+            </div>
+            <div>Соответствие законам: ФЗ №126 «О связи», ФЗ №2300-1 «О защите прав потребителей»</div>
+          </div>
+        </section>
+
+
+        <!-- ========================================== -->
+        <!-- СЛАЙД 8: ТЕХНИЧЕСКАЯ ЗРЕЛОСТЬ (2:50 – 3:10) -->
+        <!-- ========================================== -->
+        <section class="slide" id="slide-8" data-index="8" data-timing="2:50 – 3:10" data-notes="«Перед вами не презентация концепта или идея в Figma. Перед вами зрелый работающий продукт с готовностью 100%. Наш стек — Zero-Dependency: чистый HTML5 и современный Vanilla JS. Сайт весит считанные килобайты и открывается за 0.2 секунды даже при слабом мобильном 3G-интернете. Он полностью автономен, покрыт unit-тестами через Node Test Runner и снабжен валидатором целостности баз».">
+          <div class="slide-header">
+            <div class="slide-badge-row">
+              <span class="slide-tag tag-success">Инженерная зрелость</span>
+              <span class="slide-timing">2:50 – 3:10</span>
+            </div>
+            <div class="slide-tag">Слайд 08 / 10</div>
+          </div>
+
+          <div class="slide-headline">
+            Архитектура зрелого продукта: <span class="accent-success">MVP готов на 100%</span>
+          </div>
+          <p class="slide-punchline">
+            Никаких фреймворковых костылей: сверхбыстрый, отказоустойчивый и автономный сервис.
+          </p>
+
+          <div class="slide-body">
+            <div class="tech-grid">
+              <div class="tech-card">
+                <div class="tech-metric">&lt; 0.2 с</div>
+                <div class="card-title">Zero-Dependency</div>
+                <div class="card-desc">Чистый стек HTML5 + ES6 Modern JS. Мгновенная загрузка даже при нестабильной связи и высоких сетевых задержках.</div>
+              </div>
+
+              <div class="tech-card">
+                <div class="tech-metric">Offline</div>
+                <div class="card-title">100% Автономность</div>
+                <div class="card-desc">Сервис полноценно работает локально даже без подключения к интернету (включая прямой запуск из файла `file://`).</div>
+              </div>
+
+              <div class="tech-card">
+                <div class="tech-metric">100%</div>
+                <div class="card-title">Unit Test Coverage</div>
+                <div class="card-desc">Ядро расчетов протестировано нативным Node.js Test Runner: проверены все граничные случаи акций, дублей и нулевой выгоды.</div>
+              </div>
+
+              <div class="tech-card">
+                <div class="tech-metric">CI / CD</div>
+                <div class="card-title">Автовалидатор данных</div>
+                <div class="card-desc">Скрипты `validate-data.mjs` и автоматическая сборка бандла гарантируют актуальность цен и целостность JSON-баз.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="slide-footer">
+            <div class="footer-brand">
+              <span class="brand-shield-dot"></span> ТарифДетокс • Production-ready архитектура
+            </div>
+            <div>GitHub Actions CI/CD • Автоматический деплой на GitHub Pages</div>
+          </div>
+        </section>
+
+
+        <!-- ========================================== -->
+        <!-- СЛАЙД 9: МАСШТАБ И ЭФФЕКТ (3:10 – 3:30)     -->
+        <!-- ========================================== -->
+        <section class="slide" id="slide-9" data-index="9" data-timing="3:10 – 3:30" data-notes="«Каков социально-экономический эффект? До 20 000 рублей сэкономленных денег на одно домохозяйство ежегодно. В масштабе страны это возврат миллиардов рублей в реальную экономику семей. Наш план масштабирования включает внедрение безопасного AI-сканера детализаций прямо в браузере через OCR, превентивного Telegram-бота и встраиваемого виджета для региональных порталов».">
+          <div class="slide-header">
+            <div class="slide-badge-row">
+              <span class="slide-tag tag-primary">Масштабирование</span>
+              <span class="slide-timing">3:10 – 3:30</span>
+            </div>
+            <div class="slide-tag">Слайд 09 / 10</div>
+          </div>
+
+          <div class="slide-headline">
+            Масштаб и эффект: <span class="accent-primary">Возврат миллиардов в семьи</span>
+          </div>
+          <p class="slide-punchline">
+            Огромный социальный импакт и четкая дорожная карта технологического развития.
+          </p>
+
+          <div class="slide-body">
+            <div class="roadmap-timeline">
+              <div class="roadmap-col">
+                <div class="roadmap-phase">ФАЗА 1 (ТЕКУЩИЙ MVP)</div>
+                <div class="card-title">Калькулятор и аудит 50+ тарифов</div>
+                <div class="card-desc">
+                  Полная оцифрованная база мобильной связи, домашнего интернета и 27 подписок РФ и ЛНР, скрипты торга и юридический щит.
+                </div>
+                <div class="rule-highlight" style="margin-top: 24px;">
+                  ✓ Запущено и работает онлайн
+                </div>
+              </div>
+
+              <div class="roadmap-col" style="border-color: rgba(56, 189, 248, 0.4);">
+                <div class="roadmap-phase" style="color: var(--primary);">ФАЗА 2 (Q1–Q2 2027)</div>
+                <div class="card-title">In-Browser OCR AI-сканер счетов</div>
+                <div class="card-desc">
+                  Пользователь просто загружает скриншот или PDF выписки оператора. Локальная нейросеть в браузере (WASM) находит скрытые списания без отправки фото на сервер.
+                </div>
+                <div class="rule-highlight" style="margin-top: 24px; color: #7DD3FC; background: rgba(56, 189, 248, 0.1); border-color: var(--primary);">
+                  ✦ Полная приватность 152-ФЗ
+                </div>
+              </div>
+
+              <div class="roadmap-col">
+                <div class="roadmap-phase" style="color: #FCD34D;">ФАЗА 3 (Q3 2027)</div>
+                <div class="card-title">Виджет для Госуслуг и банков</div>
+                <div class="card-desc">
+                  Встраиваемый бесплатный модуль «ТарифДетокс» для региональных порталов МФЦ, банковских приложений и медиа о личных финансах.
+                </div>
+                <div class="rule-highlight" style="margin-top: 24px; color: #FCD34D; background: rgba(245, 158, 11, 0.1); border-color: var(--warning);">
+                  ✦ Охват: 10 000 000+ граждан
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="slide-footer">
+            <div class="footer-brand">
+              <span class="brand-shield-dot"></span> ТарифДетокс • Стратегия роста
+            </div>
+            <div>Потенциальный экономический эффект: > 1.2 млрд ₽ сохраненных средств граждан</div>
+          </div>
+        </section>
+
+
+        <!-- ========================================== -->
+        <!-- СЛАЙД 10: ФИНАЛ & ПРИЗЫВ (3:30 – 3:50)      -->
+        <!-- ========================================== -->
+        <section class="slide" id="slide-10" data-index="10" data-timing="3:30 – 3:50" data-notes="«В заключение: почему ТарифДетокс должен занять первое место? Потому что мы не продаем людям лишнее — мы защищаем их заработанные деньги. Наш сервис готов, протестирован и опубликован прямо сейчас. Наведите камеру смартфона на QR-код и убедитесь сами за 2 минуты. Спасибо за внимание, готов ответить на ваши вопросы!»">
+          <div class="slide-header">
+            <div class="slide-badge-row">
+              <span class="slide-tag tag-success">Финал выступления</span>
+              <span class="slide-timing">3:30 – 3:50</span>
+            </div>
+            <div class="slide-tag">Слайд 10 / 10</div>
+          </div>
+
+          <div class="slide-body">
+            <div class="final-grid">
+              
+              <div class="final-cta-box">
+                <div class="final-punchline">
+                  «Мы создали сервис, который не продает лишнее, а <span class="accent-success">защищает деньги граждан</span> каждый месяц».
+                </div>
+
+                <div class="final-quote">
+                  Продукт готов, протестирован и работает прямо сейчас в открытом доступе для жителей всей России и ЛНР.
+                </div>
+
+                <div style="display: flex; gap: 20px; align-items: center; margin-top: 30px;">
+                  <div class="slide-tag tag-success" style="font-size: 16px; padding: 12px 24px;">
+                    ✓ 100% Готовый рабочий MVP
+                  </div>
+                  <div class="slide-tag tag-primary" style="font-size: 16px; padding: 12px 24px;">
+                    ✓ Открытый исходный код
+                  </div>
+                </div>
+              </div>
+
+              <div class="qr-showcase-card">
+                <div class="qr-img-wrapper">
+                  <!-- Векторный QR-код на рабочий сервис -->
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 29 29">
+                    <rect style="fill:#FFFFFF;fill-opacity:1" x="0" y="0" width="29" height="29" />
+                    <path style="fill:#0A0D14" d="M 0,0 l 1,0 0,1 -1,0 z M 1,0 l 1,0 0,1 -1,0 z M 2,0 l 1,0 0,1 -1,0 z M 3,0 l 1,0 0,1 -1,0 z M 4,0 l 1,0 0,1 -1,0 z M 5,0 l 1,0 0,1 -1,0 z M 6,0 l 1,0 0,1 -1,0 z M 9,0 l 1,0 0,1 -1,0 z M 10,0 l 1,0 0,1 -1,0 z M 11,0 l 1,0 0,1 -1,0 z M 14,0 l 1,0 0,1 -1,0 z M 15,0 l 1,0 0,1 -1,0 z M 16,0 l 1,0 0,1 -1,0 z M 18,0 l 1,0 0,1 -1,0 z M 19,0 l 1,0 0,1 -1,0 z M 20,0 l 1,0 0,1 -1,0 z M 22,0 l 1,0 0,1 -1,0 z M 23,0 l 1,0 0,1 -1,0 z M 24,0 l 1,0 0,1 -1,0 z M 25,0 l 1,0 0,1 -1,0 z M 26,0 l 1,0 0,1 -1,0 z M 27,0 l 1,0 0,1 -1,0 z M 28,0 l 1,0 0,1 -1,0 z M 0,1 l 1,0 0,1 -1,0 z M 6,1 l 1,0 0,1 -1,0 z M 8,1 l 1,0 0,1 -1,0 z M 9,1 l 1,0 0,1 -1,0 z M 11,1 l 1,0 0,1 -1,0 z M 12,1 l 1,0 0,1 -1,0 z M 13,1 l 1,0 0,1 -1,0 z M 14,1 l 1,0 0,1 -1,0 z M 15,1 l 1,0 0,1 -1,0 z M 17,1 l 1,0 0,1 -1,0 z M 20,1 l 1,0 0,1 -1,0 z M 22,1 l 1,0 0,1 -1,0 z M 28,1 l 1,0 0,1 -1,0 z M 0,2 l 1,0 0,1 -1,0 z M 2,2 l 1,0 0,1 -1,0 z M 3,2 l 1,0 0,1 -1,0 z M 4,2 l 1,0 0,1 -1,0 z M 6,2 l 1,0 0,1 -1,0 z M 9,2 l 1,0 0,1 -1,0 z M 11,2 l 1,0 0,1 -1,0 z M 12,2 l 1,0 0,1 -1,0 z M 14,2 l 1,0 0,1 -1,0 z M 16,2 l 1,0 0,1 -1,0 z M 18,2 l 1,0 0,1 -1,0 z M 19,2 l 1,0 0,1 -1,0 z M 20,2 l 1,0 0,1 -1,0 z M 22,2 l 1,0 0,1 -1,0 z M 24,2 l 1,0 0,1 -1,0 z M 25,2 l 1,0 0,1 -1,0 z M 26,2 l 1,0 0,1 -1,0 z M 28,2 l 1,0 0,1 -1,0 z M 0,3 l 1,0 0,1 -1,0 z M 2,3 l 1,0 0,1 -1,0 z M 3,3 l 1,0 0,1 -1,0 z M 4,3 l 1,0 0,1 -1,0 z M 6,3 l 1,0 0,1 -1,0 z M 8,3 l 1,0 0,1 -1,0 z M 9,3 l 1,0 0,1 -1,0 z M 15,3 l 1,0 0,1 -1,0 z M 17,3 l 1,0 0,1 -1,0 z M 20,3 l 1,0 0,1 -1,0 z M 22,3 l 1,0 0,1 -1,0 z M 24,3 l 1,0 0,1 -1,0 z M 25,3 l 1,0 0,1 -1,0 z M 26,3 l 1,0 0,1 -1,0 z M 28,3 l 1,0 0,1 -1,0 z M 0,4 l 1,0 0,1 -1,0 z M 2,4 l 1,0 0,1 -1,0 z M 3,4 l 1,0 0,1 -1,0 z M 4,4 l 1,0 0,1 -1,0 z M 6,4 l 1,0 0,1 -1,0 z M 12,4 l 1,0 0,1 -1,0 z M 16,4 l 1,0 0,1 -1,0 z M 19,4 l 1,0 0,1 -1,0 z M 22,4 l 1,0 0,1 -1,0 z M 24,4 l 1,0 0,1 -1,0 z M 25,4 l 1,0 0,1 -1,0 z M 26,4 l 1,0 0,1 -1,0 z M 28,4 l 1,0 0,1 -1,0 z M 0,5 l 1,0 0,1 -1,0 z M 6,5 l 1,0 0,1 -1,0 z M 8,5 l 1,0 0,1 -1,0 z M 10,5 l 1,0 0,1 -1,0 z M 11,5 l 1,0 0,1 -1,0 z M 13,5 l 1,0 0,1 -1,0 z M 14,5 l 1,0 0,1 -1,0 z M 17,5 l 1,0 0,1 -1,0 z M 18,5 l 1,0 0,1 -1,0 z M 20,5 l 1,0 0,1 -1,0 z M 22,5 l 1,0 0,1 -1,0 z M 28,5 l 1,0 0,1 -1,0 z M 0,6 l 1,0 0,1 -1,0 z M 1,6 l 1,0 0,1 -1,0 z M 2,6 l 1,0 0,1 -1,0 z M 3,6 l 1,0 0,1 -1,0 z M 4,6 l 1,0 0,1 -1,0 z M 5,6 l 1,0 0,1 -1,0 z M 6,6 l 1,0 0,1 -1,0 z M 8,6 l 1,0 0,1 -1,0 z M 10,6 l 1,0 0,1 -1,0 z M 12,6 l 1,0 0,1 -1,0 z M 14,6 l 1,0 0,1 -1,0 z M 16,6 l 1,0 0,1 -1,0 z M 18,6 l 1,0 0,1 -1,0 z M 20,6 l 1,0 0,1 -1,0 z M 22,6 l 1,0 0,1 -1,0 z M 23,6 l 1,0 0,1 -1,0 z M 24,6 l 1,0 0,1 -1,0 z M 25,6 l 1,0 0,1 -1,0 z M 26,6 l 1,0 0,1 -1,0 z M 27,6 l 1,0 0,1 -1,0 z M 28,6 l 1,0 0,1 -1,0 z M 11,7 l 1,0 0,1 -1,0 z M 16,7 l 1,0 0,1 -1,0 z M 17,7 l 1,0 0,1 -1,0 z M 18,7 l 1,0 0,1 -1,0 z M 19,7 l 1,0 0,1 -1,0 z M 20,7 l 1,0 0,1 -1,0 z M 0,8 l 1,0 0,1 -1,0 z M 1,8 l 1,0 0,1 -1,0 z M 2,8 l 1,0 0,1 -1,0 z M 3,8 l 1,0 0,1 -1,0 z M 4,8 l 1,0 0,1 -1,0 z M 6,8 l 1,0 0,1 -1,0 z M 7,8 l 1,0 0,1 -1,0 z M 8,8 l 1,0 0,1 -1,0 z M 9,8 l 1,0 0,1 -1,0 z M 10,8 l 1,0 0,1 -1,0 z M 14,8 l 1,0 0,1 -1,0 z M 15,8 l 1,0 0,1 -1,0 z M 16,8 l 1,0 0,1 -1,0 z M 17,8 l 1,0 0,1 -1,0 z M 20,8 l 1,0 0,1 -1,0 z M 21,8 l 1,0 0,1 -1,0 z M 23,8 l 1,0 0,1 -1,0 z M 25,8 l 1,0 0,1 -1,0 z M 27,8 l 1,0 0,1 -1,0 z M 1,9 l 1,0 0,1 -1,0 z M 2,9 l 1,0 0,1 -1,0 z M 4,9 l 1,0 0,1 -1,0 z M 9,9 l 1,0 0,1 -1,0 z M 12,9 l 1,0 0,1 -1,0 z M 14,9 l 1,0 0,1 -1,0 z M 16,9 l 1,0 0,1 -1,0 z M 18,9 l 1,0 0,1 -1,0 z M 20,9 l 1,0 0,1 -1,0 z M 21,9 l 1,0 0,1 -1,0 z M 22,9 l 1,0 0,1 -1,0 z M 23,9 l 1,0 0,1 -1,0 z M 24,9 l 1,0 0,1 -1,0 z M 28,9 l 1,0 0,1 -1,0 z M 2,10 l 1,0 0,1 -1,0 z M 3,10 l 1,0 0,1 -1,0 z M 6,10 l 1,0 0,1 -1,0 z M 8,10 l 1,0 0,1 -1,0 z M 9,10 l 1,0 0,1 -1,0 z M 12,10 l 1,0 0,1 -1,0 z M 13,10 l 1,0 0,1 -1,0 z M 14,10 l 1,0 0,1 -1,0 z M 17,10 l 1,0 0,1 -1,0 z M 19,10 l 1,0 0,1 -1,0 z M 22,10 l 1,0 0,1 -1,0 z M 0,11 l 1,0 0,1 -1,0 z M 2,11 l 1,0 0,1 -1,0 z M 3,11 l 1,0 0,1 -1,0 z M 4,11 l 1,0 0,1 -1,0 z M 7,11 l 1,0 0,1 -1,0 z M 9,11 l 1,0 0,1 -1,0 z M 10,11 l 1,0 0,1 -1,0 z M 11,11 l 1,0 0,1 -1,0 z M 14,11 l 1,0 0,1 -1,0 z M 18,11 l 1,0 0,1 -1,0 z M 19,11 l 1,0 0,1 -1,0 z M 22,11 l 1,0 0,1 -1,0 z M 24,11 l 1,0 0,1 -1,0 z M 25,11 l 1,0 0,1 -1,0 z M 27,11 l 1,0 0,1 -1,0 z M 1,12 l 1,0 0,1 -1,0 z M 2,12 l 1,0 0,1 -1,0 z M 3,12 l 1,0 0,1 -1,0 z M 4,12 l 1,0 0,1 -1,0 z M 6,12 l 1,0 0,1 -1,0 z M 9,12 l 1,0 0,1 -1,0 z M 12,12 l 1,0 0,1 -1,0 z M 13,12 l 1,0 0,1 -1,0 z M 15,12 l 1,0 0,1 -1,0 z M 16,12 l 1,0 0,1 -1,0 z M 17,12 l 1,0 0,1 -1,0 z M 25,12 l 1,0 0,1 -1,0 z M 26,12 l 1,0 0,1 -1,0 z M 0,13 l 1,0 0,1 -1,0 z M 1,13 l 1,0 0,1 -1,0 z M 7,13 l 1,0 0,1 -1,0 z M 9,13 l 1,0 0,1 -1,0 z M 10,13 l 1,0 0,1 -1,0 z M 11,13 l 1,0 0,1 -1,0 z M 16,13 l 1,0 0,1 -1,0 z M 19,13 l 1,0 0,1 -1,0 z M 20,13 l 1,0 0,1 -1,0 z M 21,13 l 1,0 0,1 -1,0 z M 22,13 l 1,0 0,1 -1,0 z M 23,13 l 1,0 0,1 -1,0 z M 24,13 l 1,0 0,1 -1,0 z M 28,13 l 1,0 0,1 -1,0 z M 1,14 l 1,0 0,1 -1,0 z M 2,14 l 1,0 0,1 -1,0 z M 4,14 l 1,0 0,1 -1,0 z M 6,14 l 1,0 0,1 -1,0 z M 8,14 l 1,0 0,1 -1,0 z M 9,14 l 1,0 0,1 -1,0 z M 13,14 l 1,0 0,1 -1,0 z M 14,14 l 1,0 0,1 -1,0 z M 17,14 l 1,0 0,1 -1,0 z M 20,14 l 1,0 0,1 -1,0 z M 21,14 l 1,0 0,1 -1,0 z M 22,14 l 1,0 0,1 -1,0 z M 24,14 l 1,0 0,1 -1,0 z M 25,14 l 1,0 0,1 -1,0 z M 26,14 l 1,0 0,1 -1,0 z M 0,15 l 1,0 0,1 -1,0 z M 1,15 l 1,0 0,1 -1,0 z M 2,15 l 1,0 0,1 -1,0 z M 5,15 l 1,0 0,1 -1,0 z M 8,15 l 1,0 0,1 -1,0 z M 11,15 l 1,0 0,1 -1,0 z M 16,15 l 1,0 0,1 -1,0 z M 17,15 l 1,0 0,1 -1,0 z M 18,15 l 1,0 0,1 -1,0 z M 19,15 l 1,0 0,1 -1,0 z M 23,15 l 1,0 0,1 -1,0 z M 24,15 l 1,0 0,1 -1,0 z M 27,15 l 1,0 0,1 -1,0 z M 0,16 l 1,0 0,1 -1,0 z M 2,16 l 1,0 0,1 -1,0 z M 5,16 l 1,0 0,1 -1,0 z M 6,16 l 1,0 0,1 -1,0 z M 8,16 l 1,0 0,1 -1,0 z M 10,16 l 1,0 0,1 -1,0 z M 14,16 l 1,0 0,1 -1,0 z M 15,16 l 1,0 0,1 -1,0 z M 16,16 l 1,0 0,1 -1,0 z M 18,16 l 1,0 0,1 -1,0 z M 20,16 l 1,0 0,1 -1,0 z M 23,16 l 1,0 0,1 -1,0 z M 25,16 l 1,0 0,1 -1,0 z M 26,16 l 1,0 0,1 -1,0 z M 0,17 l 1,0 0,1 -1,0 z M 1,17 l 1,0 0,1 -1,0 z M 7,17 l 1,0 0,1 -1,0 z M 8,17 l 1,0 0,1 -1,0 z M 12,17 l 1,0 0,1 -1,0 z M 14,17 l 1,0 0,1 -1,0 z M 15,17 l 1,0 0,1 -1,0 z M 19,17 l 1,0 0,1 -1,0 z M 21,17 l 1,0 0,1 -1,0 z M 23,17 l 1,0 0,1 -1,0 z M 24,17 l 1,0 0,1 -1,0 z M 26,17 l 1,0 0,1 -1,0 z M 28,17 l 1,0 0,1 -1,0 z M 0,18 l 1,0 0,1 -1,0 z M 2,18 l 1,0 0,1 -1,0 z M 4,18 l 1,0 0,1 -1,0 z M 6,18 l 1,0 0,1 -1,0 z M 8,18 l 1,0 0,1 -1,0 z M 9,18 l 1,0 0,1 -1,0 z M 11,18 l 1,0 0,1 -1,0 z M 12,18 l 1,0 0,1 -1,0 z M 13,18 l 1,0 0,1 -1,0 z M 14,18 l 1,0 0,1 -1,0 z M 17,18 l 1,0 0,1 -1,0 z M 20,18 l 1,0 0,1 -1,0 z M 21,18 l 1,0 0,1 -1,0 z M 26,18 l 1,0 0,1 -1,0 z M 0,19 l 1,0 0,1 -1,0 z M 2,19 l 1,0 0,1 -1,0 z M 3,19 l 1,0 0,1 -1,0 z M 4,19 l 1,0 0,1 -1,0 z M 5,19 l 1,0 0,1 -1,0 z M 11,19 l 1,0 0,1 -1,0 z M 14,19 l 1,0 0,1 -1,0 z M 16,19 l 1,0 0,1 -1,0 z M 19,19 l 1,0 0,1 -1,0 z M 21,19 l 1,0 0,1 -1,0 z M 22,19 l 1,0 0,1 -1,0 z M 24,19 l 1,0 0,1 -1,0 z M 27,19 l 1,0 0,1 -1,0 z M 0,20 l 1,0 0,1 -1,0 z M 3,20 l 1,0 0,1 -1,0 z M 4,20 l 1,0 0,1 -1,0 z M 6,20 l 1,0 0,1 -1,0 z M 7,20 l 1,0 0,1 -1,0 z M 8,20 l 1,0 0,1 -1,0 z M 9,20 l 1,0 0,1 -1,0 z M 12,20 l 1,0 0,1 -1,0 z M 15,20 l 1,0 0,1 -1,0 z M 20,20 l 1,0 0,1 -1,0 z M 21,20 l 1,0 0,1 -1,0 z M 22,20 l 1,0 0,1 -1,0 z M 23,20 l 1,0 0,1 -1,0 z M 24,20 l 1,0 0,1 -1,0 z M 26,20 l 1,0 0,1 -1,0 z M 27,20 l 1,0 0,1 -1,0 z M 28,20 l 1,0 0,1 -1,0 z M 8,21 l 1,0 0,1 -1,0 z M 9,21 l 1,0 0,1 -1,0 z M 12,21 l 1,0 0,1 -1,0 z M 16,21 l 1,0 0,1 -1,0 z M 18,21 l 1,0 0,1 -1,0 z M 20,21 l 1,0 0,1 -1,0 z M 24,21 l 1,0 0,1 -1,0 z M 25,21 l 1,0 0,1 -1,0 z M 26,21 l 1,0 0,1 -1,0 z M 27,21 l 1,0 0,1 -1,0 z M 28,21 l 1,0 0,1 -1,0 z M 0,22 l 1,0 0,1 -1,0 z M 1,22 l 1,0 0,1 -1,0 z M 2,22 l 1,0 0,1 -1,0 z M 3,22 l 1,0 0,1 -1,0 z M 4,22 l 1,0 0,1 -1,0 z M 5,22 l 1,0 0,1 -1,0 z M 6,22 l 1,0 0,1 -1,0 z M 8,22 l 1,0 0,1 -1,0 z M 11,22 l 1,0 0,1 -1,0 z M 12,22 l 1,0 0,1 -1,0 z M 13,22 l 1,0 0,1 -1,0 z M 14,22 l 1,0 0,1 -1,0 z M 17,22 l 1,0 0,1 -1,0 z M 20,22 l 1,0 0,1 -1,0 z M 22,22 l 1,0 0,1 -1,0 z M 24,22 l 1,0 0,1 -1,0 z M 25,22 l 1,0 0,1 -1,0 z M 26,22 l 1,0 0,1 -1,0 z M 0,23 l 1,0 0,1 -1,0 z M 6,23 l 1,0 0,1 -1,0 z M 10,23 l 1,0 0,1 -1,0 z M 11,23 l 1,0 0,1 -1,0 z M 13,23 l 1,0 0,1 -1,0 z M 17,23 l 1,0 0,1 -1,0 z M 18,23 l 1,0 0,1 -1,0 z M 19,23 l 1,0 0,1 -1,0 z M 20,23 l 1,0 0,1 -1,0 z M 24,23 l 1,0 0,1 -1,0 z M 27,23 l 1,0 0,1 -1,0 z M 28,23 l 1,0 0,1 -1,0 z M 0,24 l 1,0 0,1 -1,0 z M 2,24 l 1,0 0,1 -1,0 z M 3,24 l 1,0 0,1 -1,0 z M 4,24 l 1,0 0,1 -1,0 z M 6,24 l 1,0 0,1 -1,0 z M 8,24 l 1,0 0,1 -1,0 z M 10,24 l 1,0 0,1 -1,0 z M 14,24 l 1,0 0,1 -1,0 z M 15,24 l 1,0 0,1 -1,0 z M 18,24 l 1,0 0,1 -1,0 z M 20,24 l 1,0 0,1 -1,0 z M 21,24 l 1,0 0,1 -1,0 z M 22,24 l 1,0 0,1 -1,0 z M 23,24 l 1,0 0,1 -1,0 z M 24,24 l 1,0 0,1 -1,0 z M 26,24 l 1,0 0,1 -1,0 z M 28,24 l 1,0 0,1 -1,0 z M 0,25 l 1,0 0,1 -1,0 z M 2,25 l 1,0 0,1 -1,0 z M 3,25 l 1,0 0,1 -1,0 z M 4,25 l 1,0 0,1 -1,0 z M 6,25 l 1,0 0,1 -1,0 z M 8,25 l 1,0 0,1 -1,0 z M 9,25 l 1,0 0,1 -1,0 z M 10,25 l 1,0 0,1 -1,0 z M 11,25 l 1,0 0,1 -1,0 z M 12,25 l 1,0 0,1 -1,0 z M 18,25 l 1,0 0,1 -1,0 z M 19,25 l 1,0 0,1 -1,0 z M 20,25 l 1,0 0,1 -1,0 z M 21,25 l 1,0 0,1 -1,0 z M 23,25 l 1,0 0,1 -1,0 z M 25,25 l 1,0 0,1 -1,0 z M 26,25 l 1,0 0,1 -1,0 z M 27,25 l 1,0 0,1 -1,0 z M 0,26 l 1,0 0,1 -1,0 z M 2,26 l 1,0 0,1 -1,0 z M 3,26 l 1,0 0,1 -1,0 z M 4,26 l 1,0 0,1 -1,0 z M 6,26 l 1,0 0,1 -1,0 z M 8,26 l 1,0 0,1 -1,0 z M 9,26 l 1,0 0,1 -1,0 z M 12,26 l 1,0 0,1 -1,0 z M 13,26 l 1,0 0,1 -1,0 z M 14,26 l 1,0 0,1 -1,0 z M 15,26 l 1,0 0,1 -1,0 z M 17,26 l 1,0 0,1 -1,0 z M 22,26 l 1,0 0,1 -1,0 z M 23,26 l 1,0 0,1 -1,0 z M 24,26 l 1,0 0,1 -1,0 z M 25,26 l 1,0 0,1 -1,0 z M 26,26 l 1,0 0,1 -1,0 z M 27,26 l 1,0 0,1 -1,0 z M 0,27 l 1,0 0,1 -1,0 z M 6,27 l 1,0 0,1 -1,0 z M 8,27 l 1,0 0,1 -1,0 z M 10,27 l 1,0 0,1 -1,0 z M 11,27 l 1,0 0,1 -1,0 z M 16,27 l 1,0 0,1 -1,0 z M 19,27 l 1,0 0,1 -1,0 z M 21,27 l 1,0 0,1 -1,0 z M 23,27 l 1,0 0,1 -1,0 z M 24,27 l 1,0 0,1 -1,0 z M 25,27 l 1,0 0,1 -1,0 z M 27,27 l 1,0 0,1 -1,0 z M 0,28 l 1,0 0,1 -1,0 z M 1,28 l 1,0 0,1 -1,0 z M 2,28 l 1,0 0,1 -1,0 z M 3,28 l 1,0 0,1 -1,0 z M 4,28 l 1,0 0,1 -1,0 z M 5,28 l 1,0 0,1 -1,0 z M 6,28 l 1,0 0,1 -1,0 z M 8,28 l 1,0 0,1 -1,0 z M 10,28 l 1,0 0,1 -1,0 z M 15,28 l 1,0 0,1 -1,0 z M 16,28 l 1,0 0,1 -1,0 z M 19,28 l 1,0 0,1 -1,0 z M 22,28 l 1,0 0,1 -1,0 z M 24,28 l 1,0 0,1 -1,0 z M 26,28 l 1,0 0,1 -1,0 z " />
+                  </svg>
+                </div>
+                <div class="qr-caption">Наведите камеру смартфона</div>
+                <div class="qr-subcaption">artboi5436-svg.github.io/nepereplachivay</div>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="slide-footer">
+            <div class="footer-brand">
+              <span class="brand-shield-dot"></span> ТарифДетокс • Победитель Demo Day
+            </div>
+            <div>Команда разработки готова к ответам на вопросы экспертного жюри</div>
+          </div>
+        </section>
+
+      </main>
+
+      <!-- Нижняя полоса прогресса презентации -->
+      <div id="bottom-control-bar">
+        <div id="progress-fill"></div>
+      </div>
+
+      <!-- Всплывающая шпаргалка спикера (Presenter Notes - клавиша N) -->
+      <aside id="speaker-notes-panel" role="region" aria-label="Заметки докладчика">
+        <div class="notes-header">
+          <div class="notes-header-title">
+            <span>📝 Шпаргалка спикера</span>
+            <span id="notes-slide-badge" style="color: #5EEAD4;">Слайд 01 / 10</span>
+            <span id="notes-timing-badge" style="color: var(--text-dim);">(0:00 – 0:20)</span>
+          </div>
+          <button class="notes-close-btn" id="notes-close" title="Закрыть шпаргалку (N)">✕</button>
+        </div>
+        <div class="notes-speech-text" id="notes-body">
+          Загрузка заметок...
+        </div>
+      </aside>
+
+      <!-- Подсказки по горячим клавишам внизу экрана -->
+      <div class="controls-legend">
+        <span class="legend-key"><kbd>Space</kbd> / <kbd>→</kbd> Далее</span>
+        <span class="legend-key"><kbd>←</kbd> Назад</span>
+        <span class="legend-key"><kbd>T</kbd> Таймер</span>
+        <span class="legend-key"><kbd>N</kbd> Шпаргалка</span>
+        <span class="legend-key"><kbd>F</kbd> На весь экран</span>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      'use strict';
+
+      // ----------------------------------------------------
+      // ИНИЦИАЛИЗАЦИЯ И МАСШТАБИРОВАНИЕ ЭКРАНА (16:9 VIEWPORT)
+      // ----------------------------------------------------
+      const frame = document.getElementById('stage-frame');
+      const BASE_W = 1920;
+      const BASE_H = 1080;
+
+      function resizeStage() {
+        const vw = window.innerWidth;
+        const vh = window.innerHeight;
+        const scale = Math.min(vw / BASE_W, vh / BASE_H);
+        frame.style.transform = `scale(${scale})`;
+      }
+
+      window.addEventListener('resize', resizeStage);
+      window.addEventListener('DOMContentLoaded', resizeStage);
+      resizeStage();
+
+      // ----------------------------------------------------
+      // СИСТЕМА УПРАВЛЕНИЯ СЛАЙДАМИ И КЛИКЕР
+      // ----------------------------------------------------
+      const slides = Array.from(document.querySelectorAll('.slide'));
+      const totalSlides = slides.length;
+      let currentIndex = 0;
+
+      const progressFill = document.getElementById('progress-fill');
+      const notesPanel = document.getElementById('speaker-notes-panel');
+      const notesBody = document.getElementById('notes-body');
+      const notesSlideBadge = document.getElementById('notes-slide-badge');
+      const notesTimingBadge = document.getElementById('notes-timing-badge');
+
+      function updateSlide(newIndex, direction = 'next') {
+        if (newIndex < 0 || newIndex >= totalSlides) return;
+        if (newIndex === currentIndex && slides[currentIndex].classList.contains('active')) return;
+
+        const prevSlide = slides[currentIndex];
+        const nextSlide = slides[newIndex];
+
+        // Анимация классов
+        slides.forEach((s, idx) => {
+          s.classList.remove('active', 'prev');
+          if (idx < newIndex) {
+            s.classList.add('prev');
+          }
+        });
+
+        nextSlide.classList.add('active');
+        currentIndex = newIndex;
+
+        // Обновление прогресс-бара
+        const progressPct = ((currentIndex + 1) / totalSlides) * 100;
+        progressFill.style.width = `${progressPct}%`;
+
+        // Обновление заметок спикера
+        updateSpeakerNotes();
+
+        // Запуск GSAP-анимаций на активном слайде (если доступен GSAP)
+        triggerSlideEntrance(nextSlide);
+      }
+
+      function nextSlide() {
+        if (currentIndex < totalSlides - 1) {
+          updateSlide(currentIndex + 1, 'next');
+        }
+      }
+
+      function prevSlide() {
+        if (currentIndex > 0) {
+          updateSlide(currentIndex - 1, 'prev');
+        }
+      }
+
+      // Кнопки навигации мышью
+      document.getElementById('btn-next').addEventListener('click', nextSlide);
+      document.getElementById('btn-prev').addEventListener('click', prevSlide);
+
+      // ----------------------------------------------------
+      // ОБРАБОТЧИК КЛАВИАТУРЫ И КЛИКЕРА (PRESENTER CLICKER)
+      // ----------------------------------------------------
+      window.addEventListener('keydown', (e) => {
+        // Пробел, Enter, стрелка вправо, стрелка вниз, PageDown
+        if (e.code === 'Space' || e.key === 'Enter' || e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === 'PageDown') {
+          e.preventDefault();
+          nextSlide();
+        }
+        // Стрелка влево, стрелка вверх, Backspace, PageUp
+        else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp' || e.key === 'Backspace' || e.key === 'PageUp') {
+          e.preventDefault();
+          prevSlide();
+        }
+        // Полноэкранный режим (F)
+        else if (e.key === 'f' || e.key === 'F' || e.key === 'а' || e.key === 'А') {
+          e.preventDefault();
+          toggleFullscreen();
+        }
+        // Заметки спикера (N)
+        else if (e.key === 'n' || e.key === 'N' || e.key === 'т' || e.key === 'Т') {
+          e.preventDefault();
+          toggleNotes();
+        }
+        // Таймер спикера (T)
+        else if (e.key === 't' || e.key === 'T' || e.key === 'е' || e.key === 'Е') {
+          e.preventDefault();
+          toggleTimerVisibility();
+        }
+        // Home / End
+        else if (e.key === 'Home') {
+          e.preventDefault();
+          updateSlide(0);
+        } else if (e.key === 'End') {
+          e.preventDefault();
+          updateSlide(totalSlides - 1);
+        }
+        // Цифровые клавиши 1..9, 0 (для быстрого перехода)
+        else if (e.key >= '1' && e.key <= '9') {
+          const idx = parseInt(e.key, 10) - 1;
+          if (idx < totalSlides) updateSlide(idx);
+        } else if (e.key === '0') {
+          updateSlide(9); // 10-й слайд
+        }
+      });
+
+      // Свайпы на сенсорных экранах
+      let touchStartX = 0;
+      let touchStartY = 0;
+
+      window.addEventListener('touchstart', (e) => {
+        if (e.touches.length === 1) {
+          touchStartX = e.touches[0].clientX;
+          touchStartY = e.touches[0].clientY;
+        }
+      }, { passive: true });
+
+      window.addEventListener('touchend', (e) => {
+        if (e.changedTouches.length === 1) {
+          const diffX = e.changedTouches[0].clientX - touchStartX;
+          const diffY = e.changedTouches[0].clientY - touchStartY;
+          if (Math.abs(diffX) > 60 && Math.abs(diffX) > Math.abs(diffY)) {
+            if (diffX < 0) nextSlide();
+            else prevSlide();
+          }
+        }
+      }, { passive: true });
+
+      // Полноэкранный режим (Fullscreen)
+      function toggleFullscreen() {
+        if (!document.fullscreenElement) {
+          document.documentElement.requestFullscreen().catch(() => {});
+        } else {
+          if (document.exitFullscreen) document.exitFullscreen();
+        }
+      }
+
+      // ----------------------------------------------------
+      // ШПАРГАЛКА СПИКЕРА (PRESENTER NOTES)
+      // ----------------------------------------------------
+      function updateSpeakerNotes() {
+        const slide = slides[currentIndex];
+        const notes = slide.getAttribute('data-notes') || 'Нет заметок для этого слайда.';
+        const timing = slide.getAttribute('data-timing') || '';
+        const idx = currentIndex + 1;
+
+        notesSlideBadge.textContent = `Слайд ${idx < 10 ? '0' + idx : idx} / ${totalSlides}`;
+        notesTimingBadge.textContent = timing ? `(${timing})` : '';
+        notesBody.innerHTML = notes;
+      }
+
+      function toggleNotes() {
+        notesPanel.classList.toggle('open');
+      }
+
+      document.getElementById('notes-close').addEventListener('click', () => {
+        notesPanel.classList.remove('open');
+      });
+
+      // ----------------------------------------------------
+      // ТАЙМЕР ВЫСТУПЛЕНИЯ СПИКЕРА (3:30 MIN)
+      // ----------------------------------------------------
+      const timerDisplay = document.getElementById('timer-display');
+      const timerDot = document.getElementById('timer-dot');
+      const timerWidget = document.getElementById('presenter-timer');
+
+      const TOTAL_SECONDS = 210; // 3 минуты 30 секунд
+      let secondsLeft = TOTAL_SECONDS;
+      let isTimerRunning = true;
+      let timerInterval = null;
+
+      function renderTimer() {
+        const isNegative = secondsLeft < 0;
+        const absSec = Math.abs(secondsLeft);
+        const mins = Math.floor(absSec / 60);
+        const secs = absSec % 60;
+        const formatted = `${isNegative ? '+' : ''}${mins < 10 ? '0' + mins : mins}:${secs < 10 ? '0' + secs : secs}`;
+        
+        timerDisplay.textContent = formatted;
+
+        timerDisplay.classList.remove('warning', 'danger');
+        if (secondsLeft > 60) {
+          timerDot.style.background = 'var(--success)';
+          timerDot.style.boxShadow = '0 0 10px var(--success)';
+        } else if (secondsLeft > 0) {
+          timerDot.style.background = 'var(--warning)';
+          timerDot.style.boxShadow = '0 0 10px var(--warning)';
+          timerDisplay.classList.add('warning');
+        } else {
+          timerDot.style.background = 'var(--danger)';
+          timerDot.style.boxShadow = '0 0 10px var(--danger)';
+          timerDisplay.classList.add('danger');
+        }
+      }
+
+      function startTimer() {
+        if (timerInterval) clearInterval(timerInterval);
+        timerInterval = setInterval(() => {
+          if (isTimerRunning) {
+            secondsLeft--;
+            renderTimer();
+          }
+        }, 1000);
+      }
+
+      timerWidget.addEventListener('click', () => {
+        isTimerRunning = !isTimerRunning;
+        timerWidget.style.opacity = isTimerRunning ? '1' : '0.5';
+      });
+
+      function toggleTimerVisibility() {
+        timerWidget.style.display = (timerWidget.style.display === 'none') ? 'flex' : 'none';
+      }
+
+      startTimer();
+      renderTimer();
+
+      // ----------------------------------------------------
+      // ЖИВОЙ СЧЕТЧИК ПЕРЕПЛАТ В СТРАНЕ (ODOMETER COUNTER)
+      // ----------------------------------------------------
+      const odometerEl = document.getElementById('hero-odometer');
+      let baseLostRubles = 52384120;
+      
+      setInterval(() => {
+        // Каждую секунду жители РФ переплачивают примерно 1 200 - 2 500 руб.
+        baseLostRubles += Math.floor(Math.random() * 450) + 180;
+        if (odometerEl) {
+          odometerEl.textContent = baseLostRubles.toLocaleString('ru-RU') + ' ₽';
+        }
+      }, 400);
+
+      // ----------------------------------------------------
+      // GSAP АНИМАЦИИ ВЫЛЕТА ЭЛЕМЕНТОВ
+      // ----------------------------------------------------
+      function triggerSlideEntrance(slideEl) {
+        if (typeof gsap === 'undefined') return;
+
+        const cards = slideEl.querySelectorAll('.stage-card, .rule-card, .algo-box, .shield-card, .tech-card, .roadmap-col, .wizard-step-pill, .demo-result-card, .lnr-item, .collapse-banner');
+        if (cards.length > 0) {
+          gsap.fromTo(cards, 
+            { y: 30, opacity: 0 },
+            { y: 0, opacity: 1, duration: 0.5, stagger: 0.08, ease: 'power2.out' }
+          );
+        }
+
+        const statNums = slideEl.querySelectorAll('.stat-number, .tech-metric, .lnr-stat-val');
+        if (statNums.length > 0) {
+          gsap.fromTo(statNums,
+            { scale: 0.85, opacity: 0 },
+            { scale: 1, opacity: 1, duration: 0.6, ease: 'back.out(1.5)', delay: 0.1 }
+          );
+        }
+      }
+
+      // Начальная инициализация
+      updateSlide(0);
+
+    })();
+  </script>
+</body>
+</html>
