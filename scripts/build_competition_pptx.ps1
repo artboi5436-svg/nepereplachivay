@@ -37,20 +37,7 @@ try {
         $bg.Fill.ForeColor.RGB = $C_BG
         $bg.Line.Visible = [Microsoft.Office.Core.MsoTriState]::msoFalse
 
-        # 2. Header: Tag & Timing
-        $tag = $slide.Shapes.AddShape(5, 50, 24, 230, 26) # msoShapeRoundedRectangle
-        $tag.Fill.Solid()
-        $tag.Fill.ForeColor.RGB = $C_CARD
-        $tag.Line.ForeColor.RGB = $categoryColor
-        $tag.Line.Weight = 1
-        $tr = $tag.TextFrame.TextRange
-        $tr.Text = "$categoryText  •  $timingText"
-        $tr.Font.Name = "Arial"
-        $tr.Font.Size = 10
-        $tr.Font.Bold = [Microsoft.Office.Core.MsoTriState]::msoTrue
-        $tr.Font.Color.RGB = $categoryColor
-
-        # Slide Number Badge
+        # 2. Header: Slide Number (Tag & Timing убраны по запросу пользователя)
         $snum = $slide.Shapes.AddTextbox(1, 780, 24, 130, 26)
         $tr = $snum.TextFrame.TextRange
         $tr.Text = $slideIndexText
@@ -61,7 +48,7 @@ try {
         $snum.TextFrame.TextRange.ParagraphFormat.Alignment = 3 # Right
 
         # 3. Main Title
-        $tbTitle = $slide.Shapes.AddTextbox(1, 50, 52, 860, 44)
+        $tbTitle = $slide.Shapes.AddTextbox(1, 50, 22, 730, 56)
         $tbTitle.TextFrame.WordWrap = [Microsoft.Office.Core.MsoTriState]::msoTrue
         $tbTitle.TextFrame.MarginLeft = 0
         $tbTitle.TextFrame.MarginTop = 0
@@ -70,13 +57,13 @@ try {
         $tr = $tbTitle.TextFrame.TextRange
         $tr.Text = $titleText
         $tr.Font.Name = "Arial"
-        $tr.Font.Size = 22
+        $tr.Font.Size = 20
         $tr.Font.Bold = [Microsoft.Office.Core.MsoTriState]::msoTrue
         $tr.Font.Color.RGB = $C_WHITE
 
         # 4. Punchline
         if ($punchlineText) {
-            $tbPunch = $slide.Shapes.AddTextbox(1, 50, 102, 860, 30)
+            $tbPunch = $slide.Shapes.AddTextbox(1, 50, 84, 860, 36)
             $tbPunch.TextFrame.WordWrap = [Microsoft.Office.Core.MsoTriState]::msoTrue
             $tbPunch.TextFrame.MarginLeft = 0
             $tbPunch.TextFrame.MarginTop = 0
