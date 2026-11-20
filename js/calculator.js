@@ -3,6 +3,36 @@
  * Без зависимостей от DOM. Полностью покрывается модульными тестами.
  */
 
+const LNR_REGIONS = new Set([
+  'Луганск',
+  'Алчевск',
+  'Краснодон',
+  'Свердловск',
+  'Стаханов',
+  'Ровеньки',
+  'Антрацит',
+  'Брянка',
+  'Красный Луч',
+  'Северодонецк',
+  'Лисичанск',
+  'Рубежное',
+  'Первомайск',
+  'Все города ЛНР',
+  'Луганская Народная Республика (ЛНР)'
+]);
+
+function isAllLnrRegion(region) {
+  return region === 'Все города ЛНР' || region === 'Луганская Народная Республика (ЛНР)';
+}
+
+export function isTariffAvailableInRegion(tariffRegion, userRegion) {
+  if (tariffRegion === userRegion) return true;
+  if (tariffRegion === 'Все регионы' || userRegion === 'Все регионы') return true;
+  if (isAllLnrRegion(tariffRegion) && LNR_REGIONS.has(userRegion)) return true;
+  if (isAllLnrRegion(userRegion) && LNR_REGIONS.has(tariffRegion)) return true;
+  return false;
+}
+
 /**
  * Расчёт полной стоимости владения (TCO) тарифа связи за 12 месяцев с учётом акций и платы за подключение.
  * @param {Object} tariff - Объект тарифа
@@ -50,7 +80,7 @@ export function calculateTariffTCO12(tariff, options = {}) {
  * @returns {Object} Результат сравнения
  */
 export function findBestMobileTariff(user, tariffs = []) {
-  const currentMonthly = Number(user.currentPrice) || 0;
+  const currentMonthly = Math.max(0, Number(user.currentPrice) || 0);
   const currentAnnualTCO = currentMonthly * 12;
 
   const isUnlimitedGb = Boolean(user.isUnlimitedGb || user.unlimitedGb || Number(user.gb) >= 999);
@@ -63,15 +93,7 @@ export function findBestMobileTariff(user, tariffs = []) {
   const userRegion = user.region || 'Все города ЛНР';
 
   // Фильтруем тарифы по региону
-  const regionalTariffs = tariffs.filter(t => {
-    return t.region === userRegion || 
-           t.region === 'Все города ЛНР' || 
-           userRegion === 'Все города ЛНР' ||
-           t.region === 'Все регионы' || 
-           userRegion === 'Все регионы' ||
-           t.region === 'Луганская Народная Республика (ЛНР)' ||
-           userRegion === 'Луганская Народная Республика (ЛНР)';
-  });
+  const regionalTariffs = tariffs.filter(t => isTariffAvailableInRegion(t.region, userRegion));
 
   // Строгое соответствие критериям
   const matchingTariffs = regionalTariffs.filter(t => {
@@ -224,22 +246,14 @@ export function findBestMobileTariff(user, tariffs = []) {
  * @returns {Object}
  */
 export function findBestInternetTariff(user, tariffs = []) {
-  const currentMonthly = Number(user.currentPrice) || 0;
+  const currentMonthly = Math.max(0, Number(user.currentPrice) || 0);
   const currentAnnualTCO = currentMonthly * 12;
   const userSpeed = Number(user.minSpeedMbps) || 100;
   const userRegion = user.region || 'Все города ЛНР';
   const needsRouter = Boolean(user.needsRouter);
 
   // Фильтруем тарифы по региону
-  const regionalTariffs = tariffs.filter(t => {
-    return t.region === userRegion || 
-           t.region === 'Все города ЛНР' || 
-           userRegion === 'Все города ЛНР' ||
-           t.region === 'Все регионы' || 
-           userRegion === 'Все регионы' ||
-           t.region === 'Луганская Народная Республика (ЛНР)' ||
-           userRegion === 'Луганская Народная Республика (ЛНР)';
-  });
+  const regionalTariffs = tariffs.filter(t => isTariffAvailableInRegion(t.region, userRegion));
 
   const matchingTariffs = regionalTariffs.filter(t => {
     return Number(t.speedMbps) >= userSpeed;
@@ -381,7 +395,7 @@ export function calculateSubscriptionsSummary({
   let currentMonthlyTotal = 0;
   const activeItems = [];
   const unusedSet = new Set(unusedIds);
-  const duplicateIdSet = new Set(duplicatesFound.map(d => d.duplicateId));
+  const duplicateIdSet = new Set(duplicatesFound.map(d => d.duplicateId).filter(Boolean));
 
   // Обработка стандартных подписок из базы
   for (const id of selectedIds) {
@@ -408,7 +422,7 @@ export function calculateSubscriptionsSummary({
 
   // Пользовательские добавленные подписки
   for (const item of customItems) {
-    const price = Number(item.price) || 0;
+    const price = Math.max(0, Number(item.price) || 0);
     currentMonthlyTotal += price;
     const isUnused = Boolean(item.unused);
 

@@ -479,8 +479,8 @@
     "includedSms": 0,
     "unlimitedApps": ["Мессенджеры"],
     "officialUrl": "https://www.tbank.ru/mobile-operator",
-    "isPartner": true,
-    "adErid": "2VtzquDEMOerid9871",
+    "isPartner": false,
+    "adErid": null,
     "notes": "Быстрое дистанционное подключение через eSIM, запись звонков и телефонный секретарь Олег."
   },
   {

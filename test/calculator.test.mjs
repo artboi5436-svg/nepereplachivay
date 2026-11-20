@@ -210,6 +210,58 @@ describe('Модуль расчётов calculator.js', () => {
       // Тариф ПитерТел дешевле, но он для СПб! Должен быть выбран именно lnr-mks
       assert.equal(res.bestTariff.id, 'lnr-mks');
     });
+
+    it('Сценарий: Конкретный город ЛНР (Алчевск) получает общие тарифы ЛНР и отсекает чужие регионы', () => {
+      const tariffs = [
+        {
+          id: 'msk-only',
+          operator: 'МскТел',
+          tariffName: 'Московский',
+          region: 'Москва и МО',
+          monthlyPrice: 100,
+          promoDurationMonths: 0,
+          setupFee: 0,
+          includedGb: 50,
+          includedMinutes: 1000,
+          includedSms: 0
+        },
+        {
+          id: 'lnr-all',
+          operator: 'МКС',
+          tariffName: 'Оптимальный',
+          region: 'Все города ЛНР',
+          monthlyPrice: 200,
+          promoDurationMonths: 0,
+          setupFee: 100,
+          includedGb: 15,
+          includedMinutes: 600,
+          includedSms: 0
+        }
+      ];
+
+      const res = findBestMobileTariff({
+        currentPrice: 500,
+        gb: 15,
+        minutes: 400,
+        sms: 0,
+        region: 'Алчевск'
+      }, tariffs);
+      assert.equal(res.hasMatch, true);
+      assert.equal(res.bestTariff.id, 'lnr-all');
+    });
+
+    it('Сценарий: Отрицательная или нулевая текущая цена корректно ограничивается 0', () => {
+      const res = findBestMobileTariff({
+        currentPrice: -200,
+        gb: 10,
+        minutes: 200,
+        sms: 0,
+        region: 'Все регионы'
+      }, mockTariffs);
+      assert.equal(res.currentMonthly, 0);
+      assert.equal(res.isCurrentOptimal, true);
+      assert.equal(res.savingsYear, 0);
+    });
   });
 
   describe('findBestInternetTariff: Поиск тарифа интернета', () => {
@@ -242,6 +294,72 @@ describe('Модуль расчётов calculator.js', () => {
       assert.equal(res.isCurrentOptimal, false);
       assert.equal(res.savingsYear, 1500);
       assert.equal(res.tco12, 6900);
+    });
+
+    it('Фильтрует интернет-тарифы по городу ЛНР и отсекает другие регионы', () => {
+      const cityTariffs = [
+        {
+          id: 'spb-net',
+          operator: 'ПитерНет',
+          tariffName: 'Питер 200',
+          region: 'Санкт-Петербург',
+          speedMbps: 200,
+          monthlyPrice: 250,
+          promoDurationMonths: 0,
+          setupFee: 0,
+          routerRentMonthly: 0
+        },
+        {
+          id: 'alchevsk-net',
+          operator: 'Магистр-Телеком',
+          tariffName: 'Городской 200',
+          region: 'Алчевск',
+          speedMbps: 200,
+          monthlyPrice: 490,
+          promoDurationMonths: 0,
+          setupFee: 0,
+          routerRentMonthly: 80
+        },
+        {
+          id: 'lugansk-only-net',
+          operator: 'ЛДС',
+          tariffName: 'Безлим 300',
+          region: 'Луганск',
+          speedMbps: 300,
+          monthlyPrice: 450,
+          promoDurationMonths: 0,
+          setupFee: 0,
+          routerRentMonthly: 100
+        }
+      ];
+
+      const resAlchevsk = findBestInternetTariff({
+        currentPrice: 700,
+        minSpeedMbps: 200,
+        needsRouter: false,
+        region: 'Алчевск'
+      }, cityTariffs);
+      assert.equal(resAlchevsk.bestTariff.id, 'alchevsk-net');
+
+      const resAllLnr = findBestInternetTariff({
+        currentPrice: 700,
+        minSpeedMbps: 200,
+        needsRouter: false,
+        region: 'Все города ЛНР'
+      }, cityTariffs);
+      assert.equal(resAllLnr.bestTariff.id, 'lugansk-only-net');
+    });
+
+    it('Обрабатывает отрицательную текущую цену интернета без отрицательной экономии', () => {
+      const res = findBestInternetTariff({
+        currentPrice: -300,
+        minSpeedMbps: 100,
+        needsRouter: false,
+        region: 'Все регионы'
+      }, mockInternet);
+      assert.equal(res.currentMonthly, 0);
+      assert.equal(res.isCurrentOptimal, true);
+      assert.equal(res.savingsYear, 0);
     });
   });
 
@@ -287,6 +405,26 @@ describe('Модуль расчётов calculator.js', () => {
       assert.equal(res.unusedMonthlySavings, 300);
       assert.equal(res.annualPlanSavingsYear, 600);
       assert.equal(res.totalAnnualSavings, 4200);
+    });
+
+    it('Не суммирует дважды экономию для подписки, которая одновременно не используется и дублирует экосистему, и клампит отрицательную цену', () => {
+      const mockSubs = [
+        { id: 'yandex-plus', name: 'Яндекс Плюс', category: 'ecosystem', monthlyPrice: 399, includesServices: ['kinopoisk'] },
+        { id: 'kinopoisk', name: 'Кинопоиск', category: 'cinema', monthlyPrice: 299, bundledInside: 'yandex-plus' }
+      ];
+      const duplicates = analyzeSubscriptionDuplicates(['yandex-plus', 'kinopoisk'], mockSubs);
+      const res = calculateSubscriptionsSummary({
+        selectedIds: ['yandex-plus', 'kinopoisk'],
+        unusedIds: ['kinopoisk'],
+        customItems: [{ name: 'Своя', price: -500, unused: true }],
+        duplicatesFound: duplicates,
+        dbSubscriptions: mockSubs
+      });
+
+      assert.equal(res.unusedMonthlySavings, 299);
+      assert.equal(res.duplicateMonthlySavings, 0);
+      assert.equal(res.currentMonthlyTotal, 698);
+      assert.equal(res.totalAnnualSavings, 299 * 12);
     });
 
     it('Сводит общий Grand Total по всем трём категориям', () => {

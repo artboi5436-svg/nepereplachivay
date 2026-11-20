@@ -5,19 +5,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Как мы считаем — Методология сервиса «ТарифДетокс»</title>
   <meta name="description" content="Честная методология расчёта экономии на тарифах связи, домашнего интернета и подписок. Формула TCO за 12 месяцев.">
-  <link rel="stylesheet" href="css/variables.css?v=20261108_8">
-  <link rel="stylesheet" href="css/style.css?v=20261108_8">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23D00000'/%3E%3Ctext x='32' y='43' text-anchor='middle' font-family='Arial,sans-serif' font-size='32' font-weight='bold' fill='%23ffffff'%3E%E2%82%BD%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="css/variables.css?v=20261120_1">
+  <link rel="stylesheet" href="css/style.css?v=20261120_1">
 </head>
 <body>
 
   <header class="site-header">
     <div class="header-container">
       <a href="index.html#calculator" class="site-logo">
-        ТарифДетокс <span class="badge">Методология</span>
+        ТарифДетокс <span class="badge">ЛНР</span>
       </a>
       <nav class="header-nav">
         <a href="index.html#calculator">Калькулятор</a>
-        <a href="index.html#how-we-calculate" class="active">Как мы считаем</a>
+        <a href="how-we-calculate.html" class="active">Как мы считаем</a>
         <a href="data-security.html">Безопасность ваших данных</a>
       </nav>
       <button type="button" class="theme-toggle-btn" id="theme-toggle" title="Переключить тему" aria-label="Сменить тему">
@@ -27,28 +28,28 @@
   </header>
 
   <main class="main-content">
-    <article class="step-card">
+    <article class="step-card doc-view">
       <h1>Как мы считаем экономию: честно и без уловок</h1>
       <p class="step-subtitle">Большинство сайтов сравнения тарифов показывают только маркетинговую «цену в первый месяц». Мы рассчитываем реальную стоимость владения (TCO) за 12 месяцев.</p>
 
       <section style="margin-bottom: 24px;">
-        <h3>1. Формула годовой стоимости владения (TCO за 12 месяцев)</h3>
+        <h2>1. Формула годовой стоимости владения (TCO за 12 месяцев)</h2>
         <p>Когда оператор пишет «1 рубль в месяц», мелким шрифтом в договоре часто указано: «со 2-го месяца — 650 ₽, плата за подключение — 500 ₽, аренда роутера — 150 ₽/мес».</p>
         <p>Наша формула учитывает все расходы за год:</p>
-        <div style="background-color: var(--bg-surface-elevated); padding: 14px; border-radius: var(--radius-sm); font-family: monospace; font-size: 13px; margin: 12px 0; overflow-x: auto; word-break: break-word;">
+        <div class="formula-box">
           TCO = Плата_за_подключение + (Цена_акции × Месяцев_акции) + (Базовая_цена × (12 - Месяцев_акции)) + (Аренда_роутера × 12)
         </div>
         <p>Среднемесячная стоимость в нашем отчёте — это <code>TCO / 12</code>. Это позволяет честно сравнивать предложения между собой.</p>
       </section>
 
       <section style="margin-bottom: 24px;">
-        <h3>2. Принцип «Текущий тариф уже лучший»</h3>
+        <h2>2. Принцип «Текущий тариф уже лучший»</h2>
         <p>Если ваш архивный тариф дешевле любых существующих на рынке предложений, <strong>мы прямо сообщаем об этом</strong> и советуем ни в коем случае его не менять.</p>
         <p>Мы никогда не навязываем переход ради перехода или ради партнёрской комиссии.</p>
       </section>
 
       <section style="margin-bottom: 24px;">
-        <h3>3. Как мы ищем дубликаты подписок</h3>
+        <h2>3. Как мы ищем дубликаты подписок</h2>
         <ul>
           <li><strong>Вложенные сервисы (экосистемы):</strong> Если у вас подключен «Яндекс Плюс», отдельная оплата «Кинопоиска» или «Яндекс Музыки» — это 100% потеря денег, так как они уже входят в базовый пакет. Аналогично с «СберПрайм» и «Okko».</li>
           <li><strong>Категориальный избыток:</strong> Оплата одновременно 2–3 онлайн-кинотеатров. По статистике, пользователь смотрит только один сериал в конкретный период. Выгоднее чередовать сервисы помесячно.</li>
@@ -57,7 +58,7 @@
       </section>
 
       <section style="margin-bottom: 24px;">
-        <h3>4. Почему мы не считаем цены на страховку</h3>
+        <h2>4. Почему мы не считаем цены на страховку</h2>
         <p>ОСАГО, КАСКО и ипотечные полисы зависят от десятков индивидуальных параметров (КБМ водителя, марка авто, мощность, возраст, остаток долга по ипотеке). Сайты, обещающие «рассчитать страховку в один клик», либо выдумывают цифры, либо заставляют передавать паспортные данные сторонним брокерам.</p>
         <p>Вместо этого мы даём:</p>
         <ul>
@@ -68,7 +69,7 @@
       </section>
 
       <section>
-        <h3>5. Откуда берутся данные о тарифах</h3>
+        <h2>5. Откуда берутся данные о тарифах</h2>
         <p>Все тарифы хранятся в открытых структурированных JSON-файлах в репозитории проекта. Каждая запись содержит дату последней проверки и ссылку на официальный сайт оператора. Мы не используем агрессивный автоматический сбор данных, нарушающий правила операторов.</p>
       </section>
 
@@ -83,6 +84,7 @@
       <div>«ТарифДетокс» © 2026. Расчёты в браузере без передачи на сервер.</div>
       <div class="footer-links">
         <a href="index.html#calculator">Калькулятор</a>
+        <a href="how-we-calculate.html">Как мы считаем</a>
         <a href="data-security.html">Безопасность ваших данных</a>
         <a href="privacy.html">Конфиденциальность</a>
       </div>

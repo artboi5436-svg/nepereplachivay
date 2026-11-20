@@ -33,9 +33,15 @@ export function exportEventsToIcs(events = [], filename = 'ne-pereplachivay-remi
     const endStr = formatIcsDate(endDate);
     const uid = `reminder-${Date.now()}-${idx}@nepereplachivay.ru`;
 
-    // Экранирование текста по стандарту RFC 5545
-    const cleanTitle = (ev.title || 'Напоминание').replace(/,/g, '\\,').replace(/;/g, '\\;');
-    const cleanDesc = (ev.description || '').replace(/\n/g, '\\n').replace(/,/g, '\\,').replace(/;/g, '\\;');
+    // Экранирование текста по стандарту RFC 5545 (сначала обратный слеш)
+    const escapeIcsText = (text) => String(text || '')
+      .replace(/\\/g, '\\\\')
+      .replace(/\r?\n/g, '\\n')
+      .replace(/,/g, '\\,')
+      .replace(/;/g, '\\;');
+
+    const cleanTitle = escapeIcsText(ev.title || 'Напоминание');
+    const cleanDesc = escapeIcsText(ev.description || '');
 
     return [
       'BEGIN:VEVENT',
@@ -73,5 +79,5 @@ export function exportEventsToIcs(events = [], filename = 'ne-pereplachivay-remi
   document.body.appendChild(a);
   a.click();
   document.body.removeChild(a);
-  URL.revokeObjectURL(url);
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
 }

@@ -493,8 +493,8 @@
     "includedSms": 0,
     "unlimitedApps": ["Мессенджеры"],
     "officialUrl": "https://www.tbank.ru/mobile-operator",
-    "isPartner": true,
-    "adErid": "2VtzquDEMOerid9871",
+    "isPartner": false,
+    "adErid": null,
     "notes": "Быстрое дистанционное подключение через eSIM, запись звонков и телефонный секретарь Олег."
   },
   {
@@ -1401,8 +1401,8 @@
     ],
     "whatToWatch": [
       "КБМ (безаварийный стаж): обновляется ежегодно 1 апреля. Если вы меняли права или фамилию, скидка могла 'слететь' до базовой (1.0). Проверьте бесплатно на сайте РСА.",
-      "Навязывание допов: страховые агенты иногда пытаются включить страховку жизни или помощь на дорогах. По ст. 15.34.1 КоАП РФ навязывание запрещено [ПРОВЕРИТЬ].",
-      "'Период охлаждения': по указанию ЦБ РФ у вас есть не менее 14 календарных дней на отказ от добровольных навязанных страховок с полным возвратом денег [ПРОВЕРИТЬ: Указание Банка России о периоде охлаждения]."
+      "Навязывание допов: страховые агенты иногда пытаются включить страховку жизни или помощь на дорогах. По ст. 15.34.1 КоАП РФ навязывание дополнительных услуг при оформлении ОСАГО запрещено.",
+      "'Период охлаждения': по Указанию Банка России № 3854-У у вас есть не менее 14 календарных дней на отказ от добровольных навязанных страховок с возвратом уплаченной премии."
     ],
     "officialTools": [
       {
@@ -1445,7 +1445,7 @@
       "Учитывается ли снижающийся остаток основного долга при расчёте суммы на следующий год?"
     ],
     "whatToWatch": [
-      "По закону об ипотеке и антимонопольным правилам вы имеете право купить полис в ЛЮБОЙ страховой компании, аккредитованной банком, и банк обязан его принять без повышения ставки [ПРОВЕРИТЬ: Постановление Правительства РФ № 39 об общих исключениях в отношении соглашений между кредитными и страховыми организациями].",
+      "По закону об ипотеке и антимонопольным правилам вы имеете право оформить полис в любой страховой компании, соответствующей требованиям банка, без повышения процентной ставки (Постановление Правительства РФ № 39).",
       "Сумма страховки должна уменьшаться каждый год пропорционально остатку долга перед банком."
     ],
     "officialTools": [
@@ -1476,13 +1476,115 @@
           fetch('data/subscriptions.json').then(r => r.ok ? r.json() : null),
           fetch('data/insurance.json').then(r => r.ok ? r.json() : null)
         ]);
+        let subsChanged = false;
+        let insChanged = false;
         if (resMob) dbMobile = resMob;
         if (resNet) dbInternet = resNet;
-        if (resSub) dbSubscriptions = resSub;
-        if (resIns) dbInsurance = resIns;
+        if (resSub && JSON.stringify(resSub) !== JSON.stringify(dbSubscriptions)) {
+          dbSubscriptions = resSub;
+          subsChanged = true;
+        }
+        if (resIns && JSON.stringify(resIns) !== JSON.stringify(dbInsurance)) {
+          dbInsurance = resIns;
+          insChanged = true;
+        }
+        if (wizard) {
+          if (subsChanged) {
+            renderSubscriptionsGrid(
+              wizard.state.subscriptions.selectedIds,
+              wizard.state.subscriptions.unusedIds,
+              wizard.state.subscriptions.customItems
+            );
+          }
+          if (insChanged) {
+            renderInsuranceSelector(wizard.state.insurance.selectedTypes);
+          }
+        }
       } catch (err) {
         // При ошибке сети продолжаем использовать встроенную базу данных
         console.warn('Фоновое обновление данных не удалось, используется встроенная база:', err);
+      }
+    }
+  }
+
+  // ==========================================
+  // 1.1. УТИЛИТЫ БЕЗОПАСНОСТИ, TOAST И БУФЕР
+  // ==========================================
+  function escapeHtml(value) {
+    return String(value == null ? '' : value)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+
+  function safeHref(url) {
+    if (!url || typeof url !== 'string') return '#';
+    try {
+      const parsed = new URL(url, window.location.href);
+      if (parsed.protocol === 'http:' || parsed.protocol === 'https:') {
+        return escapeHtml(parsed.href);
+      }
+    } catch (_) {}
+    return '#';
+  }
+
+  function showToast(message, type = 'info') {
+    const container = document.getElementById('toast-container');
+    if (!container) return;
+
+    const toast = document.createElement('div');
+    toast.className = 'toast toast-' + type;
+    toast.textContent = message;
+    container.appendChild(toast);
+
+    requestAnimationFrame(() => toast.classList.add('visible'));
+
+    setTimeout(() => {
+      toast.classList.remove('visible');
+      setTimeout(() => {
+        if (toast.parentNode) toast.parentNode.removeChild(toast);
+      }, 250);
+    }, 3200);
+  }
+
+  function copyToClipboard(text, btn, feedbackMsg) {
+    const onSuccess = () => {
+      if (btn) {
+        const orig = btn.dataset.origText || btn.textContent;
+        btn.dataset.origText = orig;
+        btn.textContent = '✓ Скопировано!';
+        btn.disabled = true;
+        setTimeout(() => {
+          btn.textContent = orig;
+          btn.disabled = false;
+        }, 1800);
+      }
+      showToast(feedbackMsg || 'Скопировано в буфер обмена', 'success');
+    };
+
+    if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(text).then(onSuccess).catch(() => fallbackCopy());
+    } else {
+      fallbackCopy();
+    }
+
+    function fallbackCopy() {
+      try {
+        const tmp = document.createElement('textarea');
+        tmp.value = text;
+        tmp.setAttribute('readonly', '');
+        tmp.style.position = 'fixed';
+        tmp.style.left = '-9999px';
+        document.body.appendChild(tmp);
+        tmp.select();
+        const ok = document.execCommand('copy');
+        document.body.removeChild(tmp);
+        if (ok) onSuccess();
+        else showToast('Выделите текст и нажмите Ctrl+C', 'error');
+      } catch (_) {
+        showToast('Выделите текст и нажмите Ctrl+C', 'error');
       }
     }
   }
@@ -1653,6 +1755,36 @@
   // ==========================================
   // 4. КАЛЬКУЛЯТОР ТАРИФОВ И TCO ЗА 12 МЕСЯЦЕВ
   // ==========================================
+  const LNR_REGIONS = new Set([
+    'Луганск',
+    'Алчевск',
+    'Краснодон',
+    'Свердловск',
+    'Стаханов',
+    'Ровеньки',
+    'Антрацит',
+    'Брянка',
+    'Красный Луч',
+    'Северодонецк',
+    'Лисичанск',
+    'Рубежное',
+    'Первомайск',
+    'Все города ЛНР',
+    'Луганская Народная Республика (ЛНР)'
+  ]);
+
+  function isAllLnrRegion(region) {
+    return region === 'Все города ЛНР' || region === 'Луганская Народная Республика (ЛНР)';
+  }
+
+  function isTariffAvailableInRegion(tariffRegion, userRegion) {
+    if (tariffRegion === userRegion) return true;
+    if (tariffRegion === 'Все регионы' || userRegion === 'Все регионы') return true;
+    if (isAllLnrRegion(tariffRegion) && LNR_REGIONS.has(userRegion)) return true;
+    if (isAllLnrRegion(userRegion) && LNR_REGIONS.has(tariffRegion)) return true;
+    return false;
+  }
+
   function calculateTariffTCO12(tariff, options = {}) {
     const setupFee = Number(tariff.setupFee) || 0;
     const regularPrice = Number(tariff.monthlyPrice) || 0;
@@ -1686,7 +1818,7 @@
   }
 
   function findBestMobileTariff(user, tariffs = []) {
-    const currentMonthly = Number(user.currentPrice) || 0;
+    const currentMonthly = Math.max(0, Number(user.currentPrice) || 0);
     const currentAnnualTCO = currentMonthly * 12;
 
     const isUnlimitedGb = Boolean(user.isUnlimitedGb || user.unlimitedGb || Number(user.gb) >= 999);
@@ -1699,15 +1831,7 @@
     const userCity = user.region || 'Все города ЛНР';
 
     // Фильтруем тарифы по региону
-    const regionalTariffs = tariffs.filter(t => {
-      return t.region === userCity || 
-             t.region === 'Все города ЛНР' || 
-             userCity === 'Все города ЛНР' ||
-             t.region === 'Все регионы' || 
-             userCity === 'Все регионы' ||
-             t.region === 'Луганская Народная Республика (ЛНР)' ||
-             userCity === 'Луганская Народная Республика (ЛНР)';
-    });
+    const regionalTariffs = tariffs.filter(t => isTariffAvailableInRegion(t.region, userCity));
 
     // Строгое соответствие критериям
     const matchingTariffs = regionalTariffs.filter(t => {
@@ -1854,22 +1978,14 @@
   }
 
   function findBestInternetTariff(user, tariffs = []) {
-    const currentMonthly = Number(user.currentPrice) || 0;
+    const currentMonthly = Math.max(0, Number(user.currentPrice) || 0);
     const currentAnnualTCO = currentMonthly * 12;
     const userSpeed = Number(user.minSpeedMbps) || 100;
     const userCity = user.region || 'Все города ЛНР';
     const needsRouter = Boolean(user.needsRouter);
 
     // Фильтруем тарифы по региону
-    const regionalTariffs = tariffs.filter(t => {
-      return t.region === userCity || 
-             t.region === 'Все города ЛНР' || 
-             userCity === 'Все города ЛНР' ||
-             t.region === 'Все регионы' || 
-             userCity === 'Все регионы' ||
-             t.region === 'Луганская Народная Республика (ЛНР)' ||
-             userCity === 'Луганская Народная Республика (ЛНР)';
-    });
+    const regionalTariffs = tariffs.filter(t => isTariffAvailableInRegion(t.region, userCity));
 
     const matchingTariffs = regionalTariffs.filter(t => {
       return Number(t.speedMbps) >= userSpeed;
@@ -2002,7 +2118,7 @@
     let currentMonthlyTotal = 0;
     const activeItems = [];
     const unusedSet = new Set(unusedIds);
-    const duplicateIdSet = new Set(duplicatesFound.map(d => d.duplicateId));
+    const duplicateIdSet = new Set(duplicatesFound.map(d => d.duplicateId).filter(Boolean));
 
     for (const id of selectedIds) {
       const sub = dbMap.get(id);
@@ -2027,7 +2143,7 @@
     }
 
     for (const item of customItems) {
-      const price = Number(item.price) || 0;
+      const price = Math.max(0, Number(item.price) || 0);
       currentMonthlyTotal += price;
       const isUnused = Boolean(item.unused);
 
@@ -2150,11 +2266,16 @@
 
   function exportEventsToIcs(events = [], filename = 'ne-pereplachivay-reminders.ics') {
     if (events.length === 0) {
-      alert('Нет активных напоминаний для экспорта в календарь.');
+      showToast('Нет активных напоминаний для экспорта в календарь.', 'info');
       return;
     }
 
     const nowStr = formatIcsDate(new Date());
+    const escapeIcsText = (text) => String(text || '')
+      .replace(/\\/g, '\\\\')
+      .replace(/\r?\n/g, '\\n')
+      .replace(/,/g, '\\,')
+      .replace(/;/g, '\\;');
 
     const vEvents = events.map((ev, idx) => {
       const startStr = formatIcsDate(ev.date);
@@ -2162,8 +2283,8 @@
       const endStr = formatIcsDate(endDate);
       const uid = 'reminder-' + Date.now() + '-' + idx + '@nepereplachivay.ru';
 
-      const cleanTitle = (ev.title || 'Напоминание').replace(/,/g, '\\,').replace(/;/g, '\\;');
-      const cleanDesc = (ev.description || '').replace(/\n/g, '\\n').replace(/,/g, '\\,').replace(/;/g, '\\;');
+      const cleanTitle = escapeIcsText(ev.title || 'Напоминание');
+      const cleanDesc = escapeIcsText(ev.description || '');
 
       return [
         'BEGIN:VEVENT',
@@ -2201,7 +2322,8 @@
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
-    URL.revokeObjectURL(url);
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+    showToast('Файл напоминаний (.ics) скачан', 'success');
   }
 
   // ==========================================
@@ -2421,6 +2543,22 @@
   // 8. ИНТЕРФЕЙС И ГЕНЕРАЦИЯ HTML
   // ==========================================
   let wizard;
+  let lastFocusedElement = null;
+  let netRegionManuallyChanged = false;
+  const stepDirty = {
+    mobile: false,
+    internet: false,
+    subscriptions: false,
+    insurance: false
+  };
+
+  function scrollToTopInstant() {
+    try {
+      window.scrollTo({ top: 0, behavior: 'instant' });
+    } catch (_) {
+      window.scrollTo(0, 0);
+    }
+  }
 
   function initTheme() {
     const themeToggleBtn = document.getElementById('theme-toggle');
@@ -2456,12 +2594,35 @@
     ecosystem: 'Экосистема',
     cinema: 'Кино',
     music: 'Музыка',
-    messenger: 'Мессенджер',
+    social: 'Мессенджеры',
+    messenger: 'Мессенджеры',
     books: 'Книги',
     cloud: 'Облако',
     delivery: 'Доставка',
     gaming: 'Игры'
   };
+
+  function updateSubscriptionsSummary() {
+    const countEl = document.getElementById('subs-selected-count');
+    const sumEl = document.getElementById('subs-selected-sum');
+    if (!countEl || !sumEl) return;
+
+    const checkedIds = Array.from(document.querySelectorAll('.sub-check:checked')).map(el => el.dataset.id);
+    const dbMap = new Map(dbSubscriptions.map(s => [s.id, s]));
+    let total = 0;
+    checkedIds.forEach(id => {
+      const sub = dbMap.get(id);
+      if (sub) total += Number(sub.monthlyPrice) || 0;
+    });
+
+    const customItems = (wizard && wizard.state && wizard.state.subscriptions && wizard.state.subscriptions.customItems) || [];
+    customItems.forEach(item => {
+      total += Math.max(0, Number(item.price) || 0);
+    });
+
+    countEl.textContent = String(checkedIds.length + customItems.length);
+    sumEl.textContent = total.toLocaleString('ru-RU') + ' ₽/мес';
+  }
 
   function renderSubscriptionsGrid(selectedIds = [], unusedIds = [], customItems = []) {
     const container = document.getElementById('subscriptions-list');
@@ -2471,36 +2632,44 @@
     const selSet = new Set(selectedIds);
     const unSet = new Set(unusedIds);
 
+    const allFilterBtn = document.querySelector('.sub-filter-btn[data-cat="all"], .sub-filter-btn[data-filter="all"]');
+    if (allFilterBtn) {
+      allFilterBtn.textContent = 'Все (' + dbSubscriptions.length + ')';
+    }
+
     const activeFilterBtn = document.querySelector('.sub-filter-btn.active');
-    const currentFilter = activeFilterBtn ? (activeFilterBtn.getAttribute('data-filter') || 'all') : 'all';
+    const currentFilter = activeFilterBtn
+      ? (activeFilterBtn.getAttribute('data-cat') || activeFilterBtn.getAttribute('data-filter') || 'all')
+      : 'all';
 
     dbSubscriptions.forEach(sub => {
       const isChecked = selSet.has(sub.id);
-      const isUnused = unSet.has(sub.id);
+      const isUnused = isChecked && unSet.has(sub.id);
       const cat = sub.category || 'other';
       const catLabel = SUBSCRIPTION_CATEGORY_LABELS[cat] || 'Сервис';
       const isFilteredOut = (currentFilter !== 'all' && cat !== currentFilter);
+      const safeId = escapeHtml(sub.id);
 
       const card = document.createElement('div');
       card.className = 'sub-item-card ' + (isChecked ? 'active ' : '') + (isFilteredOut ? 'filter-hidden' : '');
       card.id = 'sub-card-' + sub.id;
       card.setAttribute('data-category', cat);
 
-      const descHtml = sub.description ? ('<div class="sub-desc-note">' + sub.description + '</div>') : '';
+      const descHtml = sub.description ? ('<div class="sub-desc-note">' + escapeHtml(sub.description) + '</div>') : '';
 
       card.innerHTML = [
         '<div class="sub-header-row">',
         '  <label class="custom-checkbox-label">',
-        '    <input type="checkbox" class="sub-check" data-id="' + sub.id + '" ' + (isChecked ? 'checked' : '') + '>',
-        '    <span class="sub-name">' + sub.name + '</span>',
-        '    <span class="sub-category-tag sub-cat-' + cat + '">' + catLabel + '</span>',
+        '    <input type="checkbox" class="sub-check" data-id="' + safeId + '" ' + (isChecked ? 'checked' : '') + '>',
+        '    <span class="sub-name">' + escapeHtml(sub.name) + '</span>',
+        '    <span class="sub-category-tag sub-cat-' + escapeHtml(cat) + '">' + escapeHtml(catLabel) + '</span>',
         '  </label>',
-        '  <span class="sub-price-badge">' + sub.monthlyPrice + ' ₽/мес</span>',
+        '  <span class="sub-price-badge">' + (Number(sub.monthlyPrice) || 0) + ' ₽/мес</span>',
         '</div>',
         descHtml,
-        '<div class="sub-footer-row ' + (isChecked ? '' : 'hidden') + '" id="sub-unused-row-' + sub.id + '">',
+        '<div class="sub-footer-row ' + (isChecked ? '' : 'hidden') + '" id="sub-unused-row-' + safeId + '">',
         '  <label class="unused-label">',
-        '    <input type="checkbox" class="sub-unused-check" data-id="' + sub.id + '" ' + (isUnused ? 'checked' : '') + '>',
+        '    <input type="checkbox" class="sub-unused-check" data-id="' + safeId + '" ' + (isUnused ? 'checked' : '') + '>',
         '    <span>Не пользуюсь / забыл(а) отменить</span>',
         '  </label>',
         '</div>'
@@ -2510,6 +2679,7 @@
     });
 
     renderCustomSubscriptionsList(customItems);
+    updateSubscriptionsSummary();
   }
 
   function renderCustomSubscriptionsList(customItems = []) {
@@ -2518,14 +2688,16 @@
     customListEl.innerHTML = '';
 
     customItems.forEach((item, idx) => {
+      const safePrice = Math.max(0, Number(item.price) || 0);
       const el = document.createElement('div');
       el.className = 'custom-sub-pill';
       el.innerHTML = [
-        '<span>' + item.name + ': <strong>' + item.price + ' ₽/мес</strong> ' + (item.unused ? '(не пользуюсь)' : '') + '</span>',
-        '<button type="button" class="btn-remove-custom" data-idx="' + idx + '" title="Удалить">✕</button>'
+        '<span>' + escapeHtml(item.name) + ': <strong>' + safePrice + ' ₽/мес</strong> ' + (item.unused ? '(не пользуюсь)' : '') + '</span>',
+        '<button type="button" class="btn-remove-custom" data-idx="' + idx + '" title="Удалить" aria-label="Удалить подписку ' + escapeHtml(item.name) + '">✕</button>'
       ].join('');
       customListEl.appendChild(el);
     });
+    updateSubscriptionsSummary();
   }
 
   function renderInsuranceSelector(selectedTypes = []) {
@@ -2537,14 +2709,15 @@
 
     dbInsurance.forEach(ins => {
       const isChecked = selSet.has(ins.id);
+      const safeId = escapeHtml(ins.id);
       const card = document.createElement('div');
       card.className = 'insurance-item-card ' + (isChecked ? 'selected' : '');
       card.innerHTML = [
         '<label class="custom-checkbox-label">',
-        '  <input type="checkbox" class="ins-check" data-id="' + ins.id + '" ' + (isChecked ? 'checked' : '') + '>',
+        '  <input type="checkbox" class="ins-check" data-id="' + safeId + '" ' + (isChecked ? 'checked' : '') + '>',
         '  <div>',
-        '    <strong>' + ins.name + '</strong>',
-        '    <p class="ins-desc">' + ins.description + '</p>',
+        '    <strong>' + escapeHtml(ins.name) + '</strong>',
+        '    <p class="ins-desc">' + escapeHtml(ins.description) + '</p>',
         '  </div>',
         '</label>'
       ].join('');
@@ -2560,7 +2733,7 @@
       return {
         operator: document.getElementById('mob-operator')?.value || 'МКС',
         region: document.getElementById('mob-region')?.value || 'Луганск',
-        currentPrice: Number(document.getElementById('mob-price')?.value) || 0,
+        currentPrice: Math.max(0, Number(document.getElementById('mob-price')?.value) || 0),
         gb: isUnlimGb ? 9999 : (Number(document.getElementById('mob-gb')?.value) || 0),
         isUnlimitedGb: isUnlimGb,
         minutes: isUnlimMin ? 9999 : (Number(document.getElementById('mob-min')?.value) || 0),
@@ -2572,13 +2745,16 @@
       return {
         operator: document.getElementById('net-operator')?.value || 'Луганет',
         region: document.getElementById('net-region')?.value || 'Луганск',
-        currentPrice: Number(document.getElementById('net-price')?.value) || 0,
+        currentPrice: Math.max(0, Number(document.getElementById('net-price')?.value) || 0),
         minSpeedMbps: Number(document.getElementById('net-speed')?.value) || 100,
         needsRouter: Boolean(document.getElementById('net-router-rent')?.checked)
       };
     } else if (step === 3) {
       const selectedIds = Array.from(document.querySelectorAll('.sub-check:checked')).map(el => el.dataset.id);
-      const unusedIds = Array.from(document.querySelectorAll('.sub-unused-check:checked')).map(el => el.dataset.id);
+      const selectedSet = new Set(selectedIds);
+      const unusedIds = Array.from(document.querySelectorAll('.sub-unused-check:checked'))
+        .map(el => el.dataset.id)
+        .filter(id => selectedSet.has(id));
       return {
         selectedIds,
         unusedIds,
@@ -2593,64 +2769,45 @@
     return {};
   }
 
+  function syncSliderControl(sliderId, valId, toggleId, isUnlimited, numericValue, defaultValue, maxValue, unit) {
+    const slider = document.getElementById(sliderId);
+    const span = document.getElementById(valId);
+    const toggle = document.getElementById(toggleId);
+    if (!slider || !span || !toggle) return;
+
+    const checked = Boolean(isUnlimited);
+    toggle.checked = checked;
+    const toggleLabel = toggle.closest('.unlimited-toggle');
+    if (toggleLabel) toggleLabel.classList.toggle('active', checked);
+
+    if (checked) {
+      if (!slider.dataset.prevValue) {
+        slider.dataset.prevValue = String(defaultValue);
+      }
+      slider.value = maxValue;
+      slider.disabled = true;
+      span.textContent = 'Безлимит (∞)';
+      span.classList.add('unlimited');
+    } else {
+      const val = (numericValue !== undefined && numericValue !== null && Number(numericValue) < 9999)
+        ? Number(numericValue)
+        : defaultValue;
+      slider.disabled = false;
+      slider.value = val;
+      slider.dataset.prevValue = String(val);
+      span.textContent = slider.value + ' ' + unit;
+      span.classList.remove('unlimited');
+    }
+  }
+
   function syncInputsWithState(state) {
     if (document.getElementById('mob-operator')) document.getElementById('mob-operator').value = state.mobile.operator;
     if (document.getElementById('mob-region')) document.getElementById('mob-region').value = state.mobile.region;
     if (document.getElementById('mob-price')) document.getElementById('mob-price').value = state.mobile.currentPrice;
 
-    const gbSlider = document.getElementById('mob-gb');
-    const gbVal = document.getElementById('mob-gb-val');
-    const gbUnlim = document.getElementById('mob-gb-unlim');
-    if (gbSlider && gbVal && gbUnlim) {
-      gbUnlim.checked = Boolean(state.mobile.isUnlimitedGb);
-      if (gbUnlim.checked) {
-        gbSlider.value = 100;
-        gbSlider.disabled = true;
-        gbVal.textContent = 'Безлимит (∞)';
-        gbVal.classList.add('unlimited');
-      } else {
-        gbSlider.disabled = false;
-        gbSlider.value = state.mobile.gb || 25;
-        gbVal.textContent = gbSlider.value + ' ГБ';
-        gbVal.classList.remove('unlimited');
-      }
-    }
-
-    const minSlider = document.getElementById('mob-min');
-    const minVal = document.getElementById('mob-min-val');
-    const minUnlim = document.getElementById('mob-min-unlim');
-    if (minSlider && minVal && minUnlim) {
-      minUnlim.checked = Boolean(state.mobile.isUnlimitedMinutes);
-      if (minUnlim.checked) {
-        minSlider.value = 1200;
-        minSlider.disabled = true;
-        minVal.textContent = 'Безлимит (∞)';
-        minVal.classList.add('unlimited');
-      } else {
-        minSlider.disabled = false;
-        minSlider.value = state.mobile.minutes || 400;
-        minVal.textContent = minSlider.value + ' мин';
-        minVal.classList.remove('unlimited');
-      }
-    }
-
-    const smsSlider = document.getElementById('mob-sms');
-    const smsVal = document.getElementById('mob-sms-val');
-    const smsUnlim = document.getElementById('mob-sms-unlim');
-    if (smsSlider && smsVal && smsUnlim) {
-      smsUnlim.checked = Boolean(state.mobile.isUnlimitedSms);
-      if (smsUnlim.checked) {
-        smsSlider.value = 100;
-        smsSlider.disabled = true;
-        smsVal.textContent = 'Безлимит (∞)';
-        smsVal.classList.add('unlimited');
-      } else {
-        smsSlider.disabled = false;
-        smsSlider.value = state.mobile.sms || 0;
-        smsVal.textContent = smsSlider.value + ' шт';
-        smsVal.classList.remove('unlimited');
-      }
-    }
+    syncSliderControl('mob-gb', 'mob-gb-val', 'mob-gb-unlim', state.mobile.isUnlimitedGb, state.mobile.gb, 25, 100, 'ГБ');
+    syncSliderControl('mob-min', 'mob-min-val', 'mob-min-unlim', state.mobile.isUnlimitedMinutes, state.mobile.minutes, 400, 1200, 'мин');
+    syncSliderControl('mob-sms', 'mob-sms-val', 'mob-sms-unlim', state.mobile.isUnlimitedSms, state.mobile.sms, 0, 100, 'шт');
 
     if (document.getElementById('net-operator')) document.getElementById('net-operator').value = state.internet.operator;
     if (document.getElementById('net-region')) document.getElementById('net-region').value = state.internet.region;
@@ -2688,7 +2845,25 @@
       progressBar.style.width = ((stepIndex / totalSteps) * 100) + '%';
     }
 
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    const stepCats = { 1: 'mobile', 2: 'internet', 3: 'subscriptions', 4: 'insurance' };
+    document.querySelectorAll('.wizard-step-pill').forEach(pill => {
+      const pillStep = Number(pill.dataset.step);
+      const cat = stepCats[pillStep];
+      const isSkipped = Boolean(wizard && wizard.state[cat] && wizard.state[cat].skipped);
+      const isActive = pillStep === stepIndex;
+      const isDone = pillStep < stepIndex && !isSkipped;
+
+      pill.classList.toggle('active', isActive);
+      pill.classList.toggle('done', !isActive && isDone);
+      pill.classList.toggle('skipped', !isActive && isSkipped);
+      if (isActive) {
+        pill.setAttribute('aria-current', 'step');
+      } else {
+        pill.removeAttribute('aria-current');
+      }
+    });
+
+    scrollToTopInstant();
   }
 
   function renderReport(state) {
@@ -2720,15 +2895,32 @@
       });
     }
 
+    const hasInsurance = !state.insurance.skipped && state.insurance.selectedTypes && state.insurance.selectedTypes.length > 0;
+    const isCompletelyEmpty = !mobileResult && !internetResult && !subsResult && !hasInsurance;
+
+    const emptyStateEl = document.getElementById('report-empty-state');
+    const heroCardEl = document.querySelector('.report-hero-card');
+    const exportBtnEl = document.getElementById('btn-export-ics');
+    const printBtnEl = document.getElementById('btn-print-report');
+    const restartBtnEl = document.getElementById('btn-restart');
+
+    if (emptyStateEl) emptyStateEl.classList.toggle('hidden', !isCompletelyEmpty);
+    if (heroCardEl) heroCardEl.classList.toggle('hidden', isCompletelyEmpty);
+    if (exportBtnEl) exportBtnEl.classList.toggle('hidden', isCompletelyEmpty);
+    if (printBtnEl) printBtnEl.classList.toggle('hidden', isCompletelyEmpty);
+    if (restartBtnEl) restartBtnEl.classList.toggle('hidden', isCompletelyEmpty);
+
     const grandTotal = calculateGrandTotal({ mobileResult, internetResult, subsResult });
 
-    document.getElementById('grand-current-month').textContent = grandTotal.currentMonthlyGrand + ' ₽';
-    document.getElementById('grand-target-month').textContent = grandTotal.optimizedMonthlyGrand + ' ₽';
+    document.getElementById('grand-current-month').textContent = grandTotal.currentMonthlyGrand.toLocaleString('ru-RU') + ' ₽';
+    document.getElementById('grand-target-month').textContent = grandTotal.optimizedMonthlyGrand.toLocaleString('ru-RU') + ' ₽';
     document.getElementById('grand-savings-year').textContent = grandTotal.totalAnnualSavings.toLocaleString('ru-RU') + ' ₽';
 
     const bannerNote = document.getElementById('grand-banner-note');
     if (grandTotal.hasAnySavings) {
       bannerNote.innerHTML = 'Вы можете сохранить до <strong>' + grandTotal.totalMonthlySavings.toLocaleString('ru-RU') + ' ₽ в месяц</strong> без потери качества связи и контента!';
+    } else if (!mobileResult && !internetResult && !subsResult && hasInsurance) {
+      bannerNote.innerHTML = '<strong>Справочный гид готов:</strong> Ниже собраны официальные инструменты и чек-листы по выбранным видам страхования.';
     } else {
       bannerNote.innerHTML = '<strong>Отличный результат:</strong> Ваши текущие тарифы уже одни из самых выгодных на рынке. Ниже — подсказки, как не переплатить при их продлении.';
     }
@@ -2758,7 +2950,7 @@
     }
 
     const insCardContainer = document.getElementById('report-insurance-card');
-    if (!state.insurance.skipped && state.insurance.selectedTypes && state.insurance.selectedTypes.length > 0) {
+    if (hasInsurance) {
       insCardContainer.classList.remove('hidden');
       renderInsuranceReportCard(insCardContainer, state.insurance.selectedTypes);
     } else {
@@ -2766,7 +2958,7 @@
     }
 
     setupIcsExportButton(mobileResult, internetResult, subsResult);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    scrollToTopInstant();
   }
 
   function buildTariffCardHtml(item, isFeatured = false) {
@@ -2775,31 +2967,31 @@
     const isUnlimGb = Boolean(t.isUnlimitedGb) || Number(t.includedGb) >= 999;
     const isUnlimMin = Boolean(t.isUnlimitedMinutes) || Number(t.includedMinutes) >= 1500;
     
-    const gbLabel = isUnlimGb ? '<strong>Безлимитный интернет (4G)</strong>' : (t.includedGb + ' ГБ интернета');
-    const minLabel = isUnlimMin ? ('Безлимит внутри сети + ' + t.includedMinutes + ' мин по РФ') : (t.includedMinutes + ' мин звонков');
+    const gbLabel = isUnlimGb ? '<strong>Безлимитный интернет (4G)</strong>' : (Number(t.includedGb) + ' ГБ интернета');
+    const minLabel = isUnlimMin ? ('Безлимит внутри сети + ' + Number(t.includedMinutes) + ' мин по РФ') : (Number(t.includedMinutes) + ' мин звонков');
     const appsItem = (Array.isArray(t.unlimitedApps) && t.unlimitedApps.length > 0)
-      ? ('<li>Безлимит: ' + t.unlimitedApps.slice(0, 3).join(', ') + '</li>')
+      ? ('<li>Безлимит: ' + escapeHtml(t.unlimitedApps.slice(0, 3).join(', ')) + '</li>')
       : '';
     const promoPill = (t.promoDurationMonths > 0 && t.promoMonthlyPrice)
-      ? ('<div class="promo-pill">Акция: ' + t.promoMonthlyPrice + ' ₽ первые ' + t.promoDurationMonths + ' мес.</div>')
+      ? ('<div class="promo-pill">Акция: ' + Number(t.promoMonthlyPrice) + ' ₽ первые ' + Number(t.promoDurationMonths) + ' мес.</div>')
       : '';
     const eridHtml = (t.isPartner && t.adErid)
-      ? ('<span class="ad-label" title="Реклама. Токен erid: ' + t.adErid + '">erid: ' + t.adErid + '</span>')
+      ? ('<span class="ad-label" title="Реклама. Токен erid: ' + escapeHtml(t.adErid) + '">erid: ' + escapeHtml(t.adErid) + '</span>')
       : '';
 
     return [
       '<div class="closest-card ' + (isFeatured ? 'featured' : '') + '">',
-      '  <div class="closest-card-op">' + t.operator + ' ' + eridHtml + '</div>',
-      '  <div class="closest-card-name">' + t.tariffName + '</div>',
-      '  <div class="closest-card-price">' + effPrice + ' ₽/мес <small class="effective-hint">(в среднем)</small></div>',
+      '  <div class="closest-card-op">' + escapeHtml(t.operator) + ' ' + eridHtml + '</div>',
+      '  <div class="closest-card-name">' + escapeHtml(t.tariffName) + '</div>',
+      '  <div class="closest-card-price">' + Number(effPrice).toLocaleString('ru-RU') + ' ₽/мес <small class="effective-hint">(в среднем)</small></div>',
       '  ' + promoPill,
       '  <ul class="closest-card-list">',
       '    <li>' + gbLabel + '</li>',
       '    <li>' + minLabel + '</li>',
       '    ' + appsItem,
-      '    <li>Плата за подключение (MNP): ' + (t.setupFee || 0) + ' ₽</li>',
+      '    <li>Плата за подключение (MNP): ' + (Number(t.setupFee) || 0) + ' ₽</li>',
       '  </ul>',
-      '  <a href="' + t.officialUrl + '" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-sm">Перейти на сайт ' + t.operator + ' ↗</a>',
+      '  <a href="' + safeHref(t.officialUrl) + '" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-sm">Перейти на сайт ' + escapeHtml(t.operator) + ' ↗</a>',
       '</div>'
     ].join('\n');
   }
@@ -2835,7 +3027,7 @@
 
       bodyHtml = [
         '<div class="optimal-badge">Ваш тариф оптимален</div>',
-        '<p class="card-desc">Вы платите <strong>' + currentMonthly + ' ₽/мес</strong>. Достойных альтернатив с таким пакетом минут и гигабайт дешевле мы не нашли.</p>',
+        '<p class="card-desc">Вы платите <strong>' + Number(currentMonthly).toLocaleString('ru-RU') + ' ₽/мес</strong>. Достойных альтернатив с таким пакетом минут и гигабайт дешевле мы не нашли.</p>',
         alternativesHtml,
         '<div class="action-buttons-row">',
         '  <button type="button" class="btn btn-secondary btn-retention" data-type="mobile">Скрипт звонка оператору для скидки 30%</button>',
@@ -2843,15 +3035,21 @@
       ].join('');
     } else {
       const isPartner = bestTariff.isPartner;
-      const eridHtml = isPartner ? '<span class="ad-label" title="Реклама. Токен erid: ' + bestTariff.adErid + '">Реклама erid: ' + bestTariff.adErid + '</span>' : '';
+      const eridHtml = (isPartner && bestTariff.adErid) ? '<span class="ad-label" title="Реклама. Токен erid: ' + escapeHtml(bestTariff.adErid) + '">Реклама erid: ' + escapeHtml(bestTariff.adErid) + '</span>' : '';
       const promoNote = bestTariff.promoDurationMonths > 0 
-        ? '<span class="promo-pill">Акция: ' + bestTariff.promoMonthlyPrice + ' ₽ первые ' + bestTariff.promoDurationMonths + ' мес., затем ' + bestTariff.monthlyPrice + ' ₽</span>'
+        ? '<span class="promo-pill">Акция: ' + Number(bestTariff.promoMonthlyPrice) + ' ₽ первые ' + Number(bestTariff.promoDurationMonths) + ' мес., затем ' + Number(bestTariff.monthlyPrice) + ' ₽</span>'
         : '';
 
-      const gbText = (bestTariff.isUnlimitedGb || bestTariff.includedGb >= 999) ? 'Безлимитный интернет' : bestTariff.includedGb + ' ГБ';
-      const minText = (bestTariff.isUnlimitedMinutes || bestTariff.includedMinutes >= 1500) ? 'Безлимит внутри сети + ' + bestTariff.includedMinutes + ' мин' : bestTariff.includedMinutes + ' мин';
-      const userGbText = userMob.isUnlimitedGb ? 'Безлимитный интернет' : userMob.gb + ' ГБ';
-      const userMinText = userMob.isUnlimitedMinutes ? 'Безлимитные звонки' : userMob.minutes + ' минут';
+      const gbText = (bestTariff.isUnlimitedGb || bestTariff.includedGb >= 999) ? 'Безлимитный интернет' : Number(bestTariff.includedGb) + ' ГБ';
+      const minText = (bestTariff.isUnlimitedMinutes || bestTariff.includedMinutes >= 1500) ? 'Безлимит внутри сети + ' + Number(bestTariff.includedMinutes) + ' мин' : Number(bestTariff.includedMinutes) + ' мин';
+      const userGbText = userMob.isUnlimitedGb ? 'Безлимитный интернет' : Number(userMob.gb) + ' ГБ';
+      const userMinText = userMob.isUnlimitedMinutes ? 'Безлимитные звонки' : Number(userMob.minutes) + ' минут';
+      const showSms = userMob.isUnlimitedSms || Number(userMob.sms) > 0;
+      const userSmsLi = showSms ? ('<li>' + (userMob.isUnlimitedSms ? 'Безлимитные СМС' : (Number(userMob.sms) + ' СМС')) + '</li>') : '';
+      const bestSmsLi = showSms ? ('<li>' + Number(bestTariff.includedSms || 0) + ' СМС в пакете</li>') : '';
+      const bestAppsLi = (Array.isArray(bestTariff.unlimitedApps) && bestTariff.unlimitedApps.length > 0)
+        ? ('<li>Безлимит: ' + escapeHtml(bestTariff.unlimitedApps.slice(0, 4).join(', ')) + '</li>')
+        : '';
 
       let otherOptionsHtml = '';
       if (otherOptions && otherOptions.length > 0) {
@@ -2865,27 +3063,30 @@
       }
 
       bodyHtml = [
-        '<div class="savings-highlight">Экономия: <strong>' + savingsYear.toLocaleString('ru-RU') + ' ₽ в год</strong> (~' + savingsMonth + ' ₽/мес)</div>',
+        '<div class="savings-highlight">Экономия: <strong>' + savingsYear.toLocaleString('ru-RU') + ' ₽ в год</strong> (~' + savingsMonth.toLocaleString('ru-RU') + ' ₽/мес)</div>',
         '<div class="comparison-grid">',
         '  <div class="comp-col current">',
-        '    <div class="comp-label">Сейчас у вас (' + userMob.operator + ')</div>',
-        '    <div class="comp-price">' + currentMonthly + ' ₽/мес</div>',
+        '    <div class="comp-label">Сейчас у вас (' + escapeHtml(userMob.operator) + ')</div>',
+        '    <div class="comp-price">' + Number(currentMonthly).toLocaleString('ru-RU') + ' ₽/мес</div>',
         '    <ul class="comp-list">',
         '      <li>' + userGbText + '</li>',
         '      <li>' + userMinText + '</li>',
+        '      ' + userSmsLi,
         '    </ul>',
         '  </div>',
         '  <div class="comp-col target">',
-        '    <div class="comp-label">Выгодная альтернатива: <strong>' + bestTariff.operator + '</strong></div>',
-        '    <div class="comp-tariff-name">' + bestTariff.tariffName + ' ' + eridHtml + '</div>',
-        '    <div class="comp-price">' + effectiveMonthly + ' ₽/мес <small class="effective-hint">(средняя за 12 мес. с учётом подключения)</small></div>',
+        '    <div class="comp-label">Выгодная альтернатива: <strong>' + escapeHtml(bestTariff.operator) + '</strong></div>',
+        '    <div class="comp-tariff-name">' + escapeHtml(bestTariff.tariffName) + ' ' + eridHtml + '</div>',
+        '    <div class="comp-price">' + Number(effectiveMonthly).toLocaleString('ru-RU') + ' ₽/мес <small class="effective-hint">(средняя за 12 мес. с учётом подключения)</small></div>',
         '    ' + promoNote,
         '    <ul class="comp-list">',
         '      <li>' + gbText + '</li>',
         '      <li>' + minText + '</li>',
-        '      <li>Плата за переход (MNP): ' + (bestTariff.setupFee || 0) + ' ₽</li>',
+        '      ' + bestSmsLi,
+        '      ' + bestAppsLi,
+        '      <li>Плата за переход (MNP): ' + (Number(bestTariff.setupFee) || 0) + ' ₽</li>',
         '    </ul>',
-        '    <a href="' + bestTariff.officialUrl + '" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-sm">Перейти на сайт ' + bestTariff.operator + ' ↗</a>',
+        '    <a href="' + safeHref(bestTariff.officialUrl) + '" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-sm">Перейти на сайт ' + escapeHtml(bestTariff.operator) + ' ↗</a>',
         '  </div>',
         '</div>',
         otherOptionsHtml,
@@ -2902,26 +3103,28 @@
   function buildInternetCardHtml(item, isFeatured = false, userNet = {}) {
     const t = item.tariff || item;
     const effPrice = item.effectiveMonthly || t.monthlyPrice;
-    const routerText = (userNet && userNet.needsRouter) ? ('Аренда роутера: ' + (t.routerRentMonthly || 0) + ' ₽/мес') : 'Без роутера';
+    const routerText = (userNet && userNet.needsRouter) ? ('Аренда роутера: ' + (Number(t.routerRentMonthly) || 0) + ' ₽/мес') : 'Без роутера';
+    const tvLi = t.hasTv ? '<li>Интерактивное ТВ включено</li>' : '';
     const promoPill = (t.promoDurationMonths > 0 && t.promoMonthlyPrice)
-      ? ('<div class="promo-pill">Акция: ' + t.promoMonthlyPrice + ' ₽ первые ' + t.promoDurationMonths + ' мес.</div>')
+      ? ('<div class="promo-pill">Акция: ' + Number(t.promoMonthlyPrice) + ' ₽ первые ' + Number(t.promoDurationMonths) + ' мес.</div>')
       : '';
     const eridHtml = (t.isPartner && t.adErid)
-      ? ('<span class="ad-label" title="Реклама. Токен erid: ' + t.adErid + '">erid: ' + t.adErid + '</span>')
+      ? ('<span class="ad-label" title="Реклама. Токен erid: ' + escapeHtml(t.adErid) + '">erid: ' + escapeHtml(t.adErid) + '</span>')
       : '';
 
     return [
       '<div class="closest-card ' + (isFeatured ? 'featured' : '') + '">',
-      '  <div class="closest-card-op">' + t.operator + ' ' + eridHtml + '</div>',
-      '  <div class="closest-card-name">' + t.tariffName + '</div>',
-      '  <div class="closest-card-price">' + effPrice + ' ₽/мес <small class="effective-hint">(в среднем)</small></div>',
+      '  <div class="closest-card-op">' + escapeHtml(t.operator) + ' ' + eridHtml + '</div>',
+      '  <div class="closest-card-name">' + escapeHtml(t.tariffName) + '</div>',
+      '  <div class="closest-card-price">' + Number(effPrice).toLocaleString('ru-RU') + ' ₽/мес <small class="effective-hint">(в среднем)</small></div>',
       '  ' + promoPill,
       '  <ul class="closest-card-list">',
-      '    <li>Скорость: <strong>' + t.speedMbps + ' Мбит/с</strong> (' + (t.technology || 'GPON/Ethernet') + ')</li>',
+      '    <li>Скорость: <strong>' + Number(t.speedMbps) + ' Мбит/с</strong> (' + escapeHtml(t.technology || 'GPON/Ethernet') + ')</li>',
+      '    ' + tvLi,
       '    <li>' + routerText + '</li>',
-      '    <li>Подключение: ' + (t.setupFee || 0) + ' ₽</li>',
+      '    <li>Подключение: ' + (Number(t.setupFee) || 0) + ' ₽</li>',
       '  </ul>',
-      '  <a href="' + t.officialUrl + '" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-sm">Перейти на сайт ' + t.operator + ' ↗</a>',
+      '  <a href="' + safeHref(t.officialUrl) + '" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-sm">Перейти на сайт ' + escapeHtml(t.operator) + ' ↗</a>',
       '</div>'
     ].join('\n');
   }
@@ -2957,7 +3160,7 @@
 
       bodyHtml = [
         '<div class="optimal-badge">Ваш тариф интернета оптимален</div>',
-        '<p class="card-desc">Вы платите <strong>' + currentMonthly + ' ₽/мес</strong>. Для выбранной скорости это отличная рыночная ставка среди провайдеров вашего региона.</p>',
+        '<p class="card-desc">Вы платите <strong>' + Number(currentMonthly).toLocaleString('ru-RU') + ' ₽/мес</strong>. Для выбранной скорости это отличная рыночная ставка среди провайдеров вашего региона.</p>',
         alternativesHtml,
         '<div class="action-buttons-row">',
         '  <button type="button" class="btn btn-secondary btn-retention" data-type="internet">Скрипт диалога с провайдером для скидки</button>',
@@ -2965,8 +3168,12 @@
       ].join('');
     } else {
       const isPartner = bestTariff.isPartner;
-      const eridHtml = isPartner ? '<span class="ad-label" title="Реклама. Токен erid: ' + bestTariff.adErid + '">Реклама erid: ' + bestTariff.adErid + '</span>' : '';
-      const routerText = userNet.needsRouter ? 'Включает аренду роутера (' + bestTariff.routerRentMonthly + ' ₽/мес)' : 'Со своим роутером';
+      const eridHtml = (isPartner && bestTariff.adErid) ? '<span class="ad-label" title="Реклама. Токен erid: ' + escapeHtml(bestTariff.adErid) + '">Реклама erid: ' + escapeHtml(bestTariff.adErid) + '</span>' : '';
+      const promoNote = bestTariff.promoDurationMonths > 0 && bestTariff.promoMonthlyPrice
+        ? '<span class="promo-pill">Акция: ' + Number(bestTariff.promoMonthlyPrice) + ' ₽ первые ' + Number(bestTariff.promoDurationMonths) + ' мес., затем ' + Number(bestTariff.monthlyPrice) + ' ₽</span>'
+        : '';
+      const tvLi = bestTariff.hasTv ? '<li>Интерактивное ТВ включено в тариф</li>' : '';
+      const routerText = userNet.needsRouter ? 'Включает аренду роутера (' + Number(bestTariff.routerRentMonthly || 0) + ' ₽/мес)' : 'Со своим роутером';
 
       let otherOptionsHtml = '';
       if (otherOptions && otherOptions.length > 0) {
@@ -2980,25 +3187,27 @@
       }
 
       bodyHtml = [
-        '<div class="savings-highlight">Экономия: <strong>' + savingsYear.toLocaleString('ru-RU') + ' ₽ в год</strong> (~' + savingsMonth + ' ₽/мес)</div>',
+        '<div class="savings-highlight">Экономия: <strong>' + savingsYear.toLocaleString('ru-RU') + ' ₽ в год</strong> (~' + savingsMonth.toLocaleString('ru-RU') + ' ₽/мес)</div>',
         '<div class="comparison-grid">',
         '  <div class="comp-col current">',
-        '    <div class="comp-label">Сейчас (' + userNet.operator + ')</div>',
-        '    <div class="comp-price">' + currentMonthly + ' ₽/мес</div>',
+        '    <div class="comp-label">Сейчас (' + escapeHtml(userNet.operator) + ')</div>',
+        '    <div class="comp-price">' + Number(currentMonthly).toLocaleString('ru-RU') + ' ₽/мес</div>',
         '    <ul class="comp-list">',
-        '      <li>Скорость: от ' + userNet.minSpeedMbps + ' Мбит/с</li>',
+        '      <li>Скорость: от ' + Number(userNet.minSpeedMbps) + ' Мбит/с</li>',
         '    </ul>',
         '  </div>',
         '  <div class="comp-col target">',
-        '    <div class="comp-label">Альтернатива: <strong>' + bestTariff.operator + '</strong></div>',
-        '    <div class="comp-tariff-name">' + bestTariff.tariffName + ' ' + eridHtml + '</div>',
-        '    <div class="comp-price">' + effectiveMonthly + ' ₽/мес <small class="effective-hint">(с учётом акций за 12 мес)</small></div>',
+        '    <div class="comp-label">Альтернатива: <strong>' + escapeHtml(bestTariff.operator) + '</strong></div>',
+        '    <div class="comp-tariff-name">' + escapeHtml(bestTariff.tariffName) + ' ' + eridHtml + '</div>',
+        '    <div class="comp-price">' + Number(effectiveMonthly).toLocaleString('ru-RU') + ' ₽/мес <small class="effective-hint">(с учётом акций за 12 мес)</small></div>',
+        '    ' + promoNote,
         '    <ul class="comp-list">',
-        '      <li>Скорость: ' + bestTariff.speedMbps + ' Мбит/с (' + (bestTariff.technology || 'GPON/Ethernet') + ')</li>',
+        '      <li>Скорость: ' + Number(bestTariff.speedMbps) + ' Мбит/с (' + escapeHtml(bestTariff.technology || 'GPON/Ethernet') + ')</li>',
+        '      ' + tvLi,
         '      <li>' + routerText + '</li>',
-        '      <li>Плата за подключение: ' + (bestTariff.setupFee || 0) + ' ₽</li>',
+        '      <li>Плата за подключение: ' + (Number(bestTariff.setupFee) || 0) + ' ₽</li>',
         '    </ul>',
-        '    <a href="' + bestTariff.officialUrl + '" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-sm">Сайт провайдера ↗</a>',
+        '    <a href="' + safeHref(bestTariff.officialUrl) + '" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-sm">Сайт провайдера ↗</a>',
         '  </div>',
         '</div>',
         otherOptionsHtml,
@@ -3019,7 +3228,7 @@
         '<div class="duplicates-alert-box">',
         '  <h4>Обнаружены дубликаты и лишние подписки:</h4>',
         '  <ul class="duplicates-list">',
-        duplicates.map(d => '<li><strong>' + (d.duplicateName || 'Пересечение') + ':</strong> ' + d.message + (d.monthlySavings ? ' <span class="saving-tag">+' + d.monthlySavings + ' ₽/мес</span>' : '') + '</li>').join(''),
+        duplicates.map(d => '<li><strong>' + escapeHtml(d.duplicateName || 'Пересечение') + ':</strong> ' + escapeHtml(d.message) + (d.monthlySavings ? ' <span class="saving-tag">+' + Number(d.monthlySavings) + ' ₽/мес</span>' : '') + '</li>').join(''),
         '  </ul>',
         '</div>'
       ].join('');
@@ -3032,7 +3241,7 @@
         '<div class="unused-subs-box">',
         '  <h4>Подписки, которыми вы не пользуетесь (рекомендуется отменить):</h4>',
         '  <ul class="subs-action-list">',
-        unusedItems.map(item => '<li><span>' + item.name + ' (' + item.monthlyPrice + ' ₽/мес)</span>' + (item.cancelUrl ? ' <a href="' + item.cancelUrl + '" target="_blank" rel="noopener noreferrer" class="btn-cancel-link">Отключить ↗</a>' : '') + '</li>').join(''),
+        unusedItems.map(item => '<li><span>' + escapeHtml(item.name) + ' (' + Number(item.monthlyPrice) + ' ₽/мес)</span>' + (item.cancelUrl ? ' <a href="' + safeHref(item.cancelUrl) + '" target="_blank" rel="noopener noreferrer" class="btn-cancel-link">Отключить ↗</a>' : '') + '</li>').join(''),
         '  </ul>',
         '</div>'
       ].join('');
@@ -3044,7 +3253,7 @@
         '<div class="annual-subs-box">',
         '  <h4>Выгода при переходе на годовую оплату (для постоянных сервисов):</h4>',
         '  <ul>',
-        subsResult.annualPlanRecommendations.map(rec => '<li>«' + rec.name + '» — экономия <strong>' + rec.diffYear + ' ₽ в год</strong> при переходе на ежегодную оплату (выходит ' + rec.monthlyEquivalent + ' ₽/мес).</li>').join(''),
+        subsResult.annualPlanRecommendations.map(rec => '<li>«' + escapeHtml(rec.name) + '» — экономия <strong>' + Number(rec.diffYear).toLocaleString('ru-RU') + ' ₽ в год</strong> при переходе на ежегодную оплату (выходит ' + Number(rec.monthlyEquivalent) + ' ₽/мес).</li>').join(''),
         '  </ul>',
         '</div>'
       ].join('');
@@ -3068,18 +3277,18 @@
 
     const itemsHtml = selectedGuides.map(guide => [
       '<div class="insurance-guide-block">',
-      '  <h4>' + guide.name + '</h4>',
-      '  <p class="ins-desc">' + guide.description + '</p>',
+      '  <h4>' + escapeHtml(guide.name) + '</h4>',
+      '  <p class="ins-desc">' + escapeHtml(guide.description) + '</p>',
       '  <div class="ins-checklist">',
       '    <strong>На что обратить внимание:</strong>',
       '    <ul>',
-      guide.whatToWatch.map(w => '<li>' + w + '</li>').join(''),
+      guide.whatToWatch.map(w => '<li>' + escapeHtml(w) + '</li>').join(''),
       '    </ul>',
       '  </div>',
       '  <div class="ins-tools">',
       '    <strong>Официальные бесплатные калькуляторы и реестры:</strong>',
       '    <div class="tools-pills">',
-      guide.officialTools.map(t => '<a href="' + t.url + '" target="_blank" rel="noopener noreferrer" class="tool-pill">' + t.name + ' ↗</a>').join(''),
+      guide.officialTools.map(t => '<a href="' + safeHref(t.url) + '" target="_blank" rel="noopener noreferrer" class="tool-pill">' + escapeHtml(t.name) + ' ↗</a>').join(''),
       '    </div>',
       '  </div>',
       '</div>'
@@ -3142,17 +3351,27 @@
     const modalBody = document.getElementById('modal-body');
     if (!modal || !modalTitle || !modalBody) return;
 
+    lastFocusedElement = document.activeElement;
     modalTitle.textContent = title;
     modalBody.innerHTML = bodyHtml;
     modal.classList.remove('hidden');
     document.body.style.overflow = 'hidden';
+
+    const closeBtn = document.getElementById('modal-close-btn');
+    if (closeBtn) {
+      requestAnimationFrame(() => closeBtn.focus());
+    }
   }
 
   function closeModal() {
     const modal = document.getElementById('info-modal');
-    if (modal) {
+    if (modal && !modal.classList.contains('hidden')) {
       modal.classList.add('hidden');
       document.body.style.overflow = '';
+      if (lastFocusedElement && typeof lastFocusedElement.focus === 'function') {
+        lastFocusedElement.focus();
+      }
+      lastFocusedElement = null;
     }
   }
 
@@ -3167,14 +3386,6 @@
 
     const canonicalTab = (tabId === 'how-we-earn') ? 'data-security' : tabId;
 
-    const views = {
-      calculator: calcView,
-      'how-we-calculate': howCalcView,
-      'data-security': securityView,
-      'how-we-earn': securityView,
-      privacy: privacyView
-    };
-
     if (calcView) calcView.classList.toggle('hidden', canonicalTab !== 'calculator');
     if (howCalcView) howCalcView.classList.toggle('hidden', canonicalTab !== 'how-we-calculate');
     if (securityView) securityView.classList.toggle('hidden', canonicalTab !== 'data-security');
@@ -3186,46 +3397,125 @@
       link.classList.toggle('active', isActive);
     });
 
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    scrollToTopInstant();
   }
 
   // ==========================================
   // 11. СЛУШАТЕЛИ СОБЫТИЙ
   // ==========================================
   function setupEventListeners() {
-    // Навигация мастера (Вперёд, Назад, Пропустить)
+    const stepCats = { 1: 'mobile', 2: 'internet', 3: 'subscriptions', 4: 'insurance' };
+
+    const syncCityIfUnchanged = () => {
+      if (!netRegionManuallyChanged && wizard && wizard.state && wizard.state.mobile) {
+        wizard.state.internet.region = wizard.state.mobile.region;
+        const netRegionEl = document.getElementById('net-region');
+        if (netRegionEl) netRegionEl.value = wizard.state.mobile.region;
+      }
+    };
+
+    const saveCurrentStepBeforeLeave = (forceUnskip = false) => {
+      const step = wizard.currentStep;
+      const cat = stepCats[step];
+      if (!cat) return;
+      const inputs = readCurrentStepInputs(step);
+      if (!forceUnskip && wizard.state[cat].skipped && !stepDirty[cat]) {
+        wizard.state[cat] = { ...wizard.state[cat], ...inputs, skipped: true };
+      } else {
+        wizard.updateCategoryState(cat, inputs);
+      }
+      if (step === 1) syncCityIfUnchanged();
+    };
+
+    // Отслеживание изменений на каждом шаге и синхронизация города
+    [1, 2, 3, 4].forEach(num => {
+      const stepEl = document.getElementById('step-' + num);
+      if (!stepEl) return;
+      const cat = stepCats[num];
+      const markDirty = () => { stepDirty[cat] = true; };
+      stepEl.addEventListener('input', markDirty);
+      stepEl.addEventListener('change', markDirty);
+    });
+
+    const mobRegionEl = document.getElementById('mob-region');
+    if (mobRegionEl) {
+      mobRegionEl.addEventListener('change', (e) => {
+        if (!netRegionManuallyChanged && wizard && wizard.state) {
+          wizard.state.internet.region = e.target.value;
+          const netRegionEl = document.getElementById('net-region');
+          if (netRegionEl) netRegionEl.value = e.target.value;
+        }
+      });
+    }
+
+    const netRegionEl = document.getElementById('net-region');
+    if (netRegionEl) {
+      netRegionEl.addEventListener('change', () => {
+        netRegionManuallyChanged = true;
+      });
+    }
+
+    // Навигация мастера (Вперёд, Назад, Пропустить, Кликабельный степпер)
     document.querySelectorAll('.btn-wizard-next').forEach(btn => {
       btn.addEventListener('click', () => {
-        const inputs = readCurrentStepInputs(wizard.currentStep);
-        const stepCats = { 1: 'mobile', 2: 'internet', 3: 'subscriptions', 4: 'insurance' };
-        wizard.updateCategoryState(stepCats[wizard.currentStep], inputs);
+        saveCurrentStepBeforeLeave(true);
         wizard.next();
       });
     });
 
     document.querySelectorAll('.btn-wizard-prev').forEach(btn => {
-      btn.addEventListener('click', () => wizard.prev());
+      btn.addEventListener('click', () => {
+        saveCurrentStepBeforeLeave(false);
+        wizard.prev();
+      });
     });
 
     document.querySelectorAll('.btn-wizard-skip').forEach(btn => {
-      btn.addEventListener('click', () => wizard.skipCurrentCategory());
+      btn.addEventListener('click', () => {
+        const cat = stepCats[wizard.currentStep];
+        if (cat) stepDirty[cat] = false;
+        wizard.skipCurrentCategory();
+      });
     });
 
-    // Слайдеры с поддержкой выбора безлимита
-    const bindRangeWithUnlimited = (sliderId, spanId, toggleId, unit, maxVal) => {
+    document.querySelectorAll('.wizard-step-pill').forEach(pill => {
+      pill.addEventListener('click', () => {
+        const targetStep = Number(pill.dataset.step);
+        if (!targetStep || targetStep === wizard.currentStep) return;
+        saveCurrentStepBeforeLeave(false);
+        wizard.goToStep(targetStep);
+      });
+    });
+
+    // Слайдеры с поддержкой выбора безлимита (сохранение предыдущего значения)
+    const bindRangeWithUnlimited = (sliderId, spanId, toggleId, unit, maxVal, defaultVal) => {
       const slider = document.getElementById(sliderId);
       const span = document.getElementById(spanId);
       const toggle = document.getElementById(toggleId);
       if (!slider || !span) return;
 
+      if (!slider.dataset.prevValue) {
+        slider.dataset.prevValue = String(defaultVal);
+      }
+
       const updateState = (isUnlim) => {
-        if (toggle) toggle.checked = isUnlim;
-        slider.disabled = isUnlim;
+        if (toggle) {
+          toggle.checked = isUnlim;
+          const toggleLabel = toggle.closest('.unlimited-toggle');
+          if (toggleLabel) toggleLabel.classList.toggle('active', isUnlim);
+        }
         if (isUnlim) {
+          if (!slider.disabled) {
+            slider.dataset.prevValue = slider.value || String(defaultVal);
+          }
           slider.value = maxVal;
+          slider.disabled = true;
           span.textContent = 'Безлимит (∞)';
           span.classList.add('unlimited');
         } else {
+          slider.disabled = false;
+          const restored = slider.dataset.prevValue !== undefined ? slider.dataset.prevValue : String(defaultVal);
+          slider.value = restored;
           span.textContent = slider.value + ' ' + unit;
           span.classList.remove('unlimited');
         }
@@ -3233,14 +3523,15 @@
 
       slider.addEventListener('input', (e) => {
         const val = Number(e.target.value);
-        if (val >= maxVal) {
-          updateState(true);
-        } else {
-          if (toggle && toggle.checked) toggle.checked = false;
-          slider.disabled = false;
-          span.textContent = val + ' ' + unit;
-          span.classList.remove('unlimited');
+        slider.dataset.prevValue = String(val);
+        if (toggle && toggle.checked) {
+          toggle.checked = false;
+          const toggleLabel = toggle.closest('.unlimited-toggle');
+          if (toggleLabel) toggleLabel.classList.remove('active');
         }
+        slider.disabled = false;
+        span.textContent = val + ' ' + unit;
+        span.classList.remove('unlimited');
       });
 
       if (toggle) {
@@ -3250,33 +3541,82 @@
       }
     };
 
-    bindRangeWithUnlimited('mob-gb', 'mob-gb-val', 'mob-gb-unlim', 'ГБ', 100);
-    bindRangeWithUnlimited('mob-min', 'mob-min-val', 'mob-min-unlim', 'мин', 1200);
-    bindRangeWithUnlimited('mob-sms', 'mob-sms-val', 'mob-sms-unlim', 'шт', 100);
+    bindRangeWithUnlimited('mob-gb', 'mob-gb-val', 'mob-gb-unlim', 'ГБ', 100, 25);
+    bindRangeWithUnlimited('mob-min', 'mob-min-val', 'mob-min-unlim', 'мин', 1200, 400);
+    bindRangeWithUnlimited('mob-sms', 'mob-sms-val', 'mob-sms-unlim', 'шт', 100, 0);
 
     // Пользовательские подписки
+    const nameInput = document.getElementById('custom-sub-name');
+    const priceInput = document.getElementById('custom-sub-price');
+    const unusedInput = document.getElementById('custom-sub-unused');
+    const customErrorEl = document.getElementById('custom-sub-error');
+
+    const showCustomError = (msg) => {
+      if (!customErrorEl) return;
+      customErrorEl.textContent = msg;
+      customErrorEl.classList.remove('hidden');
+    };
+
+    const clearCustomError = () => {
+      if (!customErrorEl) return;
+      customErrorEl.textContent = '';
+      customErrorEl.classList.add('hidden');
+    };
+
+    const addCustomSubscription = () => {
+      if (!nameInput || !priceInput) return;
+      const name = nameInput.value.trim();
+      const rawPrice = priceInput.value.trim();
+      const numericPrice = rawPrice === '' ? 0 : Number(rawPrice);
+      const unused = Boolean(unusedInput && unusedInput.checked);
+
+      if (!name) {
+        showCustomError('Введите название сервиса или подписки.');
+        nameInput.focus();
+        return;
+      }
+      if (Number.isNaN(numericPrice) || numericPrice < 0) {
+        showCustomError('Укажите корректную цену (0 ₽ или больше).');
+        priceInput.focus();
+        return;
+      }
+
+      clearCustomError();
+      wizard.state.subscriptions.customItems.push({ name, price: Math.round(numericPrice), unused });
+      stepDirty.subscriptions = true;
+      nameInput.value = '';
+      priceInput.value = '';
+      if (unusedInput) unusedInput.checked = false;
+
+      renderCustomSubscriptionsList(wizard.state.subscriptions.customItems);
+      showToast('Подписка «' + name + '» добавлена', 'success');
+    };
+
     const addCustomBtn = document.getElementById('btn-add-custom-sub');
     if (addCustomBtn) {
-      addCustomBtn.addEventListener('click', () => {
-        const nameInput = document.getElementById('custom-sub-name');
-        const priceInput = document.getElementById('custom-sub-price');
-        const unusedInput = document.getElementById('custom-sub-unused');
+      addCustomBtn.addEventListener('click', addCustomSubscription);
+    }
 
-        const name = nameInput.value.trim();
-        const price = Number(priceInput.value) || 0;
-        const unused = Boolean(unusedInput.checked);
-
-        if (!name) {
-          alert('Введите название подписки');
-          return;
+    [nameInput, priceInput].forEach(inp => {
+      if (!inp) return;
+      inp.addEventListener('input', clearCustomError);
+      inp.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          addCustomSubscription();
         }
+      });
+    });
 
-        wizard.state.subscriptions.customItems.push({ name, price, unused });
-        nameInput.value = '';
-        priceInput.value = '';
-        unusedInput.checked = false;
-
-        renderCustomSubscriptionsList(wizard.state.subscriptions.customItems);
+    const resetSubsBtn = document.getElementById('btn-reset-subs');
+    if (resetSubsBtn) {
+      resetSubsBtn.addEventListener('click', () => {
+        wizard.state.subscriptions.selectedIds = [];
+        wizard.state.subscriptions.unusedIds = [];
+        wizard.state.subscriptions.customItems = [];
+        stepDirty.subscriptions = true;
+        renderSubscriptionsGrid([], [], []);
+        showToast('Выбор подписок сброшен', 'info');
       });
     }
 
@@ -3284,16 +3624,26 @@
       if (e.target.matches('.btn-remove-custom')) {
         const idx = Number(e.target.dataset.idx);
         wizard.state.subscriptions.customItems.splice(idx, 1);
+        stepDirty.subscriptions = true;
         renderCustomSubscriptionsList(wizard.state.subscriptions.customItems);
       }
     });
 
     document.addEventListener('change', (e) => {
       if (e.target.matches('.sub-check')) {
-        const card = document.getElementById('sub-card-' + e.target.dataset.id);
-        const unusedRow = document.getElementById('sub-unused-row-' + e.target.dataset.id);
+        const id = e.target.dataset.id;
+        const card = document.getElementById('sub-card-' + id);
+        const unusedRow = document.getElementById('sub-unused-row-' + id);
         if (card) card.classList.toggle('active', e.target.checked);
         if (unusedRow) unusedRow.classList.toggle('hidden', !e.target.checked);
+        if (!e.target.checked && card) {
+          const unusedCheck = card.querySelector('.sub-unused-check');
+          if (unusedCheck) unusedCheck.checked = false;
+        }
+        updateSubscriptionsSummary();
+      } else if (e.target.matches('.ins-check')) {
+        const card = e.target.closest('.insurance-item-card');
+        if (card) card.classList.toggle('selected', e.target.checked);
       }
     });
 
@@ -3303,7 +3653,7 @@
       if (filterBtn) {
         document.querySelectorAll('.sub-filter-btn').forEach(btn => btn.classList.remove('active'));
         filterBtn.classList.add('active');
-        const filter = filterBtn.getAttribute('data-filter') || 'all';
+        const filter = filterBtn.getAttribute('data-cat') || filterBtn.getAttribute('data-filter') || 'all';
         const cards = document.querySelectorAll('#subscriptions-list .sub-item-card');
         cards.forEach(card => {
           const cat = card.getAttribute('data-category');
@@ -3324,25 +3674,28 @@
         const scriptData = RETENTION_SCRIPTS[type];
         if (scriptData) {
           const body = [
-            '<p>' + scriptData.description + '</p>',
+            '<p>' + escapeHtml(scriptData.description) + '</p>',
             '<div class="steps-box">',
-            scriptData.steps.map(s => '<p class="step-line">' + s + '</p>').join(''),
+            scriptData.steps.map(s => '<p class="step-line">' + escapeHtml(s) + '</p>').join(''),
             '</div>',
             '<h4>Шаблон текста обращения:</h4>',
             '<div class="code-copy-box">',
-            '  <textarea id="copy-text-area" readonly class="copy-textarea">' + scriptData.template + '</textarea>',
+            '  <textarea id="copy-text-area" readonly class="copy-textarea">' + escapeHtml(scriptData.template) + '</textarea>',
             '  <button type="button" class="btn btn-sm btn-primary" id="btn-copy-template">Скопировать текст в буфер</button>',
             '</div>'
           ].join('');
           showModal(scriptData.title, body);
 
-          document.getElementById('btn-copy-template').onclick = () => {
-            const ta = document.getElementById('copy-text-area');
-            ta.select();
-            navigator.clipboard.writeText(ta.value).then(() => {
-              alert('Текст обращения скопирован в буфер обмена!');
-            });
-          };
+          const copyBtn = document.getElementById('btn-copy-template');
+          if (copyBtn) {
+            copyBtn.onclick = () => {
+              const ta = document.getElementById('copy-text-area');
+              if (ta) {
+                ta.select();
+                copyToClipboard(ta.value, copyBtn, 'Текст обращения скопирован в буфер обмена');
+              }
+            };
+          }
         }
       }
     });
@@ -3355,14 +3708,14 @@
         const guide = STEP_BY_STEP_GUIDES[guideKey];
         if (guide) {
           let contentHtml = [
-            '<div class="legal-badge">Правовое основание: ' + guide.legalBasis + '</div>',
+            '<div class="legal-badge">Правовое основание: ' + escapeHtml(guide.legalBasis) + '</div>',
             '<div class="guide-steps-list">',
             guide.steps.map(s => [
               '<div class="guide-step-card">',
-              '  <div class="step-num">' + s.number + '</div>',
+              '  <div class="step-num">' + Number(s.number) + '</div>',
               '  <div class="step-content">',
-              '    <h5>' + s.title + '</h5>',
-              '    <p>' + s.details + '</p>',
+              '    <h5>' + escapeHtml(s.title) + '</h5>',
+              '    <p>' + escapeHtml(s.details) + '</p>',
               '  </div>',
               '</div>'
             ].join('')).join(''),
@@ -3373,7 +3726,7 @@
             contentHtml += [
               '<h4>Шаблон претензии на возврат денежных средств:</h4>',
               '<div class="code-copy-box">',
-              '  <textarea id="copy-claim-area" readonly class="copy-textarea">' + guide.refundClaimTemplate + '</textarea>',
+              '  <textarea id="copy-claim-area" readonly class="copy-textarea">' + escapeHtml(guide.refundClaimTemplate) + '</textarea>',
               '  <button type="button" class="btn btn-sm btn-primary" id="btn-copy-claim">Скопировать шаблон претензии</button>',
               '</div>'
             ].join('');
@@ -3385,17 +3738,17 @@
           if (copyClaimBtn) {
             copyClaimBtn.onclick = () => {
               const ta = document.getElementById('copy-claim-area');
-              ta.select();
-              navigator.clipboard.writeText(ta.value).then(() => {
-                alert('Претензия скопирована в буфер обмена!');
-              });
+              if (ta) {
+                ta.select();
+                copyToClipboard(ta.value, copyClaimBtn, 'Шаблон претензии скопирован в буфер обмена');
+              }
             };
           }
         }
       }
     });
 
-    // Закрытие модального окна
+    // Закрытие модального окна (кнопка, фон, Escape)
     const modalCloseBtn = document.getElementById('modal-close-btn');
     const modalOverlay = document.getElementById('info-modal');
     if (modalCloseBtn) modalCloseBtn.addEventListener('click', closeModal);
@@ -3404,14 +3757,24 @@
         if (e.target === modalOverlay) closeModal();
       });
     }
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeModal();
+      }
+    });
 
     // Кнопки отчёта
     const btnRestart = document.getElementById('btn-restart');
     if (btnRestart) {
       btnRestart.addEventListener('click', () => {
-        if (confirm('Начать заново? Введённые данные останутся сохранены в браузере.')) {
-          wizard.goToStep(1);
-        }
+        wizard.goToStep(1);
+      });
+    }
+
+    const btnEmptyReturn = document.getElementById('btn-empty-return');
+    if (btnEmptyReturn) {
+      btnEmptyReturn.addEventListener('click', () => {
+        wizard.goToStep(1);
       });
     }
 
@@ -3432,7 +3795,7 @@
       });
     }
 
-    // SPA вкладки (Калькулятор, Как мы считаем, Как мы зарабатываем, Конфиденциальность)
+    // SPA вкладки (Калькулятор, Как мы считаем, Безопасность, Конфиденциальность)
     document.querySelectorAll('[data-tab]').forEach(el => {
       el.addEventListener('click', (e) => {
         e.preventDefault();
@@ -3489,6 +3852,9 @@
     const saved = loadUserData();
     if (saved) {
       wizard.loadState(saved);
+      if (saved.internet && saved.mobile && saved.internet.region && saved.internet.region !== saved.mobile.region) {
+        netRegionManuallyChanged = true;
+      }
     }
 
     // Обработка начального хэша в URL

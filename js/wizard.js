@@ -14,18 +14,21 @@ export class WizardController {
       mobile: {
         skipped: false,
         operator: 'МКС',
-        region: 'Луганская Народная Республика (ЛНР)',
+        region: 'Луганск',
         currentPrice: 500,
-        gb: 20,
+        gb: 25,
+        isUnlimitedGb: false,
         minutes: 400,
-        sms: 0
+        isUnlimitedMinutes: false,
+        sms: 0,
+        isUnlimitedSms: false
       },
       internet: {
         skipped: false,
         operator: 'Луганет',
-        region: 'Луганская Народная Республика (ЛНР)',
-        currentPrice: 550,
-        minSpeedMbps: 100,
+        region: 'Луганск',
+        currentPrice: 650,
+        minSpeedMbps: 200,
         needsRouter: false
       },
       subscriptions: {

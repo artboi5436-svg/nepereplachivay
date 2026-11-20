@@ -1,4 +1,5 @@
 :root {
+  color-scheme: light;
   /* Цветовая палитра - Светлая тема (Алый #D00000 и глубокий чёрный #000000) */
   --bg-primary: #fbfbfb;
   --bg-surface: #ffffff;
@@ -16,8 +17,9 @@
   --primary-light: #fee2e2;
   --primary-text: #D00000;
 
-  --savings-green: #D00000;
-  --savings-bg: #fee2e2;
+  --savings-green: #15803d;
+  --savings-bg: #ecfdf5;
+  --savings-border: #86efac;
   --warning-amber: #b45309;
   --warning-bg: #fef3c7;
   --danger-red: #D00000;
@@ -36,6 +38,7 @@
 }
 
 [data-theme="dark"] {
+  color-scheme: dark;
   /* Тёмная тема: глубокий чёрный #000000 и контрастный алый #D00000 */
   --bg-primary: #000000;
   --bg-surface: #0a0a0a;
@@ -52,8 +55,9 @@
   --primary-light: #2b0303;
   --primary-text: #ff4d4d;
 
-  --savings-green: #ff3333;
-  --savings-bg: #2b0000;
+  --savings-green: #4ade80;
+  --savings-bg: #052e16;
+  --savings-border: #166534;
   --warning-amber: #fbbf24;
   --warning-bg: #331d04;
   --danger-red: #ff4d4d;

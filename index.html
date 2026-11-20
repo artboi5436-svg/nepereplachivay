@@ -5,9 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>ТарифДетокс — честный расчёт экономии на связи, интернете и подписках в ЛНР</title>
   <meta name="description" content="Бесплатный сервис оптимизации ежемесячных расходов: мобильная связь, домашний интернет, подписки в городах ЛНР. Считаем чистую экономию за 12 месяцев прямо в браузере.">
-  <link rel="stylesheet" href="css/variables.css?v=20261113_1">
-  <link rel="stylesheet" href="css/style.css?v=20261113_1">
-  <link rel="stylesheet" href="css/print.css?v=20261113_1" media="print">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23D00000'/%3E%3Ctext x='32' y='43' text-anchor='middle' font-family='Arial,sans-serif' font-size='32' font-weight='bold' fill='%23ffffff'%3E%E2%82%BD%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="css/variables.css?v=20261120_1">
+  <link rel="stylesheet" href="css/style.css?v=20261120_1">
+  <link rel="stylesheet" href="css/print.css?v=20261120_1" media="print">
 </head>
 <body>
 
@@ -53,6 +54,12 @@
           </div>
           <div class="progress-bar-bg">
             <div class="progress-bar-fill" id="wizard-progress-bar"></div>
+          </div>
+          <div class="wizard-steps-nav" role="tablist" aria-label="Шаги мастера">
+            <button type="button" class="wizard-step-pill active" data-step="1" aria-current="step">1. Связь</button>
+            <button type="button" class="wizard-step-pill" data-step="2">2. Интернет</button>
+            <button type="button" class="wizard-step-pill" data-step="3">3. Подписки</button>
+            <button type="button" class="wizard-step-pill" data-step="4">4. Страховки</button>
           </div>
         </div>
 
@@ -105,7 +112,7 @@
             <div class="form-label-row">
               <label for="mob-gb">Сколько гигабайт интернета нужно: <span id="mob-gb-val" class="range-badge">25 ГБ</span></label>
               <label class="unlimited-toggle" for="mob-gb-unlim" title="Выбрать безлимитный мобильный интернет">
-                <input type="checkbox" id="mob-gb-unlim">
+                <input type="checkbox" id="mob-gb-unlim" aria-label="Безлимитный мобильный интернет">
                 <span>Безлимит</span>
               </label>
             </div>
@@ -118,7 +125,7 @@
             <div class="form-label-row">
               <label for="mob-min">Сколько минут звонков нужно: <span id="mob-min-val" class="range-badge">400 мин</span></label>
               <label class="unlimited-toggle" for="mob-min-unlim" title="Выбрать безлимитные звонки">
-                <input type="checkbox" id="mob-min-unlim">
+                <input type="checkbox" id="mob-min-unlim" aria-label="Безлимитные звонки">
                 <span>Безлимит</span>
               </label>
             </div>
@@ -131,7 +138,7 @@
             <div class="form-label-row">
               <label for="mob-sms">Нужны ли СМС в пакете: <span id="mob-sms-val" class="range-badge">0 шт</span></label>
               <label class="unlimited-toggle" for="mob-sms-unlim" title="Выбрать безлимитные СМС">
-                <input type="checkbox" id="mob-sms-unlim">
+                <input type="checkbox" id="mob-sms-unlim" aria-label="Безлимитные СМС">
                 <span>Безлимит</span>
               </label>
             </div>
@@ -237,6 +244,11 @@
             <button type="button" class="sub-filter-btn" data-cat="gaming">Игры</button>
           </div>
 
+          <div class="subs-summary-bar" id="subs-selection-summary">
+            <span>Выбрано: <strong id="subs-selected-count">0</strong> на сумму <strong id="subs-selected-sum">0 ₽/мес</strong></span>
+            <button type="button" class="subs-reset-btn" id="btn-reset-subs">Сбросить выбор</button>
+          </div>
+
           <div class="subscriptions-grid" id="subscriptions-list">
             <!-- Генерируется динамически -->
           </div>
@@ -245,10 +257,11 @@
           <div class="custom-sub-add-box">
             <h4>+ Добавить другую подписку</h4>
             <div class="custom-sub-row">
-              <input type="text" id="custom-sub-name" class="form-input" placeholder="Название сервиса">
-              <input type="number" id="custom-sub-price" class="form-input" placeholder="Цена ₽/мес">
+              <input type="text" id="custom-sub-name" class="form-input" placeholder="Название сервиса" maxlength="80">
+              <input type="number" id="custom-sub-price" class="form-input" min="0" step="1" placeholder="Цена ₽/мес">
               <button type="button" class="btn btn-secondary" id="btn-add-custom-sub">Добавить</button>
             </div>
+            <div id="custom-sub-error" class="inline-error hidden" role="alert"></div>
             <label class="unused-label">
               <input type="checkbox" id="custom-sub-unused">
               <span>Не пользуюсь этой подпиской</span>
@@ -282,6 +295,13 @@
 
       <!-- Секция отчёта (Итоговый результат) -->
       <section id="report-section" class="hidden" aria-label="Персональный отчёт об экономии">
+
+        <!-- Пустое состояние (если все шаги пропущены) -->
+        <div id="report-empty-state" class="step-card report-empty-state hidden">
+          <h2>Вы пока не выбрали ни одной категории</h2>
+          <p class="step-subtitle">Вы пропустили все разделы или указали нулевые расходы. Вернитесь к заполнению хотя бы одного шага (связь, интернет, подписки или страховки), чтобы получить расчёт и рекомендации.</p>
+          <button type="button" class="btn btn-primary" id="btn-empty-return">← Вернуться к заполнению</button>
+        </div>
 
         <!-- Главный баннер экономии -->
         <div class="report-hero-card">
@@ -346,7 +366,7 @@
         <div class="report-global-actions">
           <button type="button" class="btn btn-primary" id="btn-export-ics">Добавить напоминания в календарь (.ics)</button>
           <button type="button" class="btn btn-secondary" id="btn-print-report">Печать / Сохранить в PDF</button>
-          <button type="button" class="btn btn-outline" id="btn-restart">Начать заново</button>
+          <button type="button" class="btn btn-outline" id="btn-restart">Изменить параметры</button>
           <button type="button" class="btn btn-link-skip" id="btn-clear-data">Очистить историю браузера</button>
         </div>
 
@@ -356,14 +376,14 @@
 
     <!-- Вкладка 2: Как мы считаем (Методология) -->
     <article id="view-how-we-calculate" class="step-card doc-view hidden">
-      <h1>Как мы считаем экономию: честно и без уловок</h1>
+      <h2 class="doc-title">Как мы считаем экономию: честно и без уловок</h2>
       <p class="step-subtitle">Большинство сайтов сравнения тарифов показывают только маркетинговую «цену в первый месяц». Мы рассчитываем реальную стоимость владения (TCO) за 12 месяцев.</p>
 
       <section style="margin-bottom: 24px;">
         <h3>1. Формула годовой стоимости владения (TCO за 12 месяцев)</h3>
         <p>Когда оператор пишет «1 рубль в месяц», мелким шрифтом в договоре часто указано: «со 2-го месяца — 650 ₽, плата за подключение — 500 ₽, аренда роутера — 150 ₽/мес».</p>
         <p>Наша формула учитывает все расходы за год:</p>
-        <div style="background-color: var(--bg-surface-elevated); padding: 14px; border-radius: var(--radius-sm); font-family: monospace; font-size: 14px; margin: 12px 0;">
+        <div class="formula-box">
           TCO = Плата_за_подключение + (Цена_акции × Месяцев_акции) + (Базовая_цена × (12 - Месяцев_акции)) + (Аренда_роутера × 12)
         </div>
         <p>Среднемесячная стоимость в нашем отчёте — это <code>TCO / 12</code>. Это позволяет честно сравнивать предложения между собой.</p>
@@ -407,7 +427,7 @@
 
     <!-- Вкладка 3: Безопасность ваших данных -->
     <article id="view-data-security" class="step-card doc-view hidden">
-      <h1>Безопасность ваших данных</h1>
+      <h2 class="doc-title">Безопасность ваших данных</h2>
       <p class="step-subtitle">Архитектурная защита приватности: сервис работает локально в вашем браузере, не собирает персональные данные и не передаёт их третьим лицам.</p>
 
       <section style="margin-bottom: 24px;">
@@ -452,7 +472,7 @@
 
     <!-- Вкладка 4: Политика конфиденциальности -->
     <article id="view-privacy" class="step-card doc-view hidden">
-      <h1>Политика конфиденциальности и локальное хранение данных</h1>
+      <h2 class="doc-title">Политика конфиденциальности и локальное хранение данных</h2>
       <p class="step-subtitle">Сервис разработан с учётом положений Федерального закона РФ № 152-ФЗ «О персональных данных».</p>
 
       <section style="margin-bottom: 20px;">
@@ -509,6 +529,8 @@
     </div>
   </footer>
 
-  <script defer src="js/app.js?v=20261113_1"></script>
+  <div id="toast-container" class="toast-container" aria-live="polite" aria-atomic="true"></div>
+
+  <script defer src="js/app.js?v=20261120_1"></script>
 </body>
 </html>
