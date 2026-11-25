@@ -1,7 +1,7 @@
 /**
  * Единый самодостаточный бандл «ТарифДетокс».
  * Включает встроенную базу данных, калькулятор TCO, проверку дубликатов,
- * мастер ввода (Wizard), экспорт в .ics, шаблоны заявлений и SPA-навигацию.
+ * мастер ввода (Wizard), шаблоны заявлений и SPA-навигацию.
  * Работает без серверов: как локально (file://), так и на GitHub Pages.
  */
 
@@ -810,83 +810,7 @@
   }
 
   // ==========================================
-  // 5. ЭКСПОРТ НАПОМИНАНИЙ В КАЛЕНДАРЬ (.ICS)
-  // ==========================================
-  function formatIcsDate(date) {
-    const pad = (n) => String(n).padStart(2, '0');
-    const year = date.getUTCFullYear();
-    const month = pad(date.getUTCMonth() + 1);
-    const day = pad(date.getUTCDate());
-    const hours = pad(date.getUTCHours());
-    const minutes = pad(date.getUTCMinutes());
-    const seconds = pad(date.getUTCSeconds());
-    return '' + year + month + day + 'T' + hours + minutes + seconds + 'Z';
-  }
-
-  function exportEventsToIcs(events = [], filename = 'ne-pereplachivay-reminders.ics') {
-    if (events.length === 0) {
-      showToast('Нет активных напоминаний для экспорта в календарь.', 'info');
-      return;
-    }
-
-    const nowStr = formatIcsDate(new Date());
-    const escapeIcsText = (text) => String(text || '')
-      .replace(/\\/g, '\\\\')
-      .replace(/\r?\n/g, '\\n')
-      .replace(/,/g, '\\,')
-      .replace(/;/g, '\\;');
-
-    const vEvents = events.map((ev, idx) => {
-      const startStr = formatIcsDate(ev.date);
-      const endDate = new Date(ev.date.getTime() + (ev.durationHours || 1) * 60 * 60 * 1000);
-      const endStr = formatIcsDate(endDate);
-      const uid = 'reminder-' + Date.now() + '-' + idx + '@nepereplachivay.ru';
-
-      const cleanTitle = escapeIcsText(ev.title || 'Напоминание');
-      const cleanDesc = escapeIcsText(ev.description || '');
-
-      return [
-        'BEGIN:VEVENT',
-        'UID:' + uid,
-        'DTSTAMP:' + nowStr,
-        'DTSTART:' + startStr,
-        'DTEND:' + endStr,
-        'SUMMARY:' + cleanTitle,
-        'DESCRIPTION:' + cleanDesc,
-        'STATUS:CONFIRMED',
-        'BEGIN:VALARM',
-        'TRIGGER:-P1D',
-        'ACTION:DISPLAY',
-        'DESCRIPTION:Напоминание: ' + cleanTitle,
-        'END:VALARM',
-        'END:VEVENT'
-      ].join('\r\n');
-    }).join('\r\n');
-
-    const icsContent = [
-      'BEGIN:VCALENDAR',
-      'VERSION:2.0',
-      'PRODID:-//Ne Pereplachivay//Ru//EN',
-      'CALSCALE:GREGORIAN',
-      'METHOD:PUBLISH',
-      vEvents,
-      'END:VCALENDAR'
-    ].join('\r\n');
-
-    const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = filename;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    setTimeout(() => URL.revokeObjectURL(url), 1000);
-    showToast('Файл напоминаний (.ics) скачан', 'success');
-  }
-
-  // ==========================================
-  // 6. СКРИПТЫ ТОРГА И ПОШАГОВЫЕ ИНСТРУКЦИИ
+  // 5. СКРИПТЫ ТОРГА И ПОШАГОВЫЕ ИНСТРУКЦИИ
   // ==========================================
   const RETENTION_SCRIPTS = {
     mobile: {
@@ -1459,13 +1383,11 @@
 
     const emptyStateEl = document.getElementById('report-empty-state');
     const heroCardEl = document.querySelector('.report-hero-card');
-    const exportBtnEl = document.getElementById('btn-export-ics');
     const printBtnEl = document.getElementById('btn-print-report');
     const restartBtnEl = document.getElementById('btn-restart');
 
     if (emptyStateEl) emptyStateEl.classList.toggle('hidden', !isCompletelyEmpty);
     if (heroCardEl) heroCardEl.classList.toggle('hidden', isCompletelyEmpty);
-    if (exportBtnEl) exportBtnEl.classList.toggle('hidden', isCompletelyEmpty);
     if (printBtnEl) printBtnEl.classList.toggle('hidden', isCompletelyEmpty);
     if (restartBtnEl) restartBtnEl.classList.toggle('hidden', isCompletelyEmpty);
 
@@ -1516,7 +1438,6 @@
       insCardContainer.classList.add('hidden');
     }
 
-    setupIcsExportButton(mobileResult, internetResult, subsResult);
     scrollToTopInstant();
   }
 
@@ -1854,51 +1775,6 @@
     ].join('')).join('');
 
     container.querySelector('.card-content').innerHTML = itemsHtml;
-  }
-
-  function setupIcsExportButton(mobileResult, internetResult, subsResult) {
-    const exportBtn = document.getElementById('btn-export-ics');
-    if (!exportBtn) return;
-
-    exportBtn.onclick = () => {
-      const events = [];
-
-      if (mobileResult && !mobileResult.isCurrentOptimal && mobileResult.bestTariff && mobileResult.bestTariff.promoDurationMonths > 0) {
-        const promoMonths = mobileResult.bestTariff.promoDurationMonths;
-        const targetDate = new Date();
-        targetDate.setMonth(targetDate.getMonth() + promoMonths);
-        targetDate.setDate(targetDate.getDate() - 3);
-
-        events.push({
-          title: 'Проверить тариф связи (' + mobileResult.bestTariff.operator + ')',
-          description: 'Заканчивается промо-период тарифа «' + mobileResult.bestTariff.tariffName + '». Проверьте списание абонентской платы или запросите скидку в чате поддержки!',
-          date: targetDate
-        });
-      }
-
-      if (internetResult && !internetResult.isCurrentOptimal && internetResult.bestTariff && internetResult.bestTariff.promoDurationMonths > 0) {
-        const promoMonths = internetResult.bestTariff.promoDurationMonths;
-        const targetDate = new Date();
-        targetDate.setMonth(targetDate.getMonth() + promoMonths);
-        targetDate.setDate(targetDate.getDate() - 3);
-
-        events.push({
-          title: 'Проверить интернет-тариф (' + internetResult.bestTariff.operator + ')',
-          description: 'Истекает промо-цена на домашний интернет. Проверьте условия продления.',
-          date: targetDate
-        });
-      }
-
-      const checkSubsDate = new Date();
-      checkSubsDate.setDate(checkSubsDate.getDate() + 25);
-      events.push({
-        title: 'Ревизия подписок (ТарифДетокс)',
-        description: 'Проверьте активные подписки на смартфоне и в онлайн-банках, чтобы не списались деньги за неиспользуемые сервисы.',
-        date: checkSubsDate
-      });
-
-      exportEventsToIcs(events, 'ne-pereplachivay-reminders.ics');
-    };
   }
 
   // ==========================================
