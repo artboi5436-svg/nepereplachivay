@@ -29,6 +29,9 @@ export class WizardController {
         region: 'Луганск',
         currentPrice: 650,
         minSpeedMbps: 200,
+        hasRouterRent: false,
+        currentRouterRent: 100,
+        switchToOwnRouter: false,
         needsRouter: false
       },
       subscriptions: {

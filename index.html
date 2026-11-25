@@ -6,9 +6,9 @@
   <title>ТарифДетокс — честный расчёт экономии на связи, интернете и подписках в ЛНР</title>
   <meta name="description" content="Бесплатный сервис оптимизации ежемесячных расходов: мобильная связь, домашний интернет, подписки в городах ЛНР. Считаем чистую экономию за 12 месяцев прямо в браузере.">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23D00000'/%3E%3Ctext x='32' y='43' text-anchor='middle' font-family='Arial,sans-serif' font-size='32' font-weight='bold' fill='%23ffffff'%3E%E2%82%BD%3C/text%3E%3C/svg%3E">
-  <link rel="stylesheet" href="css/variables.css?v=20261120_1">
-  <link rel="stylesheet" href="css/style.css?v=20261120_1">
-  <link rel="stylesheet" href="css/print.css?v=20261120_1" media="print">
+  <link rel="stylesheet" href="css/variables.css?v=20261125_2">
+  <link rel="stylesheet" href="css/style.css?v=20261125_2">
+  <link rel="stylesheet" href="css/print.css?v=20261125_2" media="print">
 </head>
 <body>
 
@@ -215,8 +215,19 @@
           <div class="form-group">
             <label class="custom-checkbox-label">
               <input type="checkbox" id="net-router-rent">
-              <span>В тарифе есть платная аренда роутера или ТВ-приставки (нужен роутер от провайдера)</span>
+              <span>Сейчас я плачу за аренду роутера или ТВ-приставки</span>
             </label>
+            <div id="net-router-rent-details" class="router-rent-details hidden">
+              <div class="form-group" style="margin-bottom: 12px;">
+                <label for="net-router-rent-price">Текущая плата за аренду оборудования в месяц (₽)</label>
+                <input type="number" id="net-router-rent-price" class="form-input" min="0" step="10" value="100" placeholder="Например: 100">
+                <p class="form-hint">Если аренда оплачивается сверх тарифа выше — укажите её сумму. Мы добавим её к текущим расходам за 12 месяцев.</p>
+              </div>
+              <label class="custom-checkbox-label">
+                <input type="checkbox" id="net-own-router-switch">
+                <span>При переходе планирую использовать свой роутер (отказаться от аренды)</span>
+              </label>
+            </div>
           </div>
 
           <div class="wizard-actions-row">
@@ -530,6 +541,6 @@
 
   <div id="toast-container" class="toast-container" aria-live="polite" aria-atomic="true"></div>
 
-  <script defer src="js/app.js?v=20261125_1"></script>
+  <script defer src="js/app.js?v=20261125_2"></script>
 </body>
 </html>

@@ -537,7 +537,9 @@
   }
 
   function findBestInternetTariff(user, tariffs = []) {
-    const currentMonthly = Math.max(0, Number(user.currentPrice) || 0);
+    const baseMonthly = Math.max(0, Number(user.currentPrice) || 0);
+    const currentRouterRent = Math.max(0, Number(user.currentRouterRent) || 0);
+    const currentMonthly = baseMonthly + currentRouterRent;
     const currentAnnualTCO = currentMonthly * 12;
     const userSpeed = Number(user.minSpeedMbps) || 100;
     const userCity = user.region || 'Все города ЛНР';
@@ -949,6 +951,9 @@
           region: 'Луганск',
           currentPrice: 650,
           minSpeedMbps: 200,
+          hasRouterRent: false,
+          currentRouterRent: 100,
+          switchToOwnRouter: false,
           needsRouter: false
         },
         subscriptions: {
@@ -1225,12 +1230,18 @@
         isUnlimitedSms: isUnlimSms
       };
     } else if (step === 2) {
+      const hasRouterRent = Boolean(document.getElementById('net-router-rent')?.checked);
+      const rawRent = Math.max(0, Number(document.getElementById('net-router-rent-price')?.value) || 0);
+      const switchToOwnRouter = Boolean(document.getElementById('net-own-router-switch')?.checked);
       return {
         operator: document.getElementById('net-operator')?.value || 'Луганет',
         region: document.getElementById('net-region')?.value || 'Луганск',
         currentPrice: Math.max(0, Number(document.getElementById('net-price')?.value) || 0),
         minSpeedMbps: Number(document.getElementById('net-speed')?.value) || 100,
-        needsRouter: Boolean(document.getElementById('net-router-rent')?.checked)
+        hasRouterRent,
+        currentRouterRent: hasRouterRent ? rawRent : 0,
+        switchToOwnRouter: hasRouterRent ? switchToOwnRouter : false,
+        needsRouter: hasRouterRent && !switchToOwnRouter
       };
     } else if (step === 3) {
       const selectedIds = Array.from(document.querySelectorAll('.sub-check:checked')).map(el => el.dataset.id);
@@ -1296,7 +1307,16 @@
     if (document.getElementById('net-region')) document.getElementById('net-region').value = state.internet.region;
     if (document.getElementById('net-price')) document.getElementById('net-price').value = state.internet.currentPrice;
     if (document.getElementById('net-speed')) document.getElementById('net-speed').value = state.internet.minSpeedMbps;
-    if (document.getElementById('net-router-rent')) document.getElementById('net-router-rent').checked = state.internet.needsRouter;
+    const hasRent = Boolean(state.internet.hasRouterRent !== undefined ? state.internet.hasRouterRent : state.internet.needsRouter);
+    if (document.getElementById('net-router-rent')) document.getElementById('net-router-rent').checked = hasRent;
+    if (document.getElementById('net-router-rent-price')) {
+      document.getElementById('net-router-rent-price').value = state.internet.currentRouterRent > 0 ? state.internet.currentRouterRent : 100;
+    }
+    if (document.getElementById('net-own-router-switch')) {
+      document.getElementById('net-own-router-switch').checked = Boolean(state.internet.switchToOwnRouter);
+    }
+    const rentDetailsEl = document.getElementById('net-router-rent-details');
+    if (rentDetailsEl) rentDetailsEl.classList.toggle('hidden', !hasRent);
 
     renderSubscriptionsGrid(state.subscriptions.selectedIds, state.subscriptions.unusedIds, state.subscriptions.customItems);
     renderInsuranceSelector(state.insurance.selectedTypes);
@@ -1361,7 +1381,8 @@
     }
 
     let internetResult = null;
-    if (!state.internet.skipped && state.internet.currentPrice > 0) {
+    const internetTotalCurrent = (Number(state.internet.currentPrice) || 0) + (state.internet.hasRouterRent ? (Number(state.internet.currentRouterRent) || 0) : 0);
+    if (!state.internet.skipped && internetTotalCurrent > 0) {
       internetResult = findBestInternetTariff(state.internet, dbInternet);
     }
 
@@ -1653,7 +1674,13 @@
         ? '<span class="promo-pill">Акция: ' + Number(bestTariff.promoMonthlyPrice) + ' ₽ первые ' + Number(bestTariff.promoDurationMonths) + ' мес., затем ' + Number(bestTariff.monthlyPrice) + ' ₽</span>'
         : '';
       const tvLi = bestTariff.hasTv ? '<li>Интерактивное ТВ включено в тариф</li>' : '';
-      const routerText = userNet.needsRouter ? 'Включает аренду роутера (' + Number(bestTariff.routerRentMonthly || 0) + ' ₽/мес)' : 'Со своим роутером';
+      const currentRent = userNet.hasRouterRent ? (Number(userNet.currentRouterRent) || 0) : 0;
+      const currentRentLi = currentRent > 0
+        ? '<li>Аренда оборудования: ' + currentRent.toLocaleString('ru-RU') + ' ₽/мес (' + (currentRent * 12).toLocaleString('ru-RU') + ' ₽/год)</li>'
+        : '';
+      const routerText = userNet.needsRouter
+        ? 'Включает аренду роутера (' + Number(bestTariff.routerRentMonthly || 0) + ' ₽/мес)'
+        : (currentRent > 0 ? 'Со своим роутером (экономия на аренде ' + (currentRent * 12).toLocaleString('ru-RU') + ' ₽/год)' : 'Со своим роутером');
 
       let otherOptionsHtml = '';
       if (otherOptions && otherOptions.length > 0) {
@@ -1674,6 +1701,7 @@
         '    <div class="comp-price">' + Number(currentMonthly).toLocaleString('ru-RU') + ' ₽/мес</div>',
         '    <ul class="comp-list">',
         '      <li>Скорость: от ' + Number(userNet.minSpeedMbps) + ' Мбит/с</li>',
+        '      ' + currentRentLi,
         '    </ul>',
         '  </div>',
         '  <div class="comp-col target">',
@@ -1979,6 +2007,15 @@
     bindRangeWithUnlimited('mob-gb', 'mob-gb-val', 'mob-gb-unlim', 'ГБ', 100, 25);
     bindRangeWithUnlimited('mob-min', 'mob-min-val', 'mob-min-unlim', 'мин', 1200, 400);
     bindRangeWithUnlimited('mob-sms', 'mob-sms-val', 'mob-sms-unlim', 'шт', 100, 0);
+
+    // Показ/скрытие поля текущей аренды роутера на шаге 2
+    const netRouterRentCb = document.getElementById('net-router-rent');
+    const netRouterRentDetails = document.getElementById('net-router-rent-details');
+    if (netRouterRentCb && netRouterRentDetails) {
+      netRouterRentCb.addEventListener('change', () => {
+        netRouterRentDetails.classList.toggle('hidden', !netRouterRentCb.checked);
+      });
+    }
 
     // Пользовательские подписки
     const nameInput = document.getElementById('custom-sub-name');

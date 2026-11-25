@@ -296,6 +296,25 @@ describe('Модуль расчётов calculator.js', () => {
       assert.equal(res.tco12, 6900);
     });
 
+    it('Учитывает текущую плату за аренду роутера и переход на свой роутер', () => {
+      // Пользователь платит 500 ₽/мес за тариф + 150 ₽/мес за аренду роутера = 650 ₽/мес (7800 ₽/год)
+      // Переходит на свой роутер (needsRouter: false)
+      // net-100 TCO без роутера = (350*2) + (500*10) = 5700 ₽
+      // Экономия = 7800 - 5700 = 2100 ₽
+      const user = {
+        currentPrice: 500,
+        currentRouterRent: 150,
+        minSpeedMbps: 100,
+        needsRouter: false,
+        region: 'Все регионы'
+      };
+      const res = findBestInternetTariff(user, mockInternet);
+      assert.equal(res.isCurrentOptimal, false);
+      assert.equal(res.currentMonthly, 650);
+      assert.equal(res.tco12, 5700);
+      assert.equal(res.savingsYear, 2100);
+    });
+
     it('Фильтрует интернет-тарифы по городу ЛНР и отсекает другие регионы', () => {
       const cityTariffs = [
         {

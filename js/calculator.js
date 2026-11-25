@@ -246,7 +246,9 @@ export function findBestMobileTariff(user, tariffs = []) {
  * @returns {Object}
  */
 export function findBestInternetTariff(user, tariffs = []) {
-  const currentMonthly = Math.max(0, Number(user.currentPrice) || 0);
+  const baseMonthly = Math.max(0, Number(user.currentPrice) || 0);
+  const currentRouterRent = Math.max(0, Number(user.currentRouterRent) || 0);
+  const currentMonthly = baseMonthly + currentRouterRent;
   const currentAnnualTCO = currentMonthly * 12;
   const userSpeed = Number(user.minSpeedMbps) || 100;
   const userRegion = user.region || 'Все города ЛНР';
